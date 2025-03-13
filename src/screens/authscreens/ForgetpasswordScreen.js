@@ -19,7 +19,7 @@ const schema = z.object({
   email: z.string().email('Please enter a valid email'),
 });
 
-const Forgotpasswordscreen = () => {
+const ForgetpasswordScreen = () => {
   const navigation = useNavigation();
   const {control, handleSubmit, reset} = useForm({
     defaultValues: {
@@ -72,7 +72,7 @@ const Forgotpasswordscreen = () => {
         <View style={styles.bottomTextContainer}>
           <Text style={styles.alredyText}>Don't have an account? </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Registerscreen')}>
+            onPress={() => navigation.navigate('RegisterScreen')}>
             <Text style={styles.linkText}>Register for here.</Text>
           </TouchableOpacity>
         </View>
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Forgotpasswordscreen;
+export default ForgetpasswordScreen;

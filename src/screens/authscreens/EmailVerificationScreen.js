@@ -44,7 +44,6 @@ const EmailVerificationScreen = ({route}) => {
       if (otp === Obj.otp.toString()) {  
         Alert.alert("Success", "Your email has been verified.");
         
-        // navigation.navigate("HomeScreen"); 
       } else {
         Alert.alert("Error", "Invalid OTP. Please try again.");
       }

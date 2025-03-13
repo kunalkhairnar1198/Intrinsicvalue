@@ -28,7 +28,7 @@ const loginSchema = z.object({
     .max(20, 'Password must be at most 20 characters'),
 });
 
-const Loginscreen = () => {
+const LoginScreen = () => {
   const navigation = useNavigation();
 
   const {control, handleSubmit, reset} = useForm({
@@ -46,7 +46,7 @@ const Loginscreen = () => {
       otp: Math.floor(100000 + Math.random() * 900000)
   };
   
-  navigation.navigate('Emailverfiyscreen', { Obj });
+  navigation.navigate('EmailVerificationScreen', { Obj });
     // console.log('Form Data:', data);
   
     reset();
@@ -82,7 +82,7 @@ const Loginscreen = () => {
           />
           <View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ForgetScreen')}>
+              onPress={() => navigation.navigate('ForgetPasswordScreen')}>
               <Text style={styles.forgetLink}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
@@ -101,7 +101,7 @@ const Loginscreen = () => {
             <View style={styles.bottomTextContainer}>
               <Text style={styles.alredyText}>Don't have an account? </Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Registerscreen')}>
+                onPress={() => navigation.navigate('RegisterScreen')}>
                 <Text style={styles.linkText}>Register for here.</Text>
               </TouchableOpacity>
             </View>
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Loginscreen;
+export default LoginScreen;

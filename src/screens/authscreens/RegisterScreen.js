@@ -92,7 +92,7 @@ const RegisterScreen = () => {
     reset();
 
     console.log('Form Data:', data);
-    navigation.navigate('Loginscreen');
+    navigation.navigate('LoginScreen');
   };
 
   return (
@@ -143,7 +143,7 @@ const RegisterScreen = () => {
           <View style={styles.bottomTextContainer}>
             <Text style={styles.alreadyText}>Already have an account? </Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Loginscreen')}>
+              onPress={() => navigation.navigate('LoginScreen')}>
               <Text style={styles.linkText}>Sign in here.</Text>
             </TouchableOpacity>
           </View>

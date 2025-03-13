@@ -29,7 +29,7 @@ const WelcomeScreen = ({navigation}) => {
           
           <Button
             onPress={() => {
-              navigation.navigate('Registerscreen');
+              navigation.navigate('RegisterScreen');
             }}
             style={styles.createButton}>
             <View>
@@ -39,7 +39,7 @@ const WelcomeScreen = ({navigation}) => {
 
           <Button
               onPress={() => {
-                navigation.navigate('Loginscreen');
+                navigation.navigate('LoginScreen');
               }}
             style={styles.loginButton}>
             <View>

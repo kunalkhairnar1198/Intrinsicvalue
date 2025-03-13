@@ -1,32 +1,29 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import React from 'react';
+
 import WelcomeScreen from '../../screens/welcomescreen/Welcomescreen';
-import Loginscreen from '../../screens/authscreens/Loginscreen';
-import Registerscreen from '../../screens/authscreens/Registerscreen';
-import EmailVerificationScreen from '../../screens/authscreens/Emailverificationscreen';
-import Forgetpasswordscreen from '../../screens/authscreens/Forgetpasswordscreen';
+import LoginScreen from '../../screens/authscreens/LoginScreen';
+import RegisterScreen from '../../screens/authscreens/RegisterScreen';
+import EmailVerificationScreen from '../../screens/authscreens/EmailVerificationScreen';
+import ForgetpasswordScreen from '../../screens/authscreens/ForgetpasswordScreen';
 
 const Stack = createStackNavigator();
 
-const Rootnavigation = () => {
+const RootNavigation = () => {
+
   const screenOptions = {
     headerShown: false,
   };
 
   return (
-    <Stack.Navigator
-      initialRouteName="Welcomescreen"
-      screenOptions={screenOptions}>
-      <Stack.Screen name="Welcomescreen" component={WelcomeScreen} />
-      <Stack.Screen name="Loginscreen" component={Loginscreen} />
-      <Stack.Screen name="Registerscreen" component={Registerscreen} />
-      <Stack.Screen
-        name="Emailverfiyscreen"
-        component={EmailVerificationScreen}
-      />
-      <Stack.Screen name='ForgetScreen' component={Forgetpasswordscreen}/>
+    <Stack.Navigator initialRouteName="WelcomeScreen"  screenOptions={screenOptions}>
+      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Stack.Screen name="EmailVerificationScreen" component={EmailVerificationScreen} />
+      <Stack.Screen name="ForgetPasswordScreen" component={ForgetpasswordScreen} />
     </Stack.Navigator>
   );
 };
 
-export default Rootnavigation;
+export default RootNavigation;
+
