@@ -69,7 +69,7 @@ const EmailVerificationScreen = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Background />
+      <Background cx={400} cy={50} r={200}/>
 
       <View style={styles.logoContainer}>
         <Shadow

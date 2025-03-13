@@ -6,7 +6,7 @@ import {useRoute} from '@react-navigation/native';
 
 const Background = () => {
   const route = useRoute();
-  const isLoginScreen = route.name === 'Loginscreen' || route.name === 'Emailverfiyscreen';
+  const isLoginScreen = route.name === 'LoginScreen' || route.name === 'EmailVerificationScreen';
 
   return (
     <View style={styles.container}>

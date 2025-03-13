@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -40,15 +40,14 @@ const LoginScreen = () => {
   });
 
   const onSubmit = data => {
-
     const Obj = {
       ...data,
-      otp: Math.floor(100000 + Math.random() * 900000)
-  };
-  
-  navigation.navigate('EmailVerificationScreen', { Obj });
+      otp: Math.floor(100000 + Math.random() * 900000),
+    };
+
+    navigation.navigate('EmailVerificationScreen', {Obj});
     // console.log('Form Data:', data);
-  
+
     reset();
   };
 
