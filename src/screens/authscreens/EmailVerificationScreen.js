@@ -15,13 +15,16 @@ import IntrinsicIcon from '../../assets/SVG/appiconsvg/IntrinsicIcon';
 import Background from '../../components/Baground/Background';
 import Button from '../../components/Button/Button';
 import responsive from '../../utils/responsive';
+import { useNavigation } from '@react-navigation/native';
 
 const EmailVerificationScreen = ({route}) => {
   const { Obj } = route.params; 
-  const [enteredOtp, setEnteredOtp] = useState("");
-  const otpRef = useRef(null)
-  const [resendDisabled, setResendDisabled] = useState(false);
+  const navigation = useNavigation()
+
+  const otpRef = useRef(null)  
   const [timer, setTimer] = useState(30);
+  const [enteredOtp, setEnteredOtp] = useState("");
+  const [resendDisabled, setResendDisabled] = useState(false);
 
   console.log("Received OTP:", Obj.otp); 
 
@@ -43,7 +46,7 @@ const EmailVerificationScreen = ({route}) => {
     setTimeout(() => {
       if (otp === Obj.otp.toString()) {  
         Alert.alert("Success", "Your email has been verified.");
-        
+        navigation.navigate('Drawernavigation')
       } else {
         Alert.alert("Error", "Invalid OTP. Please try again.");
       }
