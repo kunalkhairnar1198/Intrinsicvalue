@@ -45,7 +45,8 @@ const LoginScreen = () => {
       otp: Math.floor(100000 + Math.random() * 900000),
     };
 
-    navigation.navigate('EmailVerificationScreen', {Obj});
+    // navigation.navigate('EmailVerificationScreen', {Obj});
+    navigation.navigate('Drawernavigation');
     // console.log('Form Data:', data);
 
     reset();

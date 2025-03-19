@@ -18,6 +18,11 @@ import LeaderBoardIcons from '../../assets/SVG/appiconsvg/LeaderBoardIcon';
 
 const menuItems = [
   {
+    label: 'Home',
+    screen: 'Home',
+    Icon: LeaderBoardIcons?.Homeicon,
+  },
+  {
     label: 'Leaderboard',
     screen: 'Leaderboardscreen',
     Icon: LeaderBoardIcons?.leaderBoard,
@@ -164,7 +169,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: responsive.width(200),
+    width: responsive.width(250),
     height: responsive.height(45),
     borderRadius: responsive.borderRadius(10),
     marginBottom: responsive.margin(10),

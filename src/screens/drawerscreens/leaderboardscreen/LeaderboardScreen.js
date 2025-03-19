@@ -1,10 +1,14 @@
 import React from 'react';
-import {SafeAreaView, SafeAreaProvider, View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-paper';
+import CustomeHeader from '../../../components/Header/CustomeHeader';
 
-const LeaderboardScreen = () => {
+const LeaderboardScreen = ({navigation, route}) => {
+  console.log('leader');
   return (
     <View>
+      <CustomeHeader navigation={navigation} title={'Leaderboard'} />
+
       <Text>LeaderboardScreen</Text>
     </View>
   );
