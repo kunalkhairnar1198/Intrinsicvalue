@@ -14,44 +14,50 @@ import LoginIcon from 'react-native-vector-icons/Entypo';
 import DrawerBgSvg from '../../assets/SVG/BgSvgs/DrawerBgSvg';
 import LinearGradient from 'react-native-linear-gradient';
 import responsive from '../../utils/responsive';
-import LeaderBoardIcons from '../../assets/SVG/appiconsvg/LeaderBoardIcon';
 
-const menuItems = [
-  {
-    label: 'Home',
-    screen: 'Home',
-    Icon: LeaderBoardIcons?.Homeicon,
-  },
-  {
-    label: 'Leaderboard',
-    screen: 'Leaderboardscreen',
-    Icon: LeaderBoardIcons?.leaderBoard,
-  },
-  {
-    label: 'My Strategies',
-    screen: 'Mystratergiesscreen',
-    Icon: LeaderBoardIcons?.myStrategies,
-  },
-  {
-    label: 'Refer and Earn',
-    screen: 'Referandearnscreen',
-    Icon: LeaderBoardIcons?.referAndearn,
-  },
-  {
-    label: 'Subscription',
-    screen: 'Subscriptionscreen',
-    Icon: LeaderBoardIcons?.subscription,
-  },
-  {
-    label: 'Kite Connect',
-    screen: 'Kiteconnectscreen',
-    Icon: LeaderBoardIcons?.kiteConnect,
-  },
-];
+import {routes} from '../ScreenRoutes';
+import {useNavigation} from '@react-navigation/native';
 
-const CustomeDrawer = ({navigation}) => {
+// const menuItems = [
+//   {
+//     label: 'Home',
+//     screen: 'Home',
+//     Icon: HomeLeadIcon,
+//   },
+//   {
+//     label: 'Leaderboard',
+//     screen: 'Leaderboardscreen',
+//     Icon: leaderBoardIcon,
+//   },
+//   {
+//     label: 'My Strategies',
+//     screen: 'Mystratergiesscreen',
+//     Icon: MyStrategiesIcon,
+//   },
+//   {
+//     label: 'Refer and Earn',
+//     screen: 'Referandearnscreen',
+//     Icon: ReferAndearnIcon,
+//   },
+//   {
+//     label: 'Subscription',
+//     screen: 'Subscriptionscreen',
+//     Icon: SubscriptionIcon,
+//   },
+//   {
+//     label: 'Kite Connect',
+//     screen: 'Kiteconnectscreen',
+//     Icon: KiteConnectIcon,
+//   },
+// ];
+
+const CustomeDrawer = props => {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
 
+  // console.log('CustmDrawer--------', props.navigation.getState());
+  // console.log('item custom', )
+  // console.log('PROPS', props, navigation);
   return (
     <SafeAreaView style={[styles.container, {paddingTop: insets.top}]}>
       <LinearGradient
@@ -66,26 +72,28 @@ const CustomeDrawer = ({navigation}) => {
       </View>
 
       <View style={styles.menuContainer}>
-        {menuItems.map((item, index) => (
-          <View key={index.toString()}>
-            <LinearGradient
-              colors={['#FFFFFF', '#F0F4FF']}
-              start={{x: 0, y: 0.5}}
-              end={{x: 1, y: 0.5}}
-              style={styles.itemContainer}>
-              <Pressable
-                onPress={() => navigation.navigate(item.screen)}
-                style={({pressed}) => [
-                  styles.menuItem,
-                  pressed && styles.pressedItem,
-                ]}>
-                <View style={styles.innerShadow} />
-                <item.Icon color={COLORS.primary} />
-                <Text style={styles.menuText}>{item.label}</Text>
-              </Pressable>
-            </LinearGradient>
-          </View>
-        ))}
+        {routes
+          .filter(route => route.showInDrawer)
+          .map((item, index) => (
+            <View key={index.toString()}>
+              <LinearGradient
+                colors={['#FFFFFF', '#F0F4FF']}
+                start={{x: 0, y: 0.5}}
+                end={{x: 1, y: 0.5}}
+                style={styles.itemContainer}>
+                <Pressable
+                  onPress={() => navigation.navigate(item.name)}
+                  style={({pressed}) => [
+                    styles.menuItem,
+                    pressed && styles.pressedItem,
+                  ]}>
+                  <View style={styles.innerShadow} />
+                  <item.icon color={COLORS.primary} size={item.size} />
+                  <Text style={styles.menuText}>{item.title}</Text>
+                </Pressable>
+              </LinearGradient>
+            </View>
+          ))}
       </View>
 
       <View style={styles.bottomText}>
@@ -169,7 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: responsive.width(250),
+    width: responsive.width(200),
     height: responsive.height(45),
     borderRadius: responsive.borderRadius(10),
     marginBottom: responsive.margin(10),

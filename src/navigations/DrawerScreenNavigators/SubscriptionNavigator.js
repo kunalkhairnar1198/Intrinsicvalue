@@ -1,0 +1,15 @@
+import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+import SubscriptionScreen from '../../screens/drawerscreens/subscriptionscreen/SubscriptionScreen';
+
+const Stack = createStackNavigator();
+
+const SubscriptionNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Subscription" component={SubscriptionScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export default SubscriptionNavigator;

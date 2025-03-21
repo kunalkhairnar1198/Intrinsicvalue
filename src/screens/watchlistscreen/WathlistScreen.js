@@ -7,7 +7,6 @@ const WathlistScreen = ({navigation, route}) => {
   return (
     <View>
       <CustomeHeader navigation={navigation} title={route.name} />
-
       <Text>WathlistScreen</Text>
     </View>
   );
