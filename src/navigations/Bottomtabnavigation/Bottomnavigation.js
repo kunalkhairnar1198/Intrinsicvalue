@@ -23,11 +23,11 @@ const Bottomnavigation = () => {
     const item = routes.find(routeItem => routeItem.name === route.name);
 
     if (!item) {
-      console.warn(`No matching route found for: ${route.name}`);
+      // console.warn(`No matching route found for: ${route.name}`);
       return {};
     }
 
-    console.log(item?.title); // Safe console log
+    // console.log(item?.title); // Safe console log
 
     if (!item.showInTab) {
       return {

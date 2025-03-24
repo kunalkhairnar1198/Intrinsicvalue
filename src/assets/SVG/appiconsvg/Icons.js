@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Svg, {G, Path, Defs, ClipPath} from 'react-native-svg';
-
+import SettingIcon from 'react-native-vector-icons/SimpleLineIcons';
+import HelpIcon from 'react-native-vector-icons/Feather';
 const DrawerIcons = {
   LeaderBoardIcon: ({color, size}) => (
     <Svg
@@ -95,7 +96,6 @@ export const {
 
 const BottomNavigationIcons = {
   Homeicon: ({color, size}) => {
-    console.log('Icon Color:', color);
     return (
       <Svg
         xmlns="http://www.w3.org/2000/svg"
@@ -212,5 +212,43 @@ const AppSvgsIcons = {
       <Path stroke="#ABC0FF" strokeLinecap="round" d="M1 1h398" />
     </Svg>
   ),
+  SettingIcons: ({color, size}) => (
+    <SettingIcon name="settings" color={color} size={size} />
+  ),
+  ChangePassIcon: ({color, size}) => (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none">
+      <Path
+        fill={color || '#0B588D'}
+        fillRule="evenodd"
+        d="M8.418 10.995h.808V9.228c0-.953.377-1.82.984-2.448v-.001a3.282 3.282 0 0 1 2.364-1.018c.921 0 1.758.39 2.365 1.018a3.52 3.52 0 0 1 .984 2.449v1.767h.644c.143 0 .26.122.26.27v5.704c0 .149-.117.27-.26.27H8.417a.267.267 0 0 1-.26-.27v-5.704c0-.148.117-.27.26-.27Zm-5.16-6.504c-.348.446-.669.92-.988 1.508a12.476 12.476 0 0 0-1.463 6.987 11.911 11.911 0 0 0 2.612 6.527 13.09 13.09 0 0 0 1.784 1.813c2.17 1.808 4.741 2.699 7.305 2.674 2.566-.026 5.12-.968 7.255-2.828a13.084 13.084 0 0 0 1.742-1.847 11.864 11.864 0 0 0 2.357-5.489c.3-1.956.117-4.01-.6-5.998-.68-1.892-1.72-3.576-3.08-4.895A10.322 10.322 0 0 0 15.468.3a9.94 9.94 0 0 0-3.592-.233.735.735 0 0 0-.633.818c.044.406.397.7.79.654a8.785 8.785 0 0 1 1.59-.039 8.522 8.522 0 0 1 1.51.237 8.91 8.91 0 0 1 4.07 2.284c1.198 1.163 2.118 2.654 2.722 4.333.628 1.742.788 3.54.527 5.25a10.36 10.36 0 0 1-2.061 4.794c-.482.62-1 1.169-1.545 1.643-1.874 1.632-4.108 2.459-6.349 2.48-2.24.023-4.492-.76-6.399-2.347a11.635 11.635 0 0 1-1.588-1.612 10.404 10.404 0 0 1-2.276-5.704 10.953 10.953 0 0 1 1.284-6.134c.31-.57.627-1.026.979-1.465L4.6 8.232a.725.725 0 0 0 .738.712.73.73 0 0 0 .689-.765l-.166-4.736a.725.725 0 0 0-.812-.707L.617 3.38a.736.736 0 0 0-.61.834.72.72 0 0 0 .806.632l2.445-.356Zm7.27 6.504h4.094V9.21c0-.584-.23-1.114-.601-1.498a2.007 2.007 0 0 0-1.447-.622c-.563 0-1.075.238-1.446.622-.37.384-.6.914-.6 1.498v1.786Zm2.063 3.122.413 1.974-1.132.005.332-2.001a.794.794 0 0 1-.534-.758c0-.44.344-.795.768-.795.424 0 .768.356.768.795a.789.789 0 0 1-.615.78Z"
+        clipRule="evenodd"
+      />
+    </Svg>
+  ),
+  HelpIcons: ({color, size}) => (
+    <HelpIcon name={'help-circle'} color={color} size={size} />
+  ),
+  FeedBackIcon: ({color, size}) => (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      fill="none">
+      <Path
+        fill={color || '#0B588D'}
+        d="M6 14h3.05l5-5a1.538 1.538 0 0 0 .45-1.075c0-.183-.042-.362-.125-.537a2.073 2.073 0 0 0-.325-.488l-.9-.95a1.504 1.504 0 0 0-1.638-.338A1.483 1.483 0 0 0 11 5.95l-5 5V14Zm1.5-1.5v-.95l2.525-2.525.5.45.45.5L8.45 12.5H7.5Zm3.025-3.025.45.5-.95-.95.5.45Zm.65 4.525H18v-2h-4.825l-2 2ZM2 22V4c0-.55.196-1.02.587-1.413A1.926 1.926 0 0 1 4 2h16c.55 0 1.02.196 1.413.587C21.803 2.98 22 3.45 22 4v12c0 .55-.196 1.02-.587 1.413A1.926 1.926 0 0 1 20 18H6l-4 4Zm3.15-6H20V4H4v13.125L5.15 16Z"
+      />
+    </Svg>
+  ),
 };
-export const {SingleLineIcon} = AppSvgsIcons;
+export const {
+  SingleLineIcon,
+  SettingIcons,
+  ChangePassIcon,
+  HelpIcons,
+  FeedBackIcon,
+} = AppSvgsIcons;

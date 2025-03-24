@@ -9,6 +9,10 @@ import {
   SubscriptionIcon,
   LeaderBoardIcon,
   WatchlistIcon,
+  ChangePassIcon,
+  FeedBackIcon,
+  HelpIcons,
+  SettingIcons,
 } from '../assets/SVG/appiconsvg/Icons';
 import {COLORS} from '../constants/theme';
 
@@ -312,6 +316,42 @@ export const routes = [
   },
 ];
 
-// export bottomTabRoutes =[
-
-// ]
+export const screenRoutes = [
+  {
+    screenName: 'Settings',
+    route: 'Settings',
+    icon: focused => (
+      <SettingIcons
+        color={focused ? `${COLORS.primary}` : '#0B588D'}
+        size={24}
+      />
+    ),
+  },
+  {
+    screenName: 'Change Password',
+    route: 'Chagnepassword',
+    icon: focused => (
+      <ChangePassIcon
+        color={focused ? `${COLORS.primary}` : '#0B588D'}
+        size={24}
+      />
+    ),
+  },
+  {
+    screenName: 'Help',
+    route: 'Help',
+    icon: focused => (
+      <HelpIcons color={focused ? `${COLORS.primary}` : '#0B588D'} size={24} />
+    ),
+  },
+  {
+    screenName: 'Feedback',
+    route: 'Feedback',
+    icon: focused => (
+      <FeedBackIcon
+        color={focused ? `${COLORS.primary}` : '#0B588D'}
+        size={24}
+      />
+    ),
+  },
+];

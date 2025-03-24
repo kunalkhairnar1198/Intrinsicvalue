@@ -74,6 +74,9 @@ const Drawernavigation = () => {
         <DrawerStack.Screen
           name={screens.AccountDetailsNavigator}
           component={AccountNavigator}
+          options={{
+            title: 'Account Details',
+          }}
         />
       </DrawerStack.Navigator>
     </Fragment>

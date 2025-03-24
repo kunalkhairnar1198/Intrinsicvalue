@@ -51,11 +51,9 @@ const CustomDrawer = props => {
                   ]}>
                   <View style={styles.innerShadow} />
                   {/* <item.icon color={COLORS.primary} size={item.size} /> */}
-                  {item.icon && typeof item.icon === 'function' ? (
-                    item.icon(true)
-                  ) : (
-                    <Text>?</Text>
-                  )}
+                  {item.icon && typeof item.icon === 'function'
+                    ? item.icon(true)
+                    : ''}
                   <Text style={styles.menuText}>{item.title}</Text>
                 </Pressable>
               </LinearGradient>
