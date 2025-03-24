@@ -13,17 +13,12 @@ import WatchlistNavigator from '../BottomTabNavigators/WatchlistNavigator';
 import AlgoTradeNavigator from '../BottomTabNavigators/AlgoTradeNavigator';
 import PortfolioNavigator from '../BottomTabNavigators/PortfolioNavigator';
 import InsightsNavigator from '../BottomTabNavigators/InsightsNavigator';
-import LeaderBoardNavigator from '../DrawerScreenNavigators/LeaderBoardNavigator';
-import MyStrategiesNavigator from '../DrawerScreenNavigators/MyStrategiesNavigator';
-import ReferAndEarnNavigator from '../DrawerScreenNavigators/ReferAndEarnNavigator';
-import SubscriptionNavigator from '../DrawerScreenNavigators/SubscriptionNavigator';
-import KiteToConnectNavigator from '../DrawerScreenNavigators/KiteToConnectNavigator';
 
 import FocusAwareStatusBar from '../../components/Statusbar/FocustAwareStatusBar';
 
 const BottomTab = createBottomTabNavigator();
 
-const Bottomnavigation = ({route}) => {
+const Bottomnavigation = () => {
   const BottomTabscreenOptions = ({route}) => {
     const item = routes.find(routeItem => routeItem.name === route.name);
 
@@ -87,6 +82,7 @@ const Bottomnavigation = ({route}) => {
               color: focused ? COLORS.primary : 'gray',
               bottom: 6,
               fontWeight: 'bold',
+              fontSize: responsive.fontSize(10),
             }}>
             {item.title}
           </Text>
@@ -132,28 +128,6 @@ const Bottomnavigation = ({route}) => {
         <BottomTab.Screen
           name={screens.InsightsNavigator}
           component={InsightsNavigator}
-        />
-
-        {/* //Drawer navigations routes */}
-        <BottomTab.Screen
-          name={screens.LeaderBoardNavigator}
-          component={LeaderBoardNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.MyStrategiesNavigator}
-          component={MyStrategiesNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.ReferAndEarnNavigator}
-          component={ReferAndEarnNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.SubscriptionNavigator}
-          component={SubscriptionNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.KiteToConnectNavigator}
-          component={KiteToConnectNavigator}
         />
       </BottomTab.Navigator>
     </Fragment>

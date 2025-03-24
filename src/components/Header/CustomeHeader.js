@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
 import responsive from '../../utils/responsive';
@@ -7,23 +7,38 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import UserIcon from 'react-native-vector-icons/FontAwesome';
 import {SingleLineIcon} from '../../assets/SVG/appiconsvg/Icons';
 import {COLORS} from '../../constants/theme';
+import {screens} from '../../navigations/ScreenRoutes';
+import {useRoute} from '@react-navigation/native';
 
-const CustomeHeader = ({navigation, title}) => {
-  console.log(navigation.getState());
+const CustomeHeader = ({navigation, title, goBack}) => {
+  const handleBackPress = () => {
+    if (goBack) {
+      navigation.goBack();
+    } else {
+      navigation.openDrawer();
+    }
+  };
   return (
     <>
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => navigation.openDrawer()}
+          onPress={handleBackPress}
           style={styles.toggleBackground}>
-          <Ionicons name="menu" size={30} color={COLORS.primary} />
+          <Ionicons
+            name={goBack === 'goBack' ? 'arrow-back' : 'menu'}
+            size={30}
+            color={COLORS.primary}
+          />
         </TouchableOpacity>
 
         <Text style={styles.titleText}>{title}</Text>
 
-        <View style={styles.profileSection}>
-          <UserIcon name="user" size={29} color={COLORS.primary} />
-        </View>
+        <Pressable
+          onPress={() => navigation.navigate(screens.AccountDetailsNavigator)}>
+          <View style={styles.profileSection}>
+            <UserIcon name="user" size={29} color={COLORS.primary} />
+          </View>
+        </Pressable>
       </View>
       <View style={{alignItems: 'center', marginTop: responsive.margin(1)}}>
         <SingleLineIcon />

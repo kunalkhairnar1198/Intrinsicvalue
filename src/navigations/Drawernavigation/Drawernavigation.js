@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import {StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {screens} from '../ScreenRoutes';
 
-import Bottomnavigation from '../Bottomtabnavigation/Bottomnavigation';
 import CustomDrawer from './CustomeDrawer';
 import CustomeHeader from '../../components/Header/CustomeHeader';
+import Bottomnavigation from '../Bottomtabnavigation/Bottomnavigation';
+import LeaderBoardNavigator from '../DrawerScreenNavigators/LeaderBoardNavigator';
+import MyStrategiesNavigator from '../DrawerScreenNavigators/MyStrategiesNavigator';
+import ReferAndEarnNavigator from '../DrawerScreenNavigators/ReferAndEarnNavigator';
+import SubscriptionNavigator from '../DrawerScreenNavigators/SubscriptionNavigator';
+import KiteToConnectNavigator from '../DrawerScreenNavigators/KiteToConnectNavigator';
+import AccountNavigator from '../DrawerScreenNavigators/AccountNavigator';
+import FocusAwareStatusBar from '../../components/Statusbar/FocustAwareStatusBar';
+import {COLORS} from '../../constants/theme';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const DrawerStack = createDrawerNavigator();
 
@@ -21,14 +30,18 @@ const Drawernavigation = () => {
     drawerType: 'front',
     drawerActiveTintColor: 'red',
     drawerInactiveTintColor: 'black',
-    // header: () => <CustomeHeader navigation={navigation} title={route.name} />,
   });
 
   return (
-    <>
-      <StatusBar hidden={false} />
+    <Fragment>
+      <FocusAwareStatusBar
+        barStyle={'dark-content'}
+        backgroundColor={COLORS.white}
+        hidden={false}
+      />
       <DrawerStack.Navigator
         screenOptions={screenOptions}
+        // initialRouteName="Home"
         drawerContent={props => <CustomDrawer {...props} />}>
         <DrawerStack.Screen
           name={screens.HomeTabs}
@@ -37,8 +50,33 @@ const Drawernavigation = () => {
             title: 'Home',
           }}
         />
+
+        <DrawerStack.Screen
+          name={screens.LeaderBoardNavigator}
+          component={LeaderBoardNavigator}
+        />
+        <DrawerStack.Screen
+          name={screens.MyStrategiesNavigator}
+          component={MyStrategiesNavigator}
+        />
+        <DrawerStack.Screen
+          name={screens.ReferAndEarnNavigator}
+          component={ReferAndEarnNavigator}
+        />
+        <DrawerStack.Screen
+          name={screens.SubscriptionNavigator}
+          component={SubscriptionNavigator}
+        />
+        <DrawerStack.Screen
+          name={screens.KiteToConnectNavigator}
+          component={KiteToConnectNavigator}
+        />
+        <DrawerStack.Screen
+          name={screens.AccountDetailsNavigator}
+          component={AccountNavigator}
+        />
       </DrawerStack.Navigator>
-    </>
+    </Fragment>
   );
 };
 

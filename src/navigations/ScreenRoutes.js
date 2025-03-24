@@ -24,7 +24,7 @@ export const screens = {
   PortfolioNavigator: 'PortfolioNavigator',
   Insights: 'Insights',
   InsightsNavigator: 'InsightsNavigator',
-
+  // Drawer navigations
   LeaderBoard: 'Leaderboard',
   LeaderBoardNavigator: 'LeaderBoardNavigator',
   MyStrategies: 'MyStrategies',
@@ -35,6 +35,8 @@ export const screens = {
   SubscriptionNavigator: 'SubscriptionNavigator',
   KiteToConnect: 'KiteToConnect',
   KiteToConnectNavigator: 'KiteToConnectNavigator',
+  AccountDetails: 'AccountDetails',
+  AccountDetailsNavigator: 'AccountDetailNavigator',
 };
 
 export const routes = [
@@ -43,7 +45,7 @@ export const routes = [
     focusedRoute: screens.HomeTabs,
     title: 'Home',
     showInTab: false,
-    showInDrawer: false,
+    showInDrawer: true,
     icon: focused => (
       <Homeicon color={focused ? `${COLORS.primary}` : '#0B588D'} size={24} />
     ),
@@ -87,7 +89,7 @@ export const routes = [
   {
     name: screens.AlgoTrader,
     focusedRoute: screens.AlgoTraderNavigator,
-    title: 'Algo Trader',
+    title: 'AlgoTrader',
     showInTab: true,
     showInDrawer: false,
     icon: focused => (
@@ -100,7 +102,7 @@ export const routes = [
   {
     name: screens.AlgoTraderNavigator,
     focusedRoute: screens.AlgoTraderNavigator,
-    title: 'Algo Trader',
+    title: 'AlgoTrader',
     showInTab: true,
     showInDrawer: false,
     icon: focused => (
@@ -294,4 +296,22 @@ export const routes = [
       />
     ),
   },
+  {
+    name: screens.AccountDetails,
+    focusedRoute: screens.AccountDetailsNavigator,
+    title: 'Account Details',
+    showInTab: false,
+    showInDrawer: false,
+  },
+  {
+    name: screens.AccountDetailsNavigator,
+    focusedRoute: screens.AccountDetailsNavigator,
+    title: 'Account Details',
+    showInTab: false,
+    showInDrawer: false,
+  },
 ];
+
+// export bottomTabRoutes =[
+
+// ]

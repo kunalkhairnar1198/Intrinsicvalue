@@ -7,57 +7,19 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
+
 import {COLORS} from '../../constants/theme';
+import {routes} from '../ScreenRoutes';
+
+import LinearGradient from 'react-native-linear-gradient';
 
 import LoginIcon from 'react-native-vector-icons/Entypo';
-
 import DrawerBgSvg from '../../assets/SVG/BgSvgs/DrawerBgSvg';
-import LinearGradient from 'react-native-linear-gradient';
 import responsive from '../../utils/responsive';
 
-import {routes} from '../ScreenRoutes';
-import {useNavigation} from '@react-navigation/native';
-
-// const menuItems = [
-//   {
-//     label: 'Home',
-//     screen: 'Home',
-//     Icon: HomeLeadIcon,
-//   },
-//   {
-//     label: 'Leaderboard',
-//     screen: 'Leaderboardscreen',
-//     Icon: leaderBoardIcon,
-//   },
-//   {
-//     label: 'My Strategies',
-//     screen: 'Mystratergiesscreen',
-//     Icon: MyStrategiesIcon,
-//   },
-//   {
-//     label: 'Refer and Earn',
-//     screen: 'Referandearnscreen',
-//     Icon: ReferAndearnIcon,
-//   },
-//   {
-//     label: 'Subscription',
-//     screen: 'Subscriptionscreen',
-//     Icon: SubscriptionIcon,
-//   },
-//   {
-//     label: 'Kite Connect',
-//     screen: 'Kiteconnectscreen',
-//     Icon: KiteConnectIcon,
-//   },
-// ];
-
-const CustomeDrawer = props => {
+const CustomDrawer = props => {
   const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
 
-  // console.log('CustmDrawer--------', props.navigation.getState());
-  // console.log('item custom', )
-  // console.log('PROPS', props, navigation);
   return (
     <SafeAreaView style={[styles.container, {paddingTop: insets.top}]}>
       <LinearGradient
@@ -82,13 +44,18 @@ const CustomeDrawer = props => {
                 end={{x: 1, y: 0.5}}
                 style={styles.itemContainer}>
                 <Pressable
-                  onPress={() => navigation.navigate(item.name)}
+                  onPress={() => props.navigation.navigate(item.name)}
                   style={({pressed}) => [
                     styles.menuItem,
                     pressed && styles.pressedItem,
                   ]}>
                   <View style={styles.innerShadow} />
-                  <item.icon color={COLORS.primary} size={item.size} />
+                  {/* <item.icon color={COLORS.primary} size={item.size} /> */}
+                  {item.icon && typeof item.icon === 'function' ? (
+                    item.icon(true)
+                  ) : (
+                    <Text>?</Text>
+                  )}
                   <Text style={styles.menuText}>{item.title}</Text>
                 </Pressable>
               </LinearGradient>
@@ -120,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: responsive.padding(20),
+    padding: responsive.padding(10),
     position: 'relative',
   },
   gradient: {
@@ -142,14 +109,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-
   innerShadow: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    borderRadius: responsive.borderRadius(10),
+    borderRadius: responsive.borderRadius(20),
     backgroundColor: 'transparent',
     shadowColor: '#E0E8FD',
     shadowOffset: {width: 2, height: 2},
@@ -157,7 +123,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 4,
   },
-
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -166,13 +131,10 @@ const styles = StyleSheet.create({
     height: responsive.height(50),
     paddingHorizontal: responsive.padding(10),
     borderRadius: responsive.borderRadius(10),
-    transition: 'all 0.2s ease-in-out',
   },
-
   pressedItem: {
     backgroundColor: '#E0E8FD',
   },
-
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -183,53 +145,44 @@ const styles = StyleSheet.create({
     marginBottom: responsive.margin(10),
     overflow: 'hidden',
   },
-
   menuText: {
     fontFamily: 'Inter',
     fontSize: responsive.fontSize(14),
     marginLeft: responsive.margin(10),
     color: COLORS.black,
   },
-
   bottomText: {
     alignItems: 'center',
     padding: responsive.padding(10),
   },
-
   text: {
     fontSize: responsive.fontSize(7),
     color: '#000000',
   },
-
   link: {
     color: COLORS.primary,
   },
-
   breakLine: {
     height: 1,
     marginBottom: 20,
     backgroundColor: '#ABC0FF',
     width: 280,
   },
-
   logoutButton: {
     flexDirection: 'row',
     gap: 10,
     alignSelf: 'center',
     justifyContent: 'center',
-    width: '90%',
-    height: responsive.height(30),
-    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: responsive.borderRadius(8),
+    width: '90%',
+    marginHorizontal: responsive.height(10),
   },
-
   logoutText: {
-    fontFamily: 'inter',
+    fontFamily: 'Inter',
     color: COLORS.primary,
-    fontSize: responsive.fontSize(20),
+    fontSize: responsive.fontSize(16),
     fontWeight: 'bold',
   },
 });
 
-export default CustomeDrawer;
+export default CustomDrawer;

@@ -12,7 +12,7 @@ const LeaderboardScreen = ({navigation, route}) => {
   console.log('leader');
   return (
     <View>
-      <CustomeHeader navigation={navigation} title={'Leaderboard'} />
+      <CustomeHeader navigation={navigation} title={route.name} />
       <Text>LeaderboardScreen</Text>
     </View>
   );

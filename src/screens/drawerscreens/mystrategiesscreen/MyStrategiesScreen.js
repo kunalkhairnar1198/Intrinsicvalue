@@ -6,7 +6,7 @@ import CustomeHeader from '../../../components/Header/CustomeHeader';
 const MyStrategiesScreen = ({navigation, route}) => {
   return (
     <View>
-      <CustomeHeader navigation={navigation} title="Startegy" />
+      <CustomeHeader navigation={navigation} title={route.name} />
 
       <Text>MyStrategiesScreen</Text>
     </View>
