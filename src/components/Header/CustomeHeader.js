@@ -8,7 +8,6 @@ import UserIcon from 'react-native-vector-icons/FontAwesome';
 import {SingleLineIcon} from '../../assets/SVG/appiconsvg/Icons';
 import {COLORS} from '../../constants/theme';
 import {screens} from '../../navigations/ScreenRoutes';
-import {useRoute} from '@react-navigation/native';
 
 const CustomeHeader = ({navigation, title, goBack}) => {
   const handleBackPress = () => {
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: responsive.padding(10),
     backgroundColor: COLORS.white,
-    // elevation: 3,
+    elevation: 3,
   },
 
   toggleBackground: {

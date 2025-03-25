@@ -29,7 +29,7 @@ const FormInput = ({
             secureTextEntry={secureTextEntry}
             error={!!error}
             style={[styles.input, rest.style]}
-            outlineColor={!error ? "#f3f3f3": '#ff0808'}
+            outlineColor={!error ? '#f3f3f3' : '#ff0808'}
             activeOutlineColor={COLORS.primary}
             keyboardType={rest.keyboardType}
             {...rest}
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     fontFamily: 'Inter',
     fontSize: responsive.fontSize(16),
-    color: '#3A3A3A',
+    color: '#9E9E9E',
     fontWeight: '500',
   },
 });

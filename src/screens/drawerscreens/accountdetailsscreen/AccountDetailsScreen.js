@@ -4,11 +4,11 @@ import {FlatList, Linking, Pressable, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {COLORS} from '../../../constants/theme';
 import {screenRoutes} from '../../../navigations/ScreenRoutes';
+import {SingleLineIcon} from '../../../assets/SVG/appiconsvg/Icons';
 
-import Card from '../../../components/UI/Card';
 import responsive from '../../../utils/responsive';
 import LinearGradient from 'react-native-linear-gradient';
-import {SingleLineIcon} from '../../../assets/SVG/appiconsvg/Icons';
+import CustomCard from '../../../components/UI/Card';
 
 const AccountDetailsScreen = ({navigation}) => {
   const handleLinkPress = () => {
@@ -16,7 +16,7 @@ const AccountDetailsScreen = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <Card style={styles.cardContainer}>
+      <CustomCard style={styles.cardContainer}>
         <LinearGradient
           colors={['#FFFFFF', '#F0F4FF', '#F0F4FF']}
           start={{x: 1, y: 0.5}}
@@ -27,7 +27,7 @@ const AccountDetailsScreen = ({navigation}) => {
             <Text style={styles.userEmail}>SharmaAjay@gmail.com</Text>
           </View>
         </LinearGradient>
-      </Card>
+      </CustomCard>
 
       <View>
         <FlatList
@@ -35,15 +35,13 @@ const AccountDetailsScreen = ({navigation}) => {
           renderItem={({item}) => (
             <Pressable onPress={() => navigation.navigate(item.route)}>
               <View style={styles.flatlistItem}>
-                {item.icon && typeof item.icon === 'function' ? (
-                  item.icon(true)
-                ) : (
-                  <Text>dta</Text>
-                )}
+                {item.icon &&
+                  typeof item.icon === 'function' &&
+                  item.icon(true)}
                 <Text style={styles.optionText}>{item.screenName}</Text>
               </View>
               <View style={{alignItems: 'center'}}>
-                {!item.length && <SingleLineIcon />}
+                <SingleLineIcon />
               </View>
             </Pressable>
           )}
@@ -87,13 +85,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   cardContainer: {
-    marginVertical: 15,
+    marginVertical: 10,
   },
   gradientContainer: {
     width: '100%',
     paddingVertical: 5,
     padding: responsive.padding(15),
-    borderRadius: responsive.borderRadius(10),
   },
   profileSection: {
     padding: responsive.padding(5),

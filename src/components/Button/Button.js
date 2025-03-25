@@ -7,7 +7,6 @@ const Button = ({children, onPress, style}) => {
   return (
     <Pressable
       onPress={onPress}
-  
       style={({pressed}) => [styles.button, style, pressed && styles.pressed]}>
       {children}
     </Pressable>
