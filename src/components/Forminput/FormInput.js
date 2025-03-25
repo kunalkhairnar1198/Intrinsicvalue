@@ -22,13 +22,14 @@ const FormInput = ({
         <View style={styles.container}>
           <TextInput
             placeholder={placeholder}
+            placeholderTextColor={styles.placeholderTextColor}
             mode="outlined"
             onChangeText={onChange}
             onBlur={onBlur}
             value={value}
             secureTextEntry={secureTextEntry}
             error={!!error}
-            style={[styles.input, rest.style]}
+            style={[rest.style ? rest.style : styles.input]}
             outlineColor={!error ? '#f3f3f3' : '#ff0808'}
             activeOutlineColor={COLORS.primary}
             keyboardType={rest.keyboardType}

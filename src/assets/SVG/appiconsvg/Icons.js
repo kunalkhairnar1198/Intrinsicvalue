@@ -208,7 +208,7 @@ export const {
 
 const AppSvgsIcons = {
   SingleLineIcon: ({color, size}) => (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={400} height={2} fill="none">
+    <Svg xmlns="http://www.w3.org/2000/svg" width={350} height={3} fill="none">
       <Path stroke="#ABC0FF" strokeLinecap="round" d="M1 1h398" />
     </Svg>
   ),

@@ -108,6 +108,7 @@ const SettingScreen = ({navigation, route}) => {
                   name={field.name}
                   rules={{required: `${field.placeholder} is required`}}
                   placeholder={field.placeholder}
+                  placeholderTextColor={'#9E9E9E'}
                   style={styles.input}
                   keyboardType={
                     field.name === 'phone' ? 'number-pad' : 'default'
@@ -125,6 +126,7 @@ const SettingScreen = ({navigation, route}) => {
                   placeholder="Discount Rate"
                   style={[styles.input, styles.discountInput]}
                   keyboardType={'number-pad'}
+                  placeholderTextColor={'#9E9E9E'}
                   rules={{required: 'Discount rate is required'}}
                 />
                 <PercentIcon
@@ -160,6 +162,7 @@ const SettingScreen = ({navigation, route}) => {
                 name="apikey"
                 placeholder="API Key"
                 style={styles.input}
+                placeholderTextColor={'#9E9E9E'}
                 rules={{required: 'API Key is required'}}
               />
             </View>
@@ -171,6 +174,7 @@ const SettingScreen = ({navigation, route}) => {
                 name="apisecret"
                 placeholder="API Secret Key"
                 style={styles.input}
+                placeholderTextColor={'#9E9E9E'}
                 rules={{required: 'API secret Key is required'}}
               />
             </View>

@@ -1,11 +1,10 @@
 import React, {Fragment} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import {SafeAreaView, StatusBar} from 'react-native';
 import {screens} from '../ScreenRoutes';
+import {COLORS} from '../../constants/theme';
 
 import CustomDrawer from './CustomeDrawer';
-import CustomeHeader from '../../components/Header/CustomeHeader';
 import Bottomnavigation from '../Bottomtabnavigation/Bottomnavigation';
 import LeaderBoardNavigator from '../DrawerScreenNavigators/LeaderBoardNavigator';
 import MyStrategiesNavigator from '../DrawerScreenNavigators/MyStrategiesNavigator';
@@ -14,8 +13,6 @@ import SubscriptionNavigator from '../DrawerScreenNavigators/SubscriptionNavigat
 import KiteToConnectNavigator from '../DrawerScreenNavigators/KiteToConnectNavigator';
 import AccountNavigator from '../DrawerScreenNavigators/AccountNavigator';
 import FocusAwareStatusBar from '../../components/Statusbar/FocustAwareStatusBar';
-import {COLORS} from '../../constants/theme';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const DrawerStack = createDrawerNavigator();
 

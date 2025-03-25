@@ -39,7 +39,7 @@ const CustomeHeader = ({navigation, title, goBack}) => {
           </View>
         </Pressable>
       </View>
-      <View style={{alignItems: 'center', marginTop: responsive.margin(1)}}>
+      <View style={{alignItems: 'center'}}>
         <SingleLineIcon />
       </View>
     </>
