@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text, View, StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/theme';
 import responsive from '../../utils/responsive';
 
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: responsive.borderRadius(8),
     alignItems: 'center',
+    justifyContent: 'center',
 
     // iOS Shadow
     shadowColor: COLORS.shadowColor,

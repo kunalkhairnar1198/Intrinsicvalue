@@ -129,12 +129,14 @@ const SettingScreen = ({navigation, route}) => {
                   placeholderTextColor={'#9E9E9E'}
                   rules={{required: 'Discount rate is required'}}
                 />
-                <PercentIcon
-                  name="percent"
-                  color="#8c8888"
-                  size={30}
-                  style={styles.icon}
-                />
+                <View>
+                  <PercentIcon
+                    name="percent"
+                    color="#8c8888"
+                    size={30}
+                    style={styles.icon}
+                  />
+                </View>
               </View>
             </View>
 
@@ -145,6 +147,7 @@ const SettingScreen = ({navigation, route}) => {
                 name="report"
                 placeholder="Coming Soon"
                 style={styles.input}
+                placeholderTextColor={'#9E9E9E'}
                 editable={false}
               />
             </View>
@@ -207,11 +210,10 @@ const styles = StyleSheet.create({
     padding: responsive.padding(10),
   },
   cardStyle: {
-    backgroundColor: 'white',
     padding: responsive.padding(10),
   },
   fieldContainer: {
-    margin: 5,
+    margin: responsive.margin(2),
   },
   inputWithIconWide: {
     flexDirection: 'row',
@@ -222,19 +224,34 @@ const styles = StyleSheet.create({
     width: '100%',
     height: responsive.height(45),
     backgroundColor: COLORS.white,
-    borderRadius: responsive.borderRadius(30),
+    borderRadius: responsive.borderRadius(8),
     paddingHorizontal: responsive.padding(10),
-    elevation: 2,
     fontFamily: 'Inter',
     fontSize: responsive.fontSize(14),
     color: '#9E9E9E',
     fontWeight: '500',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
   },
   discountInput: {
     width: responsive.width(270),
     alignSelf: 'flex-start',
     elevation: 2,
     borderRadius: responsive.borderRadius(20),
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
   },
   titleField: {
     alignSelf: 'flex-start',
@@ -245,7 +262,7 @@ const styles = StyleSheet.create({
   },
   textField: {
     marginBottom: responsive.margin(5),
-    fontWeight: '600',
+    fontWeight: 'bold',
     fontFamily: 'Inter',
     fontSize: responsive.fontSize(13),
   },

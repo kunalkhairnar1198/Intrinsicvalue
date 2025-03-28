@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, Linking, Pressable, StyleSheet, View} from 'react-native';
 
-import {Text} from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import {COLORS} from '../../../constants/theme';
 import {screenRoutes} from '../../../navigations/ScreenRoutes';
 import {SingleLineIcon} from '../../../assets/SVG/appiconsvg/Icons';
@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   gradientContainer: {
-    width: '100%',
     paddingVertical: 5,
     padding: responsive.padding(15),
+    borderRadius: responsive.borderRadius(10),
   },
   profileSection: {
     padding: responsive.padding(5),

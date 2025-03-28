@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -96,7 +96,10 @@ const LoginScreen = () => {
           <View style={styles.googleSection}>
             <Text style={styles.googleText}>or continue with</Text>
             <View style={styles.googleIcon}>
-              <GoogleIcon />
+              <Pressable
+                onPress={() => navigation.navigate('Drawernavigation')}>
+                <GoogleIcon />
+              </Pressable>
             </View>
             <View style={styles.bottomTextContainer}>
               <Text style={styles.alredyText}>Don't have an account? </Text>

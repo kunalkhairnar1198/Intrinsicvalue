@@ -11,8 +11,6 @@ const Background = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden={true} />
-
       <Backgroundcircle
         style={styles.topLeft}
         cx={isLoginScreen ? 400 : 50}

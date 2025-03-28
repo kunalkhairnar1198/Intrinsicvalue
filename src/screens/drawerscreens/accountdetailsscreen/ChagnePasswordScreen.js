@@ -143,10 +143,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 40,
     paddingHorizontal: responsive.padding(10),
-    elevation: 2,
     fontSize: responsive.fontSize(16),
     fontWeight: '500',
     fontFamily: 'Inter',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
   },
   textField: {
     fontSize: responsive.fontSize(13),

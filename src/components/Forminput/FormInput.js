@@ -35,7 +35,9 @@ const FormInput = ({
             keyboardType={rest.keyboardType}
             {...rest}
           />
-          {error && <Text style={{color: '#ff0808'}}>{error.message}</Text>}
+          {error && (
+            <Text style={{color: '#ff0808', margin: 10}}>{error.message}</Text>
+          )}
         </View>
       )}
     />
@@ -53,12 +55,19 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     padding: responsive.height(10),
     marginBottom: 10,
-    elevation: 2,
     textAlign: 'justify',
     fontFamily: 'Inter',
     fontSize: responsive.fontSize(16),
-    color: '#9E9E9E',
     fontWeight: '500',
+
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 10,
   },
 });
 

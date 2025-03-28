@@ -2,6 +2,8 @@ import * as React from 'react';
 import Svg, {G, Path, Defs, ClipPath} from 'react-native-svg';
 import SettingIcon from 'react-native-vector-icons/SimpleLineIcons';
 import HelpIcon from 'react-native-vector-icons/Feather';
+import SortIcon from 'react-native-vector-icons/MaterialIcons';
+
 const DrawerIcons = {
   LeaderBoardIcon: ({color, size}) => (
     <Svg
@@ -244,6 +246,9 @@ const AppSvgsIcons = {
       />
     </Svg>
   ),
+  SortIcons: ({color, size}) => (
+    <SortIcon name="sort" size={size} color={color} />
+  ),
 };
 export const {
   SingleLineIcon,
@@ -251,4 +256,5 @@ export const {
   ChangePassIcon,
   HelpIcons,
   FeedBackIcon,
+  SortIcons,
 } = AppSvgsIcons;

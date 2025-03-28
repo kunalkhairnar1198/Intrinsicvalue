@@ -21,7 +21,7 @@ const CustomDrawer = props => {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[styles.container, {paddingTop: insets.top}]}>
       <LinearGradient
         colors={['#FFFFFF', '#F0F4FF']}
         start={{x: 1, y: 0.5}}
@@ -76,7 +76,7 @@ const CustomDrawer = props => {
         <LoginIcon name="log-out" size={25} color={COLORS.primary} />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

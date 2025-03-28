@@ -30,53 +30,46 @@ const Drawernavigation = () => {
   });
 
   return (
-    <Fragment>
-      <FocusAwareStatusBar
-        barStyle={'dark-content'}
-        backgroundColor={COLORS.white}
-        hidden={false}
+    <DrawerStack.Navigator
+      screenOptions={screenOptions}
+      // initialRouteName="Home"
+      drawerContent={props => <CustomDrawer {...props} />}>
+      <DrawerStack.Screen
+        name={screens.HomeTabs}
+        component={Bottomnavigation}
+        options={{
+          title: 'Home',
+        }}
       />
-      <DrawerStack.Navigator
-        screenOptions={screenOptions}
-        // initialRouteName="Home"
-        drawerContent={props => <CustomDrawer {...props} />}>
-        <DrawerStack.Screen
-          name={screens.HomeTabs}
-          component={Bottomnavigation}
-          options={{
-            title: 'Home',
-          }}
-        />
 
-        <DrawerStack.Screen
-          name={screens.LeaderBoardNavigator}
-          component={LeaderBoardNavigator}
-        />
-        <DrawerStack.Screen
-          name={screens.MyStrategiesNavigator}
-          component={MyStrategiesNavigator}
-        />
-        <DrawerStack.Screen
-          name={screens.ReferAndEarnNavigator}
-          component={ReferAndEarnNavigator}
-        />
-        <DrawerStack.Screen
-          name={screens.SubscriptionNavigator}
-          component={SubscriptionNavigator}
-        />
-        <DrawerStack.Screen
-          name={screens.KiteToConnectNavigator}
-          component={KiteToConnectNavigator}
-        />
-        <DrawerStack.Screen
-          name={screens.AccountDetailsNavigator}
-          component={AccountNavigator}
-          options={{
-            title: 'Account Details',
-          }}
-        />
-      </DrawerStack.Navigator>
-    </Fragment>
+      <DrawerStack.Screen
+        name={screens.LeaderBoardNavigator}
+        component={LeaderBoardNavigator}
+      />
+      <DrawerStack.Screen
+        name={screens.MyStrategiesNavigator}
+        component={MyStrategiesNavigator}
+      />
+      <DrawerStack.Screen
+        name={screens.ReferAndEarnNavigator}
+        component={ReferAndEarnNavigator}
+      />
+      <DrawerStack.Screen
+        name={screens.SubscriptionNavigator}
+        component={SubscriptionNavigator}
+      />
+      <DrawerStack.Screen
+        name={screens.KiteToConnectNavigator}
+        component={KiteToConnectNavigator}
+      />
+      <DrawerStack.Screen
+        name={screens.AccountDetailsNavigator}
+        component={AccountNavigator}
+        options={{
+          title: 'Account Details',
+        }}
+      />
+    </DrawerStack.Navigator>
   );
 };
 

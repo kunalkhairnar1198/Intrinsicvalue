@@ -1,4 +1,3 @@
-import React, {Fragment} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {View} from 'react-native';
 import {Text} from 'react-native-paper';
@@ -13,8 +12,6 @@ import WatchlistNavigator from '../BottomTabNavigators/WatchlistNavigator';
 import AlgoTradeNavigator from '../BottomTabNavigators/AlgoTradeNavigator';
 import PortfolioNavigator from '../BottomTabNavigators/PortfolioNavigator';
 import InsightsNavigator from '../BottomTabNavigators/InsightsNavigator';
-
-import FocusAwareStatusBar from '../../components/Statusbar/FocustAwareStatusBar';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -103,34 +100,28 @@ const Bottomnavigation = () => {
   };
 
   return (
-    <Fragment>
-      <FocusAwareStatusBar
-        barStyle="dark-content"
-        backgroundColor={COLORS.white}
+    <BottomTab.Navigator screenOptions={BottomTabscreenOptions}>
+      <BottomTab.Screen
+        name={screens.HomeNavigator}
+        component={HomeNavigator}
       />
-      <BottomTab.Navigator screenOptions={BottomTabscreenOptions}>
-        <BottomTab.Screen
-          name={screens.HomeNavigator}
-          component={HomeNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.WatchlistNavigator}
-          component={WatchlistNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.AlgoTraderNavigator}
-          component={AlgoTradeNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.PortfolioNavigator}
-          component={PortfolioNavigator}
-        />
-        <BottomTab.Screen
-          name={screens.InsightsNavigator}
-          component={InsightsNavigator}
-        />
-      </BottomTab.Navigator>
-    </Fragment>
+      <BottomTab.Screen
+        name={screens.WatchlistNavigator}
+        component={WatchlistNavigator}
+      />
+      <BottomTab.Screen
+        name={screens.AlgoTraderNavigator}
+        component={AlgoTradeNavigator}
+      />
+      <BottomTab.Screen
+        name={screens.PortfolioNavigator}
+        component={PortfolioNavigator}
+      />
+      <BottomTab.Screen
+        name={screens.InsightsNavigator}
+        component={InsightsNavigator}
+      />
+    </BottomTab.Navigator>
   );
 };
 
