@@ -14,10 +14,24 @@ import MaterialToptabnavigation from '../../navigations/TopTabBarNavigation/Mate
 
 import NseIndicesData from '../../assets/NiftyData/Data.json';
 import IndicesList from '../../components/List/IndicesItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {deselectAll, selectAll} from '../../store/selectSlice/select-slice';
 
 const HomeScreen = ({navigation, route}) => {
   const {niftydata} = NseIndicesData;
   const {isLoading} = useContext(TabContext);
+
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(state => state.selection.selectedItems);
+  const isAllSelected = selectedItems.length === niftydata.length;
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      dispatch(deselectAll());
+    } else {
+      dispatch(selectAll(niftydata));
+    }
+  };
 
   const filteredData = niftydata.filter(item =>
     ['NIFTY BANK', 'NIFTY NEXT 50', 'NIFTY 50'].includes(item.indices_name),
@@ -41,7 +55,7 @@ const HomeScreen = ({navigation, route}) => {
         </View>
 
         <View style={styles.checkboxContainer}>
-          <CustomCheckBox />
+          <CustomCheckBox onPress={handleSelectAll} isChecked={isAllSelected} />
           <Text>Updated: 26 Apr 2024, 12:24 PM</Text>
 
           <Pressable

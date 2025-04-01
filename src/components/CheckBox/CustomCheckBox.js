@@ -1,26 +1,17 @@
-import React, {useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../../constants/theme';
 
-const CustomCheckBox = ({title, onValueChange}) => {
-  const [isChecked, setIsChecked] = useState(false);
-  console.log(isChecked);
-
-  const handlePress = () => {
-    setIsChecked(prev => !prev);
-    if (onValueChange) onValueChange(!isChecked);
-  };
-
+const CustomCheckBox = ({isChecked, onPress}) => {
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable onPress={onPress}>
       <View style={styles.checkboxContainer}>
         <View style={[styles.checkbox, isChecked && styles.checkedBackground]}>
           {isChecked && (
             <MaterialCommunityIcons name="check" size={20} color="#FFFFFF" />
           )}
         </View>
-        <Text style={styles.checkboxTitle}>{title}</Text>
       </View>
     </Pressable>
   );

@@ -10,15 +10,24 @@ import responsive from '../../utils/responsive';
 import CustomCard from '../UI/Card';
 import CustomCheckBox from '../CheckBox/CustomCheckBox';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {toggleItem} from '../../store/selectSlice/select-slice';
+
 const ItemComponent = ({item, navigation}) => {
   const {handleItemClick} = useContext(TabContext);
-  console.log(item);
-  const handleValueChange = newValue => {
-    console.log('Checkbox Value:', newValue);
+
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(state => state.selection.selectedItems);
+
+  const handleCheckboxPress = () => {
+    dispatch(toggleItem(item));
   };
+
   const handleItemPress = item => {
-    // console.log(item);
     handleItemClick(item, navigation);
+    setTimeout(() => {
+      navigation.navigate('Dynamicscreen', {item});
+    }, 10);
   };
 
   return (
@@ -30,7 +39,12 @@ const ItemComponent = ({item, navigation}) => {
         style={styles.gradientContainer}>
         <View style={styles.container}>
           <View style={styles.checkBox}>
-            <CustomCheckBox onValueChange={handleValueChange} />
+            <CustomCheckBox
+              isChecked={selectedItems.some(
+                selected => selected.id === item.id,
+              )}
+              onPress={handleCheckboxPress}
+            />
           </View>
 
           <View style={styles.contentRow}>
