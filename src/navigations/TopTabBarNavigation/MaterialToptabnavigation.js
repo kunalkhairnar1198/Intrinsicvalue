@@ -1,6 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {useNavigationState} from '@react-navigation/native';
 
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import {COLORS} from '../../constants/theme';
@@ -13,10 +14,12 @@ import DynamicTabScreen from '../../screens/homescreens/DynamicTabScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
-const MaterialToptabnavigation = () => {
+const MaterialToptabnavigation = ({setActiveTab}) => {
   const {dynamicTab} = useContext(TabContext);
-  // console.log(dynamicTab?.name)
 
+  const state = useNavigationState(state => state);
+
+  console.log('state', state);
   const materialScreenOptions = {
     tabBarStyle: {
       backgroundColor: 'transparent',
@@ -47,7 +50,15 @@ const MaterialToptabnavigation = () => {
   };
 
   return (
-    <Tab.Navigator screenOptions={materialScreenOptions}>
+    <Tab.Navigator
+      screenOptions={materialScreenOptions}
+      screenListeners={{
+        state: e => {
+          const index = e.data.state.index;
+          const routes = e.data.state.routeNames;
+          setActiveTab(routes[index]);
+        },
+      }}>
       <Tab.Screen
         name="NseIndices"
         component={NseIndicesScreen}

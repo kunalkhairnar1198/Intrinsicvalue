@@ -3,17 +3,26 @@ import {FlatList, StyleSheet} from 'react-native';
 
 import ItemComponent from './ItemComponent';
 import responsive from '../../utils/responsive';
+import NseTopGainerLooserItem from './NseTopGainerLooserItem';
 
-const FlatlistComponent = ({data, navigation}) => {
-  console.log(data);
+const FlatlistComponent = ({data, navigation, table}) => {
+  // console.log(data);
   const renderItem = ({item}) => (
-    <ItemComponent item={item} navigation={navigation} />
+    <>
+      {table === 'isTable' ? (
+        <NseTopGainerLooserItem item={item} navigation={navigation} />
+      ) : (
+        <ItemComponent item={item} navigation={navigation} />
+      )}
+    </>
   );
 
   return (
     <FlatList
       data={data}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={({item}) =>
+        Math.random().toString() || item?.id?.toString()
+      }
       renderItem={renderItem}
       contentContainerStyle={styles.listContainer}
     />

@@ -1,7 +1,7 @@
 import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
 import {ActivityIndicator, Text} from 'react-native-paper';
 
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import {SingleLineIcon, SortIcons} from '../../assets/SVG/appiconsvg/Icons';
@@ -13,23 +13,56 @@ import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
 import MaterialToptabnavigation from '../../navigations/TopTabBarNavigation/MaterialToptabnavigation';
 
 import NseIndicesData from '../../assets/NiftyData/Data.json';
+import NseTopGainerLooser from '../../assets/NiftyData/NseTopGainerLooser.json';
 import IndicesList from '../../components/List/IndicesItem';
+import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {deselectAll, selectAll} from '../../store/selectSlice/select-slice';
+import {getFormattedTime} from '../../utils/helpers/utils/time-date/timeDateFormater';
 
 const HomeScreen = ({navigation, route}) => {
   const {niftydata} = NseIndicesData;
-  const {isLoading} = useContext(TabContext);
+  const {results} = companyIndices;
+  const {gainer, looser} = NseTopGainerLooser;
+  const {loading} = useContext(TabContext);
+  const [activeTab, setActiveTab] = useState('NseTopGainer');
 
   const dispatch = useDispatch();
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  const isAllSelected = selectedItems.length === niftydata.length;
+  console.log(selectedItems);
+
+  const getCurrentList = () => {
+    switch (activeTab) {
+      case 'NseTopGainer':
+        return gainer;
+      case 'NseTopLoser':
+        return looser;
+      case 'NiftyData':
+        return niftydata;
+      case 'Dynamicscreen':
+        return results;
+      default:
+        return [];
+    }
+  };
+
+  const currentList = getCurrentList();
+
+  const isAllSelected = selectedItems.length === currentList.length;
+
+  useEffect(() => {
+    dispatch(deselectAll());
+  }, [activeTab, dispatch]);
+
+  const recentTimeDate = getFormattedTime();
 
   const handleSelectAll = () => {
+    console.log('selection', selectedItems);
     if (isAllSelected) {
       dispatch(deselectAll());
     } else {
-      dispatch(selectAll(niftydata));
+      dispatch(selectAll(currentList));
     }
   };
 
@@ -40,7 +73,7 @@ const HomeScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomeHeader navigation={navigation} title={route.name} />
-      {isLoading && (
+      {loading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
@@ -55,8 +88,13 @@ const HomeScreen = ({navigation, route}) => {
         </View>
 
         <View style={styles.checkboxContainer}>
-          <CustomCheckBox onPress={handleSelectAll} isChecked={isAllSelected} />
-          <Text>Updated: 26 Apr 2024, 12:24 PM</Text>
+          {activeTab !== 'NseIndices' && (
+            <CustomCheckBox
+              onPress={handleSelectAll}
+              isChecked={isAllSelected}
+            />
+          )}
+          <Text>Updated: {recentTimeDate}</Text>
 
           <Pressable
             onPress={() => console.log('Button Pressed')}
@@ -65,7 +103,7 @@ const HomeScreen = ({navigation, route}) => {
           </Pressable>
         </View>
 
-        <MaterialToptabnavigation />
+        <MaterialToptabnavigation setActiveTab={setActiveTab} />
       </View>
     </SafeAreaView>
   );

@@ -1,19 +1,24 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import FlatlistComponent from '../../components/List/FlatlistComponent';
+import {COLORS} from '../../constants/theme';
+import {useSelector} from 'react-redux';
 
-const DynamicTabScreen = ({route}) => {
-  const {item} = route.params || {};
-  // console.log('DYNAMIC SCREEN', item);
+const DynamicTabScreen = ({route, navigation}) => {
+  const {items} = route.params || {};
+  const selectedItems = useSelector(state => state.selection.selectedItems);
+  console.log('DYNAMIC SCREEN, ITEM', items);
+  console.log('dynamic selected', selectedItems);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Dynamic Screen</Text>
-      {item ? (
+      {items ? (
         <>
-          <Text style={styles.content}>
-            Tab indices_name: {item.indices_name}
-          </Text>
-          <Text style={styles.content}>Tab eps_growth: {item.eps_growth}</Text>
+          <FlatlistComponent
+            data={items}
+            navigation={navigation}
+            table={'isTable'}
+          />
         </>
       ) : (
         <Text>No Data Received</Text>
@@ -24,18 +29,7 @@ const DynamicTabScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  content: {
-    fontSize: 18,
-    color: '#555',
+    backgroundColor: COLORS.white,
   },
 });
 

@@ -4,7 +4,7 @@ import CustomCard from '../UI/Card';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 const IndicesItem = ({data, navigation}) => {
-  const {handleItemClick, setIsLaoding} = useContext(TabContext);
+  const {handleItemClick, toggleLoader} = useContext(TabContext);
 
   const handleItemPress = item => {
     // console.log(item);
@@ -15,6 +15,7 @@ const IndicesItem = ({data, navigation}) => {
         screen: 'Dynamicscreen',
         params: {item},
       });
+      toggleLoader();
     }, 10);
   };
   return (

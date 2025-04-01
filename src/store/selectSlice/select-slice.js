@@ -10,18 +10,19 @@ const selectionSlice = createSlice({
   reducers: {
     toggleItem: (state, action) => {
       const item = action.payload;
-      const exists = state.selectedItems.find(
+
+      const existsIndex = state.selectedItems.findIndex(
         selected => selected.id === item.id,
       );
 
-      if (exists) {
+      if (existsIndex !== -1) {
         state.selectedItems = state.selectedItems.filter(
           selected => selected.id !== item.id,
         );
       } else {
         state.selectedItems.push(item);
       }
-      console.log('select item toggle', state.selectedItems);
+      console.log('Selected items:', state.selectedItems);
     },
     selectAll: (state, action) => {
       state.selectedItems = action.payload;

@@ -1,7 +1,6 @@
-import React, {useContext, useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
-import {TabContext} from '../../context-api/MaterialTopTabContext';
 import {COLORS} from '../../constants/theme';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -13,27 +12,23 @@ import CustomCheckBox from '../CheckBox/CustomCheckBox';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleItem} from '../../store/selectSlice/select-slice';
 
-import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
+const NseTopGainerLooserItem = ({item, navigation}) => {
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(state => state.selection.selectedItems);
 
-const ItemComponent = ({item, navigation}) => {
-  const {handleItemClick, toggleLoader} = useContext(TabContext);
-  const {results} = companyIndices;
-  console.log(results);
-  // const dispatch = useDispatch();
-  // const selectedItems = useSelector(state => state.selection.selectedItems);
+  // console.log('nse top gainers', selectedItems);
 
-  // const handleCheckboxPress = () => {
-  //   dispatch(toggleItem(item));
-  // };
+  const handleCheckboxPress = () => {
+    const obj = {
+      ...item,
+      id: item.symbol || `${item.name}-${item.NSE_UPD_TIME}`,
+    };
 
-  const handleItemPress = item => {
-    handleItemClick(item, navigation);
-
-    setTimeout(() => {
-      navigation.navigate('Dynamicscreen', {items: results});
-      toggleLoader();
-    }, 10);
+    dispatch(toggleItem(obj));
+    console.log('Toggled Item:', obj);
   };
+
+  const handleItemPress = item => {};
 
   return (
     <CustomCard style={styles.cardContainer}>
@@ -42,36 +37,36 @@ const ItemComponent = ({item, navigation}) => {
         start={{x: 1, y: 0.5}}
         end={{x: 0, y: 0.5}}
         style={styles.gradientContainer}>
-        {/* <View style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.checkBox}>
             <CustomCheckBox
               isChecked={selectedItems.some(
-                selected => selected.id === item.id,
+                selected => selected.symbol === item.symbol,
               )}
               onPress={handleCheckboxPress}
             />
-          </View> */}
-
-        <View style={styles.contentRow}>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <Pressable onPress={() => handleItemPress(item)}>
-              <Text style={styles.title}>{item.indices_name}</Text>
-            </Pressable>
-            <Text style={styles.description}>{item.Symbol}</Text>
           </View>
 
-          <View style={{justifyContent: 'center'}}>
-            <Text style={styles.closeText}>₹ {item.Close}</Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: item.Change >= 0 ? 'green' : 'red',
-              }}>
-              {item.Change >= 0 ? `+${item.Change}%` : `${item.Change}%`}
-            </Text>
+          <View style={styles.contentRow}>
+            <View style={{flex: 1, justifyContent: 'center'}}>
+              <Text style={styles.title}>{item.name}</Text>
+              <Text style={styles.description}>{item.symbol}</Text>
+            </View>
+
+            <View style={{justifyContent: 'center'}}>
+              <Text style={styles.closeText}>₹ {item.NSE_LTP}</Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: item.Change >= 0 ? 'green' : 'red',
+                }}>
+                {item.Change >= 0
+                  ? `+${item.NSE_CHANGE}%`
+                  : `${item.NSE_CHANGE}%`}
+              </Text>
+            </View>
           </View>
         </View>
-        {/* </View> */}
       </LinearGradient>
     </CustomCard>
   );
@@ -120,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemComponent;
+export default NseTopGainerLooserItem;
