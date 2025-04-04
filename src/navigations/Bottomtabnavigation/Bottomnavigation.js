@@ -12,6 +12,7 @@ import WatchlistNavigator from '../BottomTabNavigators/WatchlistNavigator';
 import AlgoTradeNavigator from '../BottomTabNavigators/AlgoTradeNavigator';
 import PortfolioNavigator from '../BottomTabNavigators/PortfolioNavigator';
 import InsightsNavigator from '../BottomTabNavigators/InsightsNavigator';
+import BottomSheetModal from '../../components/BottomSheet/CustomBottomSheetModal';
 
 const BottomTab = createBottomTabNavigator();
 

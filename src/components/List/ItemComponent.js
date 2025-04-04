@@ -18,7 +18,7 @@ import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
 const ItemComponent = ({item, navigation}) => {
   const {handleItemClick, toggleLoader} = useContext(TabContext);
   const {results} = companyIndices;
-  console.log(results);
+  // console.log(results);
   // const dispatch = useDispatch();
   // const selectedItems = useSelector(state => state.selection.selectedItems);
 

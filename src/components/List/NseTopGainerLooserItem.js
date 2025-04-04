@@ -25,7 +25,7 @@ const NseTopGainerLooserItem = ({item, navigation}) => {
     };
 
     dispatch(toggleItem(obj));
-    console.log('Toggled Item:', obj);
+    // console.log('Toggled Item:', obj);
   };
 
   const handleItemPress = item => {};

@@ -17,8 +17,6 @@ const CustomCheckBox = ({isChecked, onPress}) => {
   );
 };
 
-export default CustomCheckBox;
-
 const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
@@ -29,11 +27,11 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     borderWidth: 2,
-    borderColor: '#bbb',
+    borderColor: '#cfd8f4',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#e2e9ff',
     marginRight: 10,
   },
   checkedBackground: {
@@ -46,3 +44,5 @@ const styles = StyleSheet.create({
     color: '#000',
   },
 });
+
+export default CustomCheckBox;

@@ -1,10 +1,14 @@
 import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
-import {ActivityIndicator, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, FAB, Text} from 'react-native-paper';
 
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
-import {SingleLineIcon, SortIcons} from '../../assets/SVG/appiconsvg/Icons';
+import {
+  AddWatchlistIcon,
+  SingleLineIcon,
+  SortIcons,
+} from '../../assets/SVG/appiconsvg/Icons';
 import {COLORS} from '../../constants/theme';
 import responsive from '../../utils/responsive';
 
@@ -18,19 +22,35 @@ import IndicesList from '../../components/List/IndicesItem';
 import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {deselectAll, selectAll} from '../../store/selectSlice/select-slice';
+import {
+  addWatchlistItem,
+  deselectAll,
+  selectAll,
+} from '../../store/selectSlice/select-slice';
 import {getFormattedTime} from '../../utils/helpers/utils/time-date/timeDateFormater';
+
+import FilterComponent from '../../components/BottomSheetContent/FilterComponent';
+import {
+  gainersAndLoosersKeys,
+  nseIndicesKey,
+} from '../../components/BottomSheetContent/Constant';
 
 const HomeScreen = ({navigation, route}) => {
   const {niftydata} = NseIndicesData;
   const {results} = companyIndices;
   const {gainer, looser} = NseTopGainerLooser;
   const {loading} = useContext(TabContext);
-  const [activeTab, setActiveTab] = useState('NseTopGainer');
 
+  const bottomSheetModalRef = useRef(null);
+
+  const [activeTab, setActiveTab] = useState('NseTopGainer');
   const dispatch = useDispatch();
+
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  console.log(selectedItems);
+  const ftsmWatchlistItems = useSelector(
+    state => state.selection.ftsmWatchlist,
+  );
+  console.log(selectedItems, ftsmWatchlistItems);
 
   const getCurrentList = () => {
     switch (activeTab) {
@@ -70,6 +90,15 @@ const HomeScreen = ({navigation, route}) => {
     ['NIFTY BANK', 'NIFTY NEXT 50', 'NIFTY 50'].includes(item.indices_name),
   );
 
+  const handleAddWatchlist = () => {
+    dispatch(addWatchlistItem());
+    dispatch(deselectAll());
+  };
+
+  const handlePresentModalPress = () => {
+    bottomSheetModalRef.current?.present();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomeHeader navigation={navigation} title={route.name} />
@@ -94,17 +123,27 @@ const HomeScreen = ({navigation, route}) => {
               isChecked={isAllSelected}
             />
           )}
-          <Text>Updated: {recentTimeDate}</Text>
+          <Text style={{flex: 1, textAlign: 'center'}}>
+            Updated: {recentTimeDate}
+          </Text>
 
-          <Pressable
-            onPress={() => console.log('Button Pressed')}
-            style={styles.sortBtn}>
+          <Pressable onPress={handlePresentModalPress} style={styles.sortBtn}>
             <SortIcons size={25} color={COLORS.white} />
           </Pressable>
         </View>
 
         <MaterialToptabnavigation setActiveTab={setActiveTab} />
       </View>
+      {activeTab !== 'NseIndices' && (
+        <FAB
+          icon={() => <AddWatchlistIcon size={30} />}
+          style={styles.fab}
+          label="Add to Watchlist"
+          mode="elevated"
+          onPress={handleAddWatchlist}
+        />
+      )}
+      <FilterComponent bottomSheetModalRef={bottomSheetModalRef} />
     </SafeAreaView>
   );
 };
@@ -148,6 +187,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.1)',
     zIndex: 1,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 15,
+    right: 0,
+    bottom: 0,
+    borderRadius: responsive.borderRadius(5),
+    backgroundColor: '#E3EAFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: responsive.width(120),
+    height: responsive.padding(50),
+    paddingHorizontal: responsive.padding(10),
   },
 });
 

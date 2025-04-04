@@ -1,7 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {useNavigationState} from '@react-navigation/native';
 
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import {COLORS} from '../../constants/theme';
@@ -17,9 +16,6 @@ const Tab = createMaterialTopTabNavigator();
 const MaterialToptabnavigation = ({setActiveTab}) => {
   const {dynamicTab} = useContext(TabContext);
 
-  const state = useNavigationState(state => state);
-
-  console.log('state', state);
   const materialScreenOptions = {
     tabBarStyle: {
       backgroundColor: 'transparent',
@@ -36,8 +32,6 @@ const MaterialToptabnavigation = ({setActiveTab}) => {
     },
     tabBarIndicatorStyle: {
       height: responsive.height(3),
-      width: responsive.width(100),
-      marginLeft: responsive.margin(10),
       borderRadius: responsive.width(4),
       backgroundColor: COLORS.primary,
     },

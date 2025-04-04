@@ -1,16 +1,30 @@
 import {StyleSheet, View} from 'react-native';
 
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setNseIndicesData} from '../../store/dashboard/sortSlice/dashboardslice';
+
 import NseIndicesData from '../../assets/NiftyData/Data.json';
 import FlatlistComponent from '../../components/List/FlatlistComponent';
 
 const NseIndicesScreen = ({navigation}) => {
-  // console.log('data', NseIndicesData);
-
   const {niftydata} = NseIndicesData;
+
+  // const [niftydatas, setNiftyData] = useState(niftydata);
+
+  const niftyNseIndicesData = useSelector(state => state.dashboard.indicesData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setNseIndicesData(niftydata));
+  }, []);
+
+  // console.log(niftyNseIndicesData);
 
   return (
     <View style={styles.container}>
-      <FlatlistComponent data={niftydata} navigation={navigation} />
+      <FlatlistComponent data={niftyNseIndicesData} navigation={navigation} />
     </View>
   );
 };
