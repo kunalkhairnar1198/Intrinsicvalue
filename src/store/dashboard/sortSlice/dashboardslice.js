@@ -6,6 +6,7 @@ const initialState = {
   topGainersData: null,
   topLoosersData: null,
   dynamicData: [],
+  watchlistItem: null,
 };
 
 const dashboardSlice = createSlice({
@@ -62,6 +63,9 @@ const dashboardSlice = createSlice({
     setDynamicData: (state, action) => {
       state.dynamicData = action.payload;
     },
+    setWathlistItem: (state, action) => {
+      state.watchlistItem = action.payload;
+    },
   },
 });
 
@@ -70,6 +74,7 @@ export const {
   setTopGainersData,
   setTopLoosersData,
   setDynamicData,
+  setWathlistItem,
 } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

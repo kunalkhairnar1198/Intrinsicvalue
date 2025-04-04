@@ -30,18 +30,18 @@ import {
 import {getFormattedTime} from '../../utils/helpers/utils/time-date/timeDateFormater';
 
 import FilterComponent from '../../components/BottomSheetContent/FilterComponent';
-import {
-  gainersAndLoosersKeys,
-  nseIndicesKey,
-} from '../../components/BottomSheetContent/Constant';
+
+import WatchlistBottomComponent from '../../components/BottomSheetContent/WatchlistBottomComponent';
 
 const HomeScreen = ({navigation, route}) => {
   const {niftydata} = NseIndicesData;
   const {results} = companyIndices;
   const {gainer, looser} = NseTopGainerLooser;
-  const {loading} = useContext(TabContext);
+  const {loading, bottomSheetModalRef, watchbottomSheetModalRef} =
+    useContext(TabContext);
 
-  const bottomSheetModalRef = useRef(null);
+  // const bottomSheetModalRef = useRef(null);
+  // const watchbottomSheetModalRef = useRef(null);
 
   const [activeTab, setActiveTab] = useState('NseTopGainer');
   const dispatch = useDispatch();
@@ -144,6 +144,9 @@ const HomeScreen = ({navigation, route}) => {
         />
       )}
       <FilterComponent bottomSheetModalRef={bottomSheetModalRef} />
+      <WatchlistBottomComponent
+        watchbottomSheetModalRef={watchbottomSheetModalRef}
+      />
     </SafeAreaView>
   );
 };

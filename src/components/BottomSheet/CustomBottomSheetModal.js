@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
-
+import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
+import responsive from '../../utils/responsive';
 
 const CustomBottomSheetModal = ({bottomSheetRef, snapPoints, children}) => {
   const defaultSnapPoints = useMemo(
@@ -14,8 +14,13 @@ const CustomBottomSheetModal = ({bottomSheetRef, snapPoints, children}) => {
       ref={bottomSheetRef}
       snapPoints={defaultSnapPoints}
       enableDismissOnClose={true}
-      backdropComponent={({style}) => <View style={[style, styles.backdrop]} />}
-      dismissOnBackdropPress={true}>
+      dismissOnBackdropPress={true}
+      backdropComponent={({style}) => (
+        <TouchableWithoutFeedback
+          onPress={() => bottomSheetRef.current?.dismiss()}>
+          <View style={[style, styles.backdrop]} />
+        </TouchableWithoutFeedback>
+      )}>
       <BottomSheetView style={styles.container}>{children}</BottomSheetView>
     </BottomSheetModal>
   );
@@ -23,12 +28,13 @@ const CustomBottomSheetModal = ({bottomSheetRef, snapPoints, children}) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: responsive.padding(10),
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    flex: 1,
   },
 });
 

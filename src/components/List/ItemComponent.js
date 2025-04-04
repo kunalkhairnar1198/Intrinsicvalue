@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {TabContext} from '../../context-api/MaterialTopTabContext';
@@ -8,10 +8,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import responsive from '../../utils/responsive';
 import CustomCard from '../UI/Card';
-import CustomCheckBox from '../CheckBox/CustomCheckBox';
-
-import {useDispatch, useSelector} from 'react-redux';
-import {toggleItem} from '../../store/selectSlice/select-slice';
 
 import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
 

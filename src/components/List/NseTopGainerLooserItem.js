@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {COLORS} from '../../constants/theme';
 
@@ -11,9 +11,12 @@ import CustomCheckBox from '../CheckBox/CustomCheckBox';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleItem} from '../../store/selectSlice/select-slice';
+import {TabContext} from '../../context-api/MaterialTopTabContext';
+import {setWathlistItem} from '../../store/dashboard/sortSlice/dashboardslice';
 
 const NseTopGainerLooserItem = ({item, navigation}) => {
   const dispatch = useDispatch();
+  const {watchbottomSheetModalRef} = useContext(TabContext);
   const selectedItems = useSelector(state => state.selection.selectedItems);
 
   // console.log('nse top gainers', selectedItems);
@@ -28,46 +31,51 @@ const NseTopGainerLooserItem = ({item, navigation}) => {
     // console.log('Toggled Item:', obj);
   };
 
-  const handleItemPress = item => {};
+  const handlePresentModalPress = () => {
+    watchbottomSheetModalRef.current?.present();
+    dispatch(setWathlistItem(item));
+  };
 
   return (
     <CustomCard style={styles.cardContainer}>
-      <LinearGradient
-        colors={['#FFFFFF', '#F0F4FF', '#F0F4FF']}
-        start={{x: 1, y: 0.5}}
-        end={{x: 0, y: 0.5}}
-        style={styles.gradientContainer}>
-        <View style={styles.container}>
-          <View style={styles.checkBox}>
-            <CustomCheckBox
-              isChecked={selectedItems.some(
-                selected => selected.symbol === item.symbol,
-              )}
-              onPress={handleCheckboxPress}
-            />
-          </View>
-
-          <View style={styles.contentRow}>
-            <View style={{flex: 1, justifyContent: 'center'}}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text style={styles.description}>{item.symbol}</Text>
+      <Pressable onPress={() => handlePresentModalPress(item)}>
+        <LinearGradient
+          colors={['#FFFFFF', '#F0F4FF', '#F0F4FF']}
+          start={{x: 1, y: 0.5}}
+          end={{x: 0, y: 0.5}}
+          style={styles.gradientContainer}>
+          <View style={styles.container}>
+            <View style={styles.checkBox}>
+              <CustomCheckBox
+                isChecked={selectedItems.some(
+                  selected => selected.symbol === item.symbol,
+                )}
+                onPress={handleCheckboxPress}
+              />
             </View>
 
-            <View style={{justifyContent: 'center'}}>
-              <Text style={styles.closeText}>₹ {item.NSE_LTP}</Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: item.Change >= 0 ? 'green' : 'red',
-                }}>
-                {item.Change >= 0
-                  ? `+${item.NSE_CHANGE}%`
-                  : `${item.NSE_CHANGE}%`}
-              </Text>
+            <View style={styles.contentRow}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.description}>{item.symbol}</Text>
+              </View>
+
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.closeText}>₹ {item.NSE_LTP}</Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: item.Change >= 0 ? 'green' : 'red',
+                  }}>
+                  {item.Change >= 0
+                    ? `+${item.NSE_CHANGE}%`
+                    : `${item.NSE_CHANGE}%`}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </LinearGradient>
+        </LinearGradient>
+      </Pressable>
     </CustomCard>
   );
 };

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 
 import {Dropdown} from 'react-native-element-dropdown';
@@ -20,6 +20,7 @@ import CustomBottomSheetModal from '../BottomSheet/CustomBottomSheetModal';
 import Button from '../Button/Button';
 
 import {useNavigationState} from '@react-navigation/native';
+import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 const nseIndicesKey = [
   {label: 'Close', value: 'Close'},
@@ -41,8 +42,9 @@ const gainersAndLoosersKeys = [
   {label: 'NSE_PER_CHANGE', value: 'NSE_PER_CHANGE'},
 ];
 
-const FilterComponent = ({bottomSheetModalRef}) => {
+const FilterComponent = () => {
   const dispatch = useDispatch();
+  const {bottomSheetModalRef} = useContext(TabContext);
 
   const [sortOptions, setSortingOptions] = useState(nseIndicesKey);
   const [selectedValue, setSelectedValue] = useState('Close');

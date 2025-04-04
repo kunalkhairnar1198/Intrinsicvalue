@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useRef, useState} from 'react';
 
 const TabContext = createContext();
 
@@ -6,7 +6,9 @@ const MaterialTopTabContextProvider = props => {
   const [dynamicTab, setDynamicTab] = useState(null);
   const [loading, setIsLoading] = useState(false);
 
-  console.log('CONTEXT', dynamicTab);
+  const bottomSheetModalRef = useRef(null);
+  const watchbottomSheetModalRef = useRef(null);
+  // console.log('CONTEXT', dynamicTab);
 
   const handleItemClick = item => {
     setDynamicTab({name: item.Symbol});
@@ -17,7 +19,14 @@ const MaterialTopTabContextProvider = props => {
   };
   return (
     <TabContext.Provider
-      value={{dynamicTab, toggleLoader, loading, handleItemClick}}>
+      value={{
+        dynamicTab,
+        toggleLoader,
+        loading,
+        bottomSheetModalRef,
+        watchbottomSheetModalRef,
+        handleItemClick,
+      }}>
       {props.children}
     </TabContext.Provider>
   );
