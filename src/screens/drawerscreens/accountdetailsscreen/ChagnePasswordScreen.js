@@ -78,7 +78,7 @@ const ChangePasswordScreen = ({navigation}) => {
   });
 
   const onSubmit = data => {
-    console.log('Password Change Data:', data);
+    // console.log('Password Change Data:', data);
     reset();
   };
 

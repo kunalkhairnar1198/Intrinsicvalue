@@ -8,7 +8,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 const App = () => {
-  console.log('APPPREDNER');
   return (
     <GestureHandlerRootView style={styles.container}>
       <BottomSheetModalProvider>

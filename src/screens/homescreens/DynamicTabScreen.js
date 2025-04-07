@@ -7,8 +7,8 @@ import {useSelector} from 'react-redux';
 const DynamicTabScreen = ({route, navigation}) => {
   const {items} = route.params || {};
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  console.log('DYNAMIC SCREEN, ITEM', items);
-  console.log('dynamic selected', selectedItems);
+  // console.log('DYNAMIC SCREEN, ITEM', items);
+  // console.log('dynamic selected', selectedItems);
 
   return (
     <View style={styles.container}>

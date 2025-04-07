@@ -53,8 +53,8 @@ const FilterComponent = () => {
   const {indicesData, topGainersData, topLoosersData} = useSelector(
     state => state.dashboard,
   );
-  console.log(indicesData, topGainersData, topLoosersData);
-  console.log(nseIndicesKey, gainersAndLoosersKeys, sortOptions);
+  // console.log(indicesData, topGainersData, topLoosersData);
+  // console.log(nseIndicesKey, gainersAndLoosersKeys, sortOptions);
 
   const currentRoute = useNavigationState(state => {
     const activeRoute = state.routes[state.index];

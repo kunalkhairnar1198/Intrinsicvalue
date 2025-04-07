@@ -9,7 +9,7 @@ import {COLORS} from '../../../constants/theme';
 const LeaderboardScreen = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
 
-  console.log('leader');
+  // console.log('leader');
   return (
     <View>
       <CustomeHeader navigation={navigation} title={route.name} />

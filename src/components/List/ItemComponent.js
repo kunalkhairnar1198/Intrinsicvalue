@@ -10,6 +10,10 @@ import responsive from '../../utils/responsive';
 import CustomCard from '../UI/Card';
 
 import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
+import {
+  formatAmount,
+  formatPercentage,
+} from '../../utils/calculations/FormatAmountPercentage';
 
 const ItemComponent = ({item, navigation}) => {
   const {handleItemClick, toggleLoader} = useContext(TabContext);
@@ -57,13 +61,15 @@ const ItemComponent = ({item, navigation}) => {
           </View>
 
           <View style={{justifyContent: 'center'}}>
-            <Text style={styles.closeText}>₹ {item.Close}</Text>
+            <Text style={styles.closeText}>₹ {formatAmount(item.Close)}</Text>
             <Text
               style={{
                 fontSize: 16,
-                color: item.Change >= 0 ? 'green' : 'red',
+                color: item.Change < 0 ? 'green' : 'red',
               }}>
-              {item.Change >= 0 ? `+${item.Change}%` : `${item.Change}%`}
+              {item.Change < 0
+                ? `${formatPercentage(item.Change)}`
+                : `${formatPercentage(item.Change)}`}
             </Text>
           </View>
         </View>

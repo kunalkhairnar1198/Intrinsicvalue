@@ -50,7 +50,7 @@ const HomeScreen = ({navigation, route}) => {
   const ftsmWatchlistItems = useSelector(
     state => state.selection.ftsmWatchlist,
   );
-  console.log(selectedItems, ftsmWatchlistItems);
+  // console.log(selectedItems, ftsmWatchlistItems);
 
   const getCurrentList = () => {
     switch (activeTab) {
@@ -193,10 +193,10 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    margin: 15,
+    margin: 10,
     right: 0,
-    bottom: 0,
-    borderRadius: responsive.borderRadius(5),
+    bottom: 70,
+    borderRadius: responsive.borderRadius(10),
     backgroundColor: '#E3EAFF',
     flexDirection: 'row',
     alignItems: 'center',

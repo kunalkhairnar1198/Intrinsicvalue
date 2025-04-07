@@ -8,10 +8,9 @@ import Button from '../../components/Button/Button';
 import Background from '../../components/Baground/Background';
 
 const WelcomeScreen = ({navigation}) => {
-  console.log('welcomes');
+  // console.log('welcomes');
   return (
     <SafeAreaView style={styles.container}>
-      
       <Background />
 
       <View style={styles.welcomeContainer}>
@@ -26,7 +25,6 @@ const WelcomeScreen = ({navigation}) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          
           <Button
             onPress={() => {
               navigation.navigate('RegisterScreen');
@@ -38,9 +36,9 @@ const WelcomeScreen = ({navigation}) => {
           </Button>
 
           <Button
-              onPress={() => {
-                navigation.navigate('LoginScreen');
-              }}
+            onPress={() => {
+              navigation.navigate('LoginScreen');
+            }}
             style={styles.loginButton}>
             <View>
               <Text style={styles.loginText}> Login </Text>

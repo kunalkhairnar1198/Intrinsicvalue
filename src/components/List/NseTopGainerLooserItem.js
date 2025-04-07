@@ -65,10 +65,10 @@ const NseTopGainerLooserItem = ({item, navigation}) => {
                 <Text
                   style={{
                     fontSize: 16,
-                    color: item.Change >= 0 ? 'green' : 'red',
+                    color: item.NSE_CHANGE < 0 ? 'red' : 'green',
                   }}>
-                  {item.Change >= 0
-                    ? `+${item.NSE_CHANGE}%`
+                  {item.NSE_CHANGE < 0
+                    ? `${item.NSE_CHANGE}%`
                     : `${item.NSE_CHANGE}%`}
                 </Text>
               </View>

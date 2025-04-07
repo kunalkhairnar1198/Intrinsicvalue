@@ -15,7 +15,7 @@ const dashboardSlice = createSlice({
   reducers: {
     setNseIndicesData: (state, action) => {
       const filterObject = action.payload;
-      console.log('redux', filterObject);
+      // console.log('redux', filterObject);
       const sorted = sortList(
         filterObject.indicesData,
         filterObject.selectedValue,
@@ -37,7 +37,7 @@ const dashboardSlice = createSlice({
         filterObject.order || 'asc',
       );
       if (sorted) {
-        console.log(sorted);
+        // console.log(sorted);
         state.topGainersData = sorted;
       } else {
         state.topGainersData = action.payload;
@@ -53,7 +53,7 @@ const dashboardSlice = createSlice({
         filterObject.order || 'asc',
       );
       if (sorted) {
-        console.log(sorted);
+        // console.log(sorted);
         state.topLoosersData = sorted;
       } else {
         state.topLoosersData = action.payload;

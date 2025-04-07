@@ -23,7 +23,7 @@ import {
 const WatchlistBottomComponent = () => {
   const {watchbottomSheetModalRef} = useContext(TabContext);
   const {watchlistItem} = useSelector(state => state.dashboard);
-  console.log(watchlistItem);
+  // console.log(watchlistItem);
   const [selectedValue, setSelectedValue] = useState(null);
 
   const watchlistOptions = [
@@ -42,7 +42,11 @@ const WatchlistBottomComponent = () => {
           <Text style={styles.title}>
             {watchlistItem?.name || 'Stock Title'}
           </Text>
-          <Text style={styles.percentage}>
+          <Text
+            style={[
+              styles.percentage,
+              {color: watchlistItem?.NSE_CHANGE < 0 ? 'red' : 'green'},
+            ]}>
             <Text style={styles.subText}>Change :</Text>
             {formatPercentage(watchlistItem?.NSE_CHANGE || 'NA')}
           </Text>

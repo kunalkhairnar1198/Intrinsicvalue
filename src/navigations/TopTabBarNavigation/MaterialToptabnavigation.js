@@ -1,6 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {useContext, useEffect, useRef} from 'react';
+import {useContext} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import {COLORS} from '../../constants/theme';

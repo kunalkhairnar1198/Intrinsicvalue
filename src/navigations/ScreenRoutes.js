@@ -20,26 +20,27 @@ export const screens = {
   HomeTabs: 'HomeTabs',
   Home: 'Home',
   HomeNavigator: 'HomeNavigator',
-  Watchlist: 'Watchlist',
+  // Watchlist: 'Watchlist',
   WatchlistNavigator: 'WatchlistNavigator',
-  AlgoTrader: 'AlgoTrader',
+  // AlgoTrader: 'AlgoTrader',
   AlgoTraderNavigator: 'AlgoTraderNavigator',
-  Portfolio: 'Portfolio',
+  // Portfolio: 'Portfolio',
   PortfolioNavigator: 'PortfolioNavigator',
-  Insights: 'Insights',
+  // Insights: 'Insights',
   InsightsNavigator: 'InsightsNavigator',
   // Drawer navigations
-  LeaderBoard: 'Leaderboard',
+
+  // LeaderBoard: 'Leaderboard',
   LeaderBoardNavigator: 'LeaderBoardNavigator',
-  MyStrategies: 'MyStrategies',
+  // MyStrategies: 'MyStrategies',
   MyStrategiesNavigator: 'MyStrategiesNavigator',
-  ReferAndEarn: 'ReferAndEarn',
+  // ReferAndEarn: 'ReferAndEarn',
   ReferAndEarnNavigator: 'ReferAndEarnNavigator',
-  Subscription: 'Subscription',
+  // Subscription: 'Subscription',
   SubscriptionNavigator: 'SubscriptionNavigator',
-  KiteToConnect: 'KiteToConnect',
+  // KiteToConnect: 'KiteToConnect',
   KiteToConnectNavigator: 'KiteToConnectNavigator',
-  AccountDetails: 'AccountDetails',
+  // AccountDetails: 'AccountDetails',
   AccountDetailsNavigator: 'AccountDetailNavigator',
 };
 
@@ -64,19 +65,19 @@ export const routes = [
       <Homeicon color={focused ? `${COLORS.primary}` : '#0B588D'} size={24} />
     ),
   },
-  {
-    name: screens.Watchlist,
-    focusedRoute: screens.WatchlistNavigator,
-    title: 'Watchlist',
-    showInTab: true,
-    showInDrawer: false,
-    icon: focused => (
-      <WatchlistIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.Watchlist,
+  //   focusedRoute: screens.WatchlistNavigator,
+  //   title: 'Watchlist',
+  //   showInTab: true,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <WatchlistIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.WatchlistNavigator,
     focusedRoute: screens.WatchlistNavigator,
@@ -90,19 +91,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.AlgoTrader,
-    focusedRoute: screens.AlgoTraderNavigator,
-    title: 'AlgoTrader',
-    showInTab: true,
-    showInDrawer: false,
-    icon: focused => (
-      <AlgoTradeIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.AlgoTrader,
+  //   focusedRoute: screens.AlgoTraderNavigator,
+  //   title: 'AlgoTrader',
+  //   showInTab: true,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <AlgoTradeIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.AlgoTraderNavigator,
     focusedRoute: screens.AlgoTraderNavigator,
@@ -116,19 +117,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.Portfolio,
-    focusedRoute: screens.PortfolioNavigator,
-    title: 'Portfolio',
-    showInTab: true,
-    showInDrawer: false,
-    icon: focused => (
-      <PortfolioIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.Portfolio,
+  //   focusedRoute: screens.PortfolioNavigator,
+  //   title: 'Portfolio',
+  //   showInTab: true,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <PortfolioIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.PortfolioNavigator,
     focusedRoute: screens.AlgoTraderNavigator,
@@ -142,19 +143,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.Insights,
-    focusedRoute: screens.InsightsNavigator,
-    title: 'Insights',
-    showInTab: true,
-    showInDrawer: false,
-    icon: focused => (
-      <InsightIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.Insights,
+  //   focusedRoute: screens.InsightsNavigator,
+  //   title: 'Insights',
+  //   showInTab: true,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <InsightIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.InsightsNavigator,
     focusedRoute: screens.InsightsNavigator,
@@ -170,19 +171,19 @@ export const routes = [
   },
 
   //Drawer navigations
-  {
-    name: screens.LeaderBoard,
-    focusedRoute: screens.LeaderBoardNavigator,
-    title: 'LeaderBoard',
-    showInTab: false,
-    showInDrawer: false,
-    icon: focused => (
-      <LeaderBoardIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.LeaderBoard,
+  //   focusedRoute: screens.LeaderBoardNavigator,
+  //   title: 'LeaderBoard',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <LeaderBoardIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.LeaderBoardNavigator,
     focusedRoute: screens.LeaderBoardNavigator,
@@ -196,19 +197,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.MyStrategies,
-    focusedRoute: screens.MyStrategiesNavigator,
-    title: 'My Strategies',
-    showInTab: false,
-    showInDrawer: false,
-    icon: focused => (
-      <MyStrategiesIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.MyStrategies,
+  //   focusedRoute: screens.MyStrategiesNavigator,
+  //   title: 'My Strategies',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <MyStrategiesIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.MyStrategiesNavigator,
     focusedRoute: screens.MyStrategiesNavigator,
@@ -222,19 +223,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.ReferAndEarn,
-    focusedRoute: screens.ReferAndEarnNavigator,
-    title: 'Refer & Earn',
-    showInTab: false,
-    showInDrawer: false,
-    icon: focused => (
-      <ReferAndearnIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.ReferAndEarn,
+  //   focusedRoute: screens.ReferAndEarnNavigator,
+  //   title: 'Refer & Earn',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <ReferAndearnIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.ReferAndEarnNavigator,
     focusedRoute: screens.ReferAndEarnNavigator,
@@ -248,19 +249,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.Subscription,
-    focusedRoute: screens.SubscriptionNavigator,
-    title: 'Subscription',
-    showInTab: false,
-    showInDrawer: false,
-    icon: focused => (
-      <SubscriptionIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.Subscription,
+  //   focusedRoute: screens.SubscriptionNavigator,
+  //   title: 'Subscription',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <SubscriptionIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.SubscriptionNavigator,
     focusedRoute: screens.SubscriptionNavigator,
@@ -274,19 +275,19 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.KiteToConnect,
-    focusedRoute: screens.KiteToConnectNavigator,
-    title: 'Kite to Connect',
-    showInTab: false,
-    showInDrawer: false,
-    icon: focused => (
-      <KiteConnectIcon
-        color={focused ? `${COLORS.primary}` : '#0B588D'}
-        size={24}
-      />
-    ),
-  },
+  // {
+  //   name: screens.KiteToConnect,
+  //   focusedRoute: screens.KiteToConnectNavigator,
+  //   title: 'Kite to Connect',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  //   icon: focused => (
+  //     <KiteConnectIcon
+  //       color={focused ? `${COLORS.primary}` : '#0B588D'}
+  //       size={24}
+  //     />
+  //   ),
+  // },
   {
     name: screens.KiteToConnectNavigator,
     focusedRoute: screens.KiteToConnectNavigator,
@@ -300,13 +301,13 @@ export const routes = [
       />
     ),
   },
-  {
-    name: screens.AccountDetails,
-    focusedRoute: screens.AccountDetailsNavigator,
-    title: 'Account Details',
-    showInTab: false,
-    showInDrawer: false,
-  },
+  // {
+  //   name: screens.AccountDetails,
+  //   focusedRoute: screens.AccountDetailsNavigator,
+  //   title: 'Account Details',
+  //   showInTab: false,
+  //   showInDrawer: false,
+  // },
   {
     name: screens.AccountDetailsNavigator,
     focusedRoute: screens.AccountDetailsNavigator,
