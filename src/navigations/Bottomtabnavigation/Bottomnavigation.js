@@ -35,7 +35,7 @@ const tabBarStyle = {
 const Bottomnavigation = () => {
   const BottomTabscreenOptions = ({route}) => {
     const item = routes.find(routeItem => routeItem.name === route.name);
-    console.log(item);
+    // console.log(item);
     return {
       title: item.title,
       headerShown: false,

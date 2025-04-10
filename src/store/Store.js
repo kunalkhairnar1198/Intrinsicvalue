@@ -1,12 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {combineReducers} from 'redux';
 import selectionReducer from '../store/selectSlice/select-slice';
-import sortReducer from './dashboard/sortSlice/sortSlice';
-import dashboardReducer from './dashboard/sortSlice/dashboardslice';
+import dashboardReducer from './dashboard/dashboardslice';
+import watchlistReducer from './watchlist/watchlistslice';
 const reducer = combineReducers({
   selection: selectionReducer,
-  sort: sortReducer,
+  // sort: sortReducer,
   dashboard: dashboardReducer,
+  mywatchlist: watchlistReducer,
 });
 
 export const Store = configureStore({

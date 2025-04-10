@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import NseTopGainers from '../../assets/NiftyData/NseTopGainerLooser.json';
 import FlatlistComponent from '../../components/List/FlatlistComponent';
 import {useDispatch, useSelector} from 'react-redux';
-import {setTopLoosersData} from '../../store/dashboard/sortSlice/dashboardslice';
+import {setTopLoosersData} from '../../store/dashboard/dashboardslice';
 
 const NseTopLoserScreen = ({navigation}) => {
   const {looser} = NseTopGainers;

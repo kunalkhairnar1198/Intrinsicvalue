@@ -1,44 +1,40 @@
-import React, {useContext} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Text} from 'react-native-paper';
+import {Pressable, StyleSheet, View} from 'react-native';
 
 import {COLORS} from '../../constants/theme';
+import {useDispatch, useSelector} from 'react-redux';
 
 import LinearGradient from 'react-native-linear-gradient';
-
-import responsive from '../../utils/responsive';
 import CustomCard from '../UI/Card';
 import CustomCheckBox from '../CheckBox/CustomCheckBox';
+import responsive from '../../utils/responsive';
+import {toggleSelection} from '../../store/watchlist/watchlistslice';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {toggleItem} from '../../store/selectSlice/select-slice';
-import {TabContext} from '../../context-api/MaterialTopTabContext';
-import {setWathlistItem} from '../../store/dashboard/dashboardslice';
-
-const NseTopGainerLooserItem = ({item, navigation}) => {
+const WatchlistItem = ({item, listKey}) => {
   const dispatch = useDispatch();
-  const {watchbottomSheetModalRef} = useContext(TabContext);
-  const selectedItems = useSelector(state => state.selection.selectedItems);
+  console.log(item, listKey);
 
-  // console.log('nse top gainers', selectedItems);
+  const {selectedWatchlistData, watchList1, watchList2, watchList3} =
+    useSelector(state => state.mywatchlist);
 
-  const handleCheckboxPress = () => {
-    const obj = {
+  console.log(selectedWatchlistData);
+
+  const handleCheckboxPress = (item, listKey) => {
+    // console.log(item);
+    const deletedObject = {
       ...item,
+      listKey,
       id: item.symbol || `${item.name}-${item.NSE_UPD_TIME}`,
     };
-
-    dispatch(toggleItem(obj));
-    // console.log('Toggled Item:', obj);
+    // console.log(deletedObject);
+    dispatch(toggleSelection(deletedObject));
   };
 
-  const handlePresentModalPress = () => {
-    watchbottomSheetModalRef.current?.present();
-    dispatch(setWathlistItem(item));
-  };
+  const handeSelectedItemDelete = () => {};
 
   return (
     <CustomCard style={styles.cardContainer}>
-      <Pressable onPress={() => handlePresentModalPress(item)}>
+      <Pressable>
         <LinearGradient
           colors={['#FFFFFF', '#F0F4FF', '#F0F4FF']}
           start={{x: 1, y: 0.5}}
@@ -47,10 +43,10 @@ const NseTopGainerLooserItem = ({item, navigation}) => {
           <View style={styles.container}>
             <View style={styles.checkBox}>
               <CustomCheckBox
-                isChecked={selectedItems.some(
+                isChecked={selectedWatchlistData.some(
                   selected => selected.symbol === item.symbol,
                 )}
-                onPress={handleCheckboxPress}
+                onPress={() => handleCheckboxPress(item, listKey)}
               />
             </View>
 
@@ -123,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NseTopGainerLooserItem;
+export default WatchlistItem;

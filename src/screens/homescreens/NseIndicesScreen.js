@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setNseIndicesData} from '../../store/dashboard/sortSlice/dashboardslice';
+import {setNseIndicesData} from '../../store/dashboard/dashboardslice';
 
 import NseIndicesData from '../../assets/NiftyData/Data.json';
 import FlatlistComponent from '../../components/List/FlatlistComponent';

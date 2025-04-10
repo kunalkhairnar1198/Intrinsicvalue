@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {sortList} from '../../../utils/helpers/utils/sorting/sort-helper';
+import {sortList} from '../../utils/helpers/utils/sorting/sort-helper';
 
 const initialState = {
   indicesData: null,

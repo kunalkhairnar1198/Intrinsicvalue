@@ -8,6 +8,7 @@ const MaterialTopTabContextProvider = props => {
 
   const bottomSheetModalRef = useRef(null);
   const watchbottomSheetModalRef = useRef(null);
+  const addWatchlistBottomModalRef = useRef(null);
   // console.log('CONTEXT', dynamicTab);
 
   const handleItemClick = item => {
@@ -24,6 +25,7 @@ const MaterialTopTabContextProvider = props => {
         toggleLoader,
         loading,
         bottomSheetModalRef,
+        addWatchlistBottomModalRef,
         watchbottomSheetModalRef,
         handleItemClick,
       }}>

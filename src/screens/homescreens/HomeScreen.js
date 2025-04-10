@@ -1,7 +1,7 @@
 import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
-import {ActivityIndicator, Button, FAB, Text} from 'react-native-paper';
+import {ActivityIndicator, FAB, Portal, Text} from 'react-native-paper';
 
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import {
@@ -32,25 +32,22 @@ import {getFormattedTime} from '../../utils/helpers/utils/time-date/timeDateForm
 import FilterComponent from '../../components/BottomSheetContent/FilterComponent';
 
 import WatchlistBottomComponent from '../../components/BottomSheetContent/WatchlistBottomComponent';
+import AddtoWatchListBottom from '../../components/BottomSheetContent/AddtoWatchListBottom';
 
 const HomeScreen = ({navigation, route}) => {
   const {niftydata} = NseIndicesData;
   const {results} = companyIndices;
   const {gainer, looser} = NseTopGainerLooser;
-  const {loading, bottomSheetModalRef, watchbottomSheetModalRef} =
+  const {loading, bottomSheetModalRef, addWatchlistBottomModalRef} =
     useContext(TabContext);
-
-  // const bottomSheetModalRef = useRef(null);
-  // const watchbottomSheetModalRef = useRef(null);
 
   const [activeTab, setActiveTab] = useState('NseTopGainer');
   const dispatch = useDispatch();
 
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  const ftsmWatchlistItems = useSelector(
-    state => state.selection.ftsmWatchlist,
-  );
-  // console.log(selectedItems, ftsmWatchlistItems);
+
+  // const ftsmWatchlistItems = useSelector(state => state.mywatchlist.watchList1);
+  // // console.log(ftsmWatchlistItems);
 
   const getCurrentList = () => {
     switch (activeTab) {
@@ -91,8 +88,12 @@ const HomeScreen = ({navigation, route}) => {
   );
 
   const handleAddWatchlist = () => {
-    dispatch(addWatchlistItem());
-    dispatch(deselectAll());
+    // console.log(selectedItems);
+
+    addWatchlistBottomModalRef.current?.present();
+    // dispatch(addWatchlistData(selectedItems));
+    // dispatch(addWatchlistItem());
+    // dispatch(deselectAll());
   };
 
   const handlePresentModalPress = () => {
@@ -134,19 +135,22 @@ const HomeScreen = ({navigation, route}) => {
 
         <MaterialToptabnavigation setActiveTab={setActiveTab} />
       </View>
-      {activeTab !== 'NseIndices' && (
+      {/* floating button  */}
+      <View>
         <FAB
           icon={() => <AddWatchlistIcon size={30} />}
           style={styles.fab}
+          visible={activeTab !== 'NseIndices'}
           label="Add to Watchlist"
           mode="elevated"
           onPress={handleAddWatchlist}
         />
-      )}
-      <FilterComponent bottomSheetModalRef={bottomSheetModalRef} />
-      <WatchlistBottomComponent
-        watchbottomSheetModalRef={watchbottomSheetModalRef}
-      />
+      </View>
+
+      {/* bottomsheet modals */}
+      <FilterComponent />
+      <WatchlistBottomComponent />
+      <AddtoWatchListBottom />
     </SafeAreaView>
   );
 };
@@ -193,9 +197,8 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    margin: 10,
-    right: 0,
     bottom: 70,
+    right: 10,
     borderRadius: responsive.borderRadius(10),
     backgroundColor: '#E3EAFF',
     flexDirection: 'row',

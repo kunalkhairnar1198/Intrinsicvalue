@@ -14,7 +14,7 @@ import {
   setNseIndicesData,
   setTopGainersData,
   setTopLoosersData,
-} from '../../store/dashboard/sortSlice/dashboardslice';
+} from '../../store/dashboard/dashboardslice';
 
 import CustomBottomSheetModal from '../BottomSheet/CustomBottomSheetModal';
 import Button from '../Button/Button';
