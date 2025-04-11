@@ -209,8 +209,12 @@ export const {
 } = BottomNavigationIcons;
 
 const AppSvgsIcons = {
-  SingleLineIcon: ({color, size}) => (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={350} height={3} fill="none">
+  SingleLineIcon: ({color, width, height}) => (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width || 350}
+      height={3 || height}
+      fill="none">
       <Path stroke="#ABC0FF" strokeLinecap="round" d="M1 1h398" />
     </Svg>
   ),

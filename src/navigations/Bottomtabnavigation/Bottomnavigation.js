@@ -19,7 +19,7 @@ const tabBarStyle = {
   height: responsive.height(60),
   borderTopLeftRadius: 20,
   borderTopRightRadius: 20,
-  position: 'absolute',
+  // position: 'absolute',
   left: 0,
   right: 0,
   bottom: 0,

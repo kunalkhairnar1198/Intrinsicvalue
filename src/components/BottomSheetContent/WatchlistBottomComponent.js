@@ -19,9 +19,12 @@ import {
   formatAmount,
   formatPercentage,
 } from '../../utils/calculations/FormatAmountPercentage';
+import {useNavigation} from '@react-navigation/native';
 
 const WatchlistBottomComponent = () => {
-  const {watchbottomSheetModalRef} = useContext(TabContext);
+  const navigation = useNavigation();
+  const {watchbottomSheetModalRef, addWatchlistBottomModalRef} =
+    useContext(TabContext);
   const {watchlistItem} = useSelector(state => state.dashboard);
   // console.log(watchlistItem);
   const [selectedValue, setSelectedValue] = useState(null);
@@ -31,6 +34,11 @@ const WatchlistBottomComponent = () => {
     {label: 'Watchlist 2', value: 'watchlist2'},
     {label: 'Watchlist 3', value: 'watchlist3'},
   ];
+
+  const handleNavigation = () => {
+    navigation.navigate('Detail', {item: watchlistItem});
+    watchbottomSheetModalRef.current?.close();
+  };
 
   return (
     <CustomBottomSheetModal
@@ -121,7 +129,7 @@ const WatchlistBottomComponent = () => {
         </View>
 
         {/* View Chart Button */}
-        <Button style={styles.chartButton}>
+        <Button style={styles.chartButton} onPress={handleNavigation}>
           <CandleStickIcon size={25} color="#fff" />
           <Text style={styles.chartText}>View Chart</Text>
           <Icon name="arrow-right" size={25} color="#fff" style={styles.icon} />

@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 10,
     right: 10,
     borderRadius: responsive.borderRadius(10),
     backgroundColor: '#E3EAFF',
