@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "id": 3,
+      "indicator_name": "CCI",
+      "alternate_indicator_name": "CCI20",
+      "indicator_full_name": "Commodity Channel Index",
+      "indicator_type": "Oscillators"
+    },
+    {
+      "id": 14,
+      "indicator_name": "EMA20",
+      "alternate_indicator_name": "EMA20",
+      "indicator_full_name": "Exponential Moving Average 20",
+      "indicator_type": "Moving Averages"
+    },
+    {
+      "id": 23,
+      "indicator_name": "SMA200",
+      "alternate_indicator_name": "SMA200",
+      "indicator_full_name": "Simple Moving Average 200",
+      "indicator_type": "Moving Averages"
+    }
+  ],
+  "crossover": false
+}
