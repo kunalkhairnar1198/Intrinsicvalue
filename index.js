@@ -8,15 +8,18 @@ import {name as appName} from './app.json';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {MaterialTopTabContextProvider} from './src/context-api/MaterialTopTabContext';
 import {Provider} from 'react-redux';
-import {Store} from './src/store/Store';
+import {persistor, Store} from './src/store/Store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const Application = () => (
   <Provider store={Store}>
-    <PaperProvider>
-      <MaterialTopTabContextProvider>
-        <App />
-      </MaterialTopTabContextProvider>
-    </PaperProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <PaperProvider>
+        <MaterialTopTabContextProvider>
+          <App />
+        </MaterialTopTabContextProvider>
+      </PaperProvider>
+    </PersistGate>
   </Provider>
 );
 

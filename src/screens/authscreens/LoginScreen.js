@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {z} from 'zod';
@@ -20,6 +20,9 @@ import Background from '../../components/Baground/Background';
 import FormInput from '../../components/Forminput/FormInput';
 import Button from '../../components/Button/Button';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {loginAction} from '../../store/authSlice/auth-slice';
+
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email'),
   password: z
@@ -30,6 +33,14 @@ const loginSchema = z.object({
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {isLoggedIn, token, emailId, firstName, lastName} = useSelector(
+    state => state.auth,
+  );
+  console.log(isLoggedIn);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const {control, handleSubmit, reset} = useForm({
     defaultValues: {
@@ -40,16 +51,31 @@ const LoginScreen = () => {
   });
 
   const onSubmit = data => {
-    const Obj = {
-      ...data,
-      otp: Math.floor(100000 + Math.random() * 900000),
+    const userData = {
+      username: data.email,
+      password: data.password,
     };
+    console.log(userData);
+    dispatch(
+      loginAction({
+        userData,
+        setIsLoading,
+        onEmailNotVerify: () => {
+          console.log('NAVIGATE email verification screen');
+          navigation.navigate('EmailVerificationScreen', `${data.email}`); // optional
+        },
+      }),
+    );
+    // const Obj = {
+    //   ...data,
+    //   otp: Math.floor(100000 + Math.random() * 900000),
+    // };
 
     // navigation.navigate('EmailVerificationScreen', {Obj});
-    navigation.navigate('Drawernavigation');
+    // navigation.navigate('Drawernavigation');
     // console.log('Form Data:', data);
 
-    reset();
+    // reset();
   };
 
   return (
@@ -90,7 +116,9 @@ const LoginScreen = () => {
           <Button style={styles.loginButton} onPress={handleSubmit(onSubmit)}>
             <LoginIcon name="login" size={19} color="white" />
 
-            <Text style={styles.loginText}>Login</Text>
+            <Text style={styles.loginText}>
+              {isLoading ? 'loading...' : 'Login'}
+            </Text>
           </Button>
 
           <View style={styles.googleSection}>
