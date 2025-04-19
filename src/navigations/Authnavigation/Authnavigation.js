@@ -10,15 +10,14 @@ import ForgetpasswordScreen from '../../screens/authscreens/ForgetpasswordScreen
 const Stack = createStackNavigator();
 
 const Authnavigation = () => {
-
-    const screenOptions = {
-        headerShown: false,
-      };
-    
+  const screenOptions = {
+    headerShown: false,
+  };
 
   return (
-
-    <Stack.Navigator initialRouteName='WelcomeScreen' screenOptions={screenOptions}>
+    <Stack.Navigator
+      initialRouteName="WelcomeScreen"
+      screenOptions={screenOptions}>
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
