@@ -14,7 +14,7 @@ const OcilatorsMovingAverageList = ({
   selectedOscillators,
   selectedMovingAverages,
 }) => {
-  console.log(indicators);
+  // console.log(indicators);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

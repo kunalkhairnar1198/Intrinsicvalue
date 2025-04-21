@@ -14,7 +14,7 @@ const NseTopLoserScreen = ({navigation}) => {
   const {topLoosersData} = useSelector(state => state.dashboard);
   const {token} = useSelector(state => state.auth);
 
-  console.log(topLoosersData);
+  // console.log(topLoosersData);
 
   useEffect(() => {
     dispatch(getTopGainerAndLooserAction(token, setIsLoading));

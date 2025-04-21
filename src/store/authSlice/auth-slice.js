@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {fetchIPInfo} from '../userSlice/user-slice';
 import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
+import toastService from '../../utils/ToastService/toastService';
 
 const initialState = {
   isLoggedIn: false,
@@ -16,14 +17,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLogin(state, action) {
-      console.log('logedin state');
+      // console.log('logedin state');
       const {email, first_name, last_name, token} = action.payload;
       state.isLoggedIn = true;
       state.token = token;
       state.emailId = email;
       state.firstName = first_name;
       state.lastName = last_name;
-      console.log('setIsLogin', state.isLoggedIn);
+      // console.log('setIsLogin', state.isLoggedIn);
     },
     setIsLogout(state, action) {
       return initialState;
@@ -32,40 +33,115 @@ const authSlice = createSlice({
 });
 
 // Thunk for login
-export const loginAction = ({
-  userData,
-  setIsLoading,
-  //   onSuccess,
-  onEmailNotVerify,
-}) => {
+export const loginAction = ({userData, setIsLoading, onEmailNotVerify}) => {
   return async dispatch => {
     try {
       setIsLoading(true);
-      const ipData = await fetchIPInfo();
-      console.log(ipData, userData);
 
+      const ipData = await fetchIPInfo();
       const response = await axios({
         method: HTTP_METHODS.POST,
         url: `${API_BASE_URL}/user/api/login/`,
         data: {...userData, ...ipData},
         headers: API_HEADERS,
       });
-      console.log(response.data);
 
       if (response.data?.email_verified === true) {
         dispatch(setIsLogin(response.data));
-        console.log('Successfully logged in user');
-        // onSuccess();
+        toastService.showSuccess('Login Successful');
       } else {
         onEmailNotVerify();
       }
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+      toastService.showError(
+        error.response?.data?.error,
+        'Something went wrong. Try again.',
+      );
+      // console.log('Login Error:', error.response?.data);
     } finally {
       setIsLoading(false);
     }
   };
 };
+
+export const registerAction = ({userData, setIsLoading, onEmailVerify}) => {
+  return async dispatch => {
+    console.log('register data', userData);
+    try {
+      setIsLoading(true);
+
+      const ipData = await fetchIPInfo();
+      const response = await axios({
+        method: HTTP_METHODS.POST,
+        url: `${API_BASE_URL}/user/api/register/`,
+        data: {...userData, ...ipData},
+        headers: API_HEADERS,
+      });
+
+      const user = response?.data;
+      // console.log(user);
+      if (user?.email_verified == true) {
+        toastService.showSuccess('Register user Successful');
+      } else {
+        toastService.showSuccess('Verification email sent. Please verify.');
+        onEmailVerify();
+      }
+    } catch (error) {
+      // console.error('Register Error:', error?.response?.data || error.message);
+
+      const errorMsg =
+        error?.response?.data?.error?.email ||
+        error?.response?.data?.error ||
+        'Something went wrong. Please try again.';
+
+      toastService.showError(errorMsg);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+};
+
+export const verifyEmailAction =
+  ({data, setIsLoading, onSuccess}) =>
+  async dispatch => {
+    setIsLoading(true);
+    try {
+      const response = await axios({
+        method: HTTP_METHODS.POST,
+        url: `${API_BASE_URL}/user/api/verifyemailotp/`,
+        data: data,
+        headers: API_HEADERS,
+      });
+      // console.log(response);
+      toastService.showSuccess(response, 'Email verified successfully');
+      dispatch(setIsLogin(response.data));
+      onSuccess();
+    } catch (error) {
+      // console.log({error});
+      toastService.showError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+export const sendOtpAction =
+  ({emailId, resetTimer}) =>
+  async dispatch => {
+    try {
+      const response = await axios({
+        method: HTTP_METHODS.POST,
+        url: `${API_BASE_URL}/user/api/emailverifyotpsend/`,
+        headers: API_HEADERS,
+        data: {email: emailId},
+      });
+      // console.log(response);
+      toastService.showSuccess(response.data, 'OTP sent successfully');
+      resetTimer();
+    } catch (error) {
+      toastService.showError(error);
+    }
+  };
 
 export const {setIsLogin, setIsLogout} = authSlice.actions;
 export default authSlice.reducer;

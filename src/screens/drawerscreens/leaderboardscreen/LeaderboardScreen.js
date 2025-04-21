@@ -393,11 +393,11 @@ const LeaderboardScreen = ({navigation, route}) => {
   const [otherUsers, setOtherUsers] = useState([]);
 
   const handleOpenModal = users => {
-    console.log(users);
+    // console.log(users);
     setOtherUsers(users);
     setModalVisible(true);
   };
-  console.log('leader', leaderboardData);
+  // console.log('leader', leaderboardData);
   const dataToRender = leaderboardData[selectedPeriod] || [];
 
   return (

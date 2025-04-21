@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
 const SegmentControl = ({value, onChange}) => {
-  console.log(value);
+  // console.log(value);
   return (
     <View style={styles.container}>
       <Text style={styles.infoText}>

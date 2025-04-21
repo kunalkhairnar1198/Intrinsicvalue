@@ -214,7 +214,7 @@ const AddTechnicalStrategyscreen = ({navigation}) => {
   const [selectedMovingAverages, setSelectedMovingAverages] = useState([]);
 
   const toggleOscillator = name => {
-    console.log(name);
+    // console.log(name);
     setSelectedOscillators(prev =>
       prev.includes(name)
         ? prev.filter(indicators => indicators !== name)
@@ -223,7 +223,7 @@ const AddTechnicalStrategyscreen = ({navigation}) => {
   };
 
   const toggleMovingAverage = name => {
-    console.log(name);
+    // console.log(name);
     setSelectedMovingAverages(prev =>
       prev.includes(name)
         ? prev.filter(indicators => indicators !== name)
@@ -246,7 +246,7 @@ const AddTechnicalStrategyscreen = ({navigation}) => {
       indicatorValuesChecked,
     };
 
-    console.log('Saved Strategy:', strategyData);
+    // console.log('Saved Strategy:', strategyData);
 
     // Reset state
     setSelectedOscillators([]);

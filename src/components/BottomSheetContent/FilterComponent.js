@@ -104,14 +104,14 @@ const FilterComponent = () => {
 
       dispatch(setTopLoosersData(filterObject));
     }
-    console.log(
-      'Sorting by:',
-      selectedValue,
-      'Order:',
-      order,
-      'nseindicesdata',
-      indicesData,
-    );
+    // console.log(
+    //   'Sorting by:',
+    //   selectedValue,
+    //   'Order:',
+    //   order,
+    //   'nseindicesdata',
+    //   indicesData,
+    // );
 
     bottomSheetModalRef.current?.close();
   };

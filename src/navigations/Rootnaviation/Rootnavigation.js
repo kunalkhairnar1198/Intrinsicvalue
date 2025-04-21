@@ -12,7 +12,7 @@ const RootNavigation = () => {
     state => state.auth,
   );
 
-  console.log(isLoggedIn, token, emailId, firstName, lastName);
+  // console.log(isLoggedIn, token, emailId, firstName, lastName);
   const screenOptions = {
     headerShown: false,
   };

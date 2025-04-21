@@ -24,7 +24,7 @@ const data = [
 ];
 
 const RankScreen = () => {
-  console.log('RANK CARD');
+  // console.log('RANK CARD');
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -33,8 +33,8 @@ const RankScreen = () => {
   const [confidentialRate, setConfidentialRate] = useState('');
 
   const handleAdd = () => {
-    console.log('EPS Growth:', epsGrowth);
-    console.log('Confidential Rate:', confidentialRate);
+    // console.log('EPS Growth:', epsGrowth);
+    // console.log('Confidential Rate:', confidentialRate);
   };
 
   return (

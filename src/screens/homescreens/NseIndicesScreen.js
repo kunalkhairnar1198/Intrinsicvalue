@@ -16,8 +16,8 @@ const NseIndicesScreen = ({navigation}) => {
   const {indicesData} = useSelector(state => state.dashboard);
   const dispatch = useDispatch();
 
-  console.log(indicesData);
-  console.log(token);
+  // console.log(indicesData);
+  // console.log(token);
 
   useEffect(() => {
     // dispatch(setNseIndicesData(niftydata));

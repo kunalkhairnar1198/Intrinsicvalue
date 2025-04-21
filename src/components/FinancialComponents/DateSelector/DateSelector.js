@@ -10,7 +10,7 @@ const DateSelector = ({
   selectedDateIndex,
   getMonthName,
 }) => {
-  console.log('Datest', dates);
+  // console.log('Datest', dates);
   return (
     <View style={styles.dateSelector}>
       <TouchableOpacity onPress={onhandlePrevDate} style={styles.arrowButton}>

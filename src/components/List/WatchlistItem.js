@@ -12,12 +12,12 @@ import {toggleSelection} from '../../store/watchlist/watchlistslice';
 
 const WatchlistItem = ({item, listKey}) => {
   const dispatch = useDispatch();
-  console.log(item, listKey);
+  // console.log(item, listKey);
 
   const {selectedWatchlistData, watchList1, watchList2, watchList3} =
     useSelector(state => state.mywatchlist);
 
-  console.log(selectedWatchlistData);
+  // console.log(selectedWatchlistData);
 
   const handleCheckboxPress = (item, listKey) => {
     // console.log(item);

@@ -35,10 +35,10 @@ const selectionSlice = createSlice({
       // console.log('deselect items', state.selectedItems);
     },
     addWatchlistItem: (state, action) => {
-      console.log('add watchlist in redux');
+      // console.log('add watchlist in redux');
       if (state.selectedItems) {
         state.ftsmWatchlist.push(state.selectedItems);
-        console.log('succesfully add watchlist', state.ftsmWatchlist);
+        // console.log('succesfully add watchlist', state.ftsmWatchlist);
       } else {
         console.log('Failed to load watchlist');
       }

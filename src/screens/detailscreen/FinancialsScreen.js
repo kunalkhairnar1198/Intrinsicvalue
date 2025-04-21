@@ -42,7 +42,7 @@ const FinancialsScreen = () => {
     nextYearSameMonth: null,
   });
 
-  console.log(financialDatas);
+  // console.log(financialDatas);
   const tabs = [
     'Quarterly Results',
     'Annual Results',
@@ -88,7 +88,7 @@ const FinancialsScreen = () => {
       [activeTab]: filteredData,
     }));
   }, [quaterlyResult, activeTab, activeSegment]);
-  console.log(financialDatas);
+  // console.log(financialDatas);
 
   //Convert to array of {year, month}
   const quarterlyYearMonth = useMemo(() => {
@@ -127,7 +127,7 @@ const FinancialsScreen = () => {
     }
   }, [quarterlyYearMonth, selectedDateIndex]);
 
-  console.log('Date CONTEXT', dateContext);
+  // console.log('Date CONTEXT', dateContext);
   // console.log(quarterlyYearMonth);
   // console.log(selectedDate);
   const handlePrevDate = () => {

@@ -67,8 +67,8 @@ const WathlistScreen = ({navigation, route}) => {
 
   const flattenedStocks =
     selectedTab?.data?.map(item => item?.stock)?.flat() ?? [];
-  console.log(flattenedStocks);
-  console.log(selectedTab);
+  // console.log(flattenedStocks);
+  // console.log(selectedTab);
 
   const updateTabTitle = () => {
     setTabs(prev =>
@@ -88,7 +88,7 @@ const WathlistScreen = ({navigation, route}) => {
   }, [dispatch, selectedTab]);
 
   const handleSelectAll = () => {
-    console.log('selection', selectedWatchlistData);
+    // console.log('selection', selectedWatchlistData);
     if (isAllSelected) {
       dispatch(deselectAllItem());
     } else {

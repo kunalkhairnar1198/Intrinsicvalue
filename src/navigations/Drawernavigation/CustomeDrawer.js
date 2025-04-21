@@ -27,7 +27,7 @@ const CustomDrawer = props => {
   const insets = useSafeAreaInsets();
 
   const logoutHandle = () => {
-    console.log('logout', isLoggedIn);
+    // console.log('logout', isLoggedIn);
     dispatch(setIsLogout());
     persistor.purge();
     // props.navigation.navigate('Authnavigation');

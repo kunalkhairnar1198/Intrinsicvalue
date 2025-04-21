@@ -4,9 +4,8 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
-import {useRef, useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import {Shadow} from 'react-native-shadow-2';
 import {OtpInput} from 'react-native-otp-entry';
 import {COLORS} from '../../constants/theme';
@@ -16,58 +15,72 @@ import Background from '../../components/Baground/Background';
 import Button from '../../components/Button/Button';
 import responsive from '../../utils/responsive';
 import {useNavigation} from '@react-navigation/native';
+import toastService from '../../utils/ToastService/toastService';
+import {useDispatch} from 'react-redux';
+import {
+  sendOtpAction,
+  verifyEmailAction,
+} from '../../store/authSlice/auth-slice';
 
 const EmailVerificationScreen = ({route}) => {
-  const {Obj} = route.params;
   const navigation = useNavigation();
+  // const route = useRoute();
+  const dispatch = useDispatch();
 
-  const otpRef = useRef(null);
-  const [timer, setTimer] = useState(30);
+  const otpRef = useRef();
   const [enteredOtp, setEnteredOtp] = useState('');
-  const [resendDisabled, setResendDisabled] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const [resendDisabled, setResendDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // console.log("Received OTP:", Obj.otp);
+  const email = route.params?.email;
 
-  const handleSubmit = () => {
-    if (enteredOtp.length !== 6) {
-      Alert.alert('Invalid OTP', 'Please enter a valid 6-digit OTP.');
+  useEffect(() => {
+    if (timer === 0) {
+      setResendDisabled(false);
       return;
     }
 
-    // console.log("Entered OTP:", enteredOtp);
-
-    verifyOtpOnServer(enteredOtp);
-
-    setEnteredOtp('');
-    otpRef?.current?.clear();
-  };
-
-  const verifyOtpOnServer = otp => {
-    setTimeout(() => {
-      if (otp === Obj.otp.toString()) {
-        Alert.alert('Success', 'Your email has been verified.');
-        navigation.navigate('Drawernavigation');
-      } else {
-        Alert.alert('Error', 'Invalid OTP. Please try again.');
-      }
+    const interval = setInterval(() => {
+      setTimer(prev => prev - 1);
     }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const handleSubmit = otp => {
+    if (otp.length !== 6) {
+      toastService.showWarning(
+        'Invalid OTP',
+        'Please enter a valid 6-digit OTP.',
+      );
+      return;
+    }
+
+    dispatch(
+      verifyEmailAction({
+        data: {email, otp},
+        setIsLoading,
+        onSuccess: () => {
+          navigation.navigate('Drawernavigation');
+        },
+      }),
+    );
+
+    otpRef?.current?.clear();
+    setEnteredOtp('');
   };
 
   const handleResendOTP = () => {
-    setResendDisabled(true);
-    setTimer(30);
-    // console.log("Resending OTP...");
-
-    let interval = setInterval(() => {
-      setTimer(prev => {
-        if (prev === 1) {
-          clearInterval(interval);
-          setResendDisabled(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    dispatch(
+      sendOtpAction({
+        emailId: email,
+        resetTimer: () => {
+          setResendDisabled(true);
+          setTimer(30);
+        },
+      }),
+    );
   };
 
   return (
@@ -89,8 +102,9 @@ const EmailVerificationScreen = ({route}) => {
       <View style={styles.titleSection}>
         <Text style={styles.title}>Verify Your Email</Text>
         <Text style={styles.subTitle}>
-          We emailed you the six-digit code to {''}
-          {`${Obj?.email}`} Enter the code below to confirm your email address.
+          We emailed you the six-digit code to{' '}
+          <Text style={{fontWeight: '700'}}>{`${email}`}</Text>. Enter the code
+          below to confirm your email address.
         </Text>
       </View>
 
@@ -101,10 +115,9 @@ const EmailVerificationScreen = ({route}) => {
             numberOfDigits={6}
             focusColor={COLORS.primary}
             autoFocus={false}
-            // placeholder="******"
             blurOnFilled={true}
             onTextChange={text => setEnteredOtp(text)}
-            onFilled={text => handleSubmit(text)}
+            onFilled={handleSubmit}
             textInputProps={{
               accessibilityLabel: 'One-Time Password',
             }}
@@ -124,12 +137,14 @@ const EmailVerificationScreen = ({route}) => {
           style={styles.resendContainer}>
           <Text
             style={[styles.resendText, resendDisabled && styles.disabledText]}>
-            Resend OTP {resendDisabled && `in ${timer}s`}
+            {resendDisabled ? `Resend OTP in ${timer}s` : 'Resend OTP'}
           </Text>
         </TouchableOpacity>
       </View>
 
-      <Button onPress={() => handleSubmit(Obj.otp)} style={styles.buttonVerify}>
+      <Button
+        onPress={() => handleSubmit(enteredOtp)}
+        style={styles.buttonVerify}>
         <Text style={styles.buttonText}>Verify</Text>
       </Button>
     </SafeAreaView>

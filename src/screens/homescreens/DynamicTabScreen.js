@@ -8,7 +8,7 @@ const DynamicTabScreen = ({route, navigation}) => {
   const {Symbol} = route.params || {};
   const {dynamicData} = useSelector(state => state.dashboard);
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  console.log('DYNAMIC SCREEN, ITEM', dynamicData, Symbol);
+  // console.log('DYNAMIC SCREEN, ITEM', dynamicData, Symbol);
   // console.log('dynamic selected', selectedItems);
   return (
     <View style={styles.container}>

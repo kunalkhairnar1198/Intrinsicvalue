@@ -47,7 +47,7 @@ const watchlistSlice = createSlice({
       }
     },
     toggleSelection: (state, action) => {
-      console.log('toggleitem', state.selectedWatchlistData);
+      // console.log('toggleitem', state.selectedWatchlistData);
       const item = action.payload;
 
       const existsIndex = state.selectedWatchlistData.findIndex(
@@ -61,7 +61,7 @@ const watchlistSlice = createSlice({
       } else {
         state.selectedWatchlistData.push(item);
       }
-      console.log('Selected w items:', state.selectedWatchlistData);
+      // console.log('Selected w items:', state.selectedWatchlistData);
     },
 
     selectAllItem: (state, action) => {

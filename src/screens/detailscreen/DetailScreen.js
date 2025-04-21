@@ -5,7 +5,7 @@ import DetailsToptabNavigation from '../../navigations/TopTabBarNavigation/Detai
 
 const DetailScreen = ({navigation, route}) => {
   const {item} = route?.params;
-  console.log(item);
+  // console.log(item);
   return (
     <View style={styles.container}>
       <DetailsHeader navigation={navigation} item={item} goBack={'goBack'} />

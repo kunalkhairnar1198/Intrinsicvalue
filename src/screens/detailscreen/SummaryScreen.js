@@ -26,7 +26,7 @@ const rankingData = [
 ];
 
 const SummaryScreen = () => {
-  console.log(rankingData);
+  // console.log(rankingData);
   const renderInfoItem = ({item}) => (
     <View style={styles.dataInfo}>
       <Text style={styles.infoLabel}>{item.label}</Text>

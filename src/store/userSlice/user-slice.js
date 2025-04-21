@@ -17,7 +17,7 @@ export const fetchIPInfo = async () => {
     // setIpData(response.data);
     const data = response.data;
     if (data) {
-      console.log('SUCESFULLY RESPOND DATA', data);
+      // console.log('SUCESFULLY RESPOND DATA', data);
       return {
         ip_address: data.ip,
         ip_country: data.country,

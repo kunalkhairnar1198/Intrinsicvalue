@@ -19,6 +19,9 @@ import responsive from '../../utils/responsive';
 import FormInput from '../../components/Forminput/FormInput';
 import Background from '../../components/Baground/Background';
 import Button from '../../components/Button/Button';
+import toastService from '../../utils/ToastService/toastService';
+import {useDispatch} from 'react-redux';
+import {registerAction} from '../../store/authSlice/auth-slice';
 
 const formFields = [
   {
@@ -70,7 +73,9 @@ const formSchema = z
 
 const RegisterScreen = () => {
   const [checked, setChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const {control, handleSubmit, reset} = useForm({
     defaultValues: {
@@ -86,13 +91,33 @@ const RegisterScreen = () => {
 
   const onSubmit = data => {
     if (!checked) {
-      alert('Please accept the Terms & Conditions');
+      toastService.showWarning('Please accept the Terms & Conditions');
       return;
     }
-    reset();
 
-    console.log('Form Data:', data);
-    navigation.navigate('LoginScreen');
+    const userData = {
+      email: data?.email,
+      first_name: data?.firstname,
+      last_name: data?.lastname,
+      password: data?.password,
+      user_mobileno: data?.number,
+    };
+    // console.log(userData);
+
+    dispatch(
+      registerAction({
+        userData,
+        setIsLoading,
+        onEmailVerify: () => {
+          // console.log('NAVIGATE email verification screen');
+          navigation.navigate('EmailVerificationScreen', {email: data.email});
+          reset();
+        },
+      }),
+    );
+
+    // console.log('Form Data:', data);
+    // navigation.navigate('LoginScreen');
   };
 
   return (

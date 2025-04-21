@@ -29,7 +29,7 @@ const ForgetpasswordScreen = () => {
   });
 
   const onSubmit = data => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -58,11 +58,7 @@ const ForgetpasswordScreen = () => {
         </View>
 
         <View style={styles.formSection}>
-          <FormInput
-            control={control}
-            name="email"
-            placeholder="Email"
-          />
+          <FormInput control={control} name="email" placeholder="Email" />
 
           <Button style={styles.buttonReset} onPress={handleSubmit(onSubmit)}>
             <Text style={styles.buttonText}>Forget password</Text>

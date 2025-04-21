@@ -37,7 +37,7 @@ const LoginScreen = () => {
   const {isLoggedIn, token, emailId, firstName, lastName} = useSelector(
     state => state.auth,
   );
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,14 +55,15 @@ const LoginScreen = () => {
       username: data.email,
       password: data.password,
     };
-    console.log(userData);
+    // console.log(userData);
     dispatch(
       loginAction({
         userData,
         setIsLoading,
         onEmailNotVerify: () => {
           console.log('NAVIGATE email verification screen');
-          navigation.navigate('EmailVerificationScreen', `${data.email}`); // optional
+          navigation.navigate('EmailVerificationScreen', {email: data.email}); // optional
+          reset();
         },
       }),
     );

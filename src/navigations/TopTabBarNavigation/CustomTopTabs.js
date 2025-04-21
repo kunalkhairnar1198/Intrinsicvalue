@@ -31,7 +31,7 @@ const CustomTopTabs = ({routes}) => {
     tabBarActiveTintColor: COLORS.primary,
     tabBarInactiveTintColor: 'gray',
   };
-  console.log('top tabs', routes);
+  // console.log('top tabs', routes);
 
   return (
     <Tab.Navigator
