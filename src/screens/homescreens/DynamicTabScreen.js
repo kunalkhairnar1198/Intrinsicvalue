@@ -5,23 +5,23 @@ import {COLORS} from '../../constants/theme';
 import {useSelector} from 'react-redux';
 
 const DynamicTabScreen = ({route, navigation}) => {
-  const {items} = route.params || {};
+  const {Symbol} = route.params || {};
+  const {dynamicData} = useSelector(state => state.dashboard);
   const selectedItems = useSelector(state => state.selection.selectedItems);
-  // console.log('DYNAMIC SCREEN, ITEM', items);
+  console.log('DYNAMIC SCREEN, ITEM', dynamicData, Symbol);
   // console.log('dynamic selected', selectedItems);
-
   return (
     <View style={styles.container}>
-      {items ? (
+      {dynamicData ? (
         <>
           <FlatlistComponent
-            data={items}
+            data={dynamicData}
             navigation={navigation}
             table={'isTable'}
           />
         </>
       ) : (
-        <Text>No Data Received</Text>
+        <Text>Load the data loading....</Text>
       )}
     </View>
   );

@@ -6,6 +6,7 @@ import FocusAwareStatusBar from './src/components/Statusbar/FocustAwareStatusBar
 import {COLORS} from './src/constants/theme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import CustomToast from './src/components/CustomToast/CustomToast';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Rootnavigation />
         </NavigationContainer>
       </BottomSheetModalProvider>
+      <CustomToast />
     </GestureHandlerRootView>
   );
 };

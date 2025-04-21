@@ -1039,11 +1039,6 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@backpackapp-io/react-native-toast@^0.13.0":
-  version "0.13.0"
-  resolved "https://registry.npmjs.org/@backpackapp-io/react-native-toast/-/react-native-toast-0.13.0.tgz"
-  integrity sha512-kutFSE1vi77ybNV24JSnKQ4WUgWZ+LcYsrdAyl5ztEWGP7FRsfinsuaOrBQwDBGxm0rzMFeKM5K7fRHa/Hvy8A==
-
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
@@ -6351,6 +6346,11 @@ react-native-tab-view@^4.0.6:
   integrity sha512-N0kFUSVqsL74Xxf3LrWPnTQTHAI9AMmlndAC9eFai00upLEgWcyLgyRsA3xTJSjmsYLVEZNr8VWjshBhTCp7Jg==
   dependencies:
     use-latest-callback "^0.2.1"
+
+react-native-toast-message@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-2.3.0.tgz"
+  integrity sha512-d7LldTK1ei1Bl7RFhoOYw8hVQ4oKPQHORYI//xR9Pyz3HxSlFlvQbueE5X3KLoemRRgBrOUg3zY6DxXnxrVLRg==
 
 react-native-vector-icons@^10.2.0:
   version "10.2.0"

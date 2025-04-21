@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {TabContext} from '../../context-api/MaterialTopTabContext';
@@ -14,6 +14,7 @@ import {
   formatAmount,
   formatPercentage,
 } from '../../utils/calculations/FormatAmountPercentage';
+import {useDispatch, useSelector} from 'react-redux';
 
 const ItemComponent = ({item, navigation}) => {
   const {handleItemClick, toggleLoader} = useContext(TabContext);
@@ -30,7 +31,7 @@ const ItemComponent = ({item, navigation}) => {
     handleItemClick(item, navigation);
 
     setTimeout(() => {
-      navigation.navigate('Dynamicscreen', {items: results});
+      navigation.navigate('Dynamicscreen', {Symbol: item.Symbol});
       toggleLoader();
     }, 10);
   };

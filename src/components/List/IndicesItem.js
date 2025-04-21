@@ -2,10 +2,11 @@ import React, {useContext} from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import CustomCard from '../UI/Card';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
+import responsive from '../../utils/responsive';
 
 const IndicesItem = ({data, navigation}) => {
   const {handleItemClick, toggleLoader} = useContext(TabContext);
-
+  // console.log(data);
   const handleItemPress = item => {
     // console.log(item);
     handleItemClick(item, navigation);
@@ -16,7 +17,7 @@ const IndicesItem = ({data, navigation}) => {
         params: {item},
       });
       toggleLoader();
-    }, 10);
+    }, 100);
   };
   return (
     <CustomCard style={styles.card}>
@@ -54,31 +55,31 @@ const IndicesList = ({data, navigation}) => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 8,
+    padding: responsive.padding(8),
   },
   card: {
-    width: 171,
-    height: 60,
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
+    width: responsive.width(145),
+    height: responsive.height(60),
+    margin: responsive.margin(10),
+    padding: responsive.padding(10),
+    borderRadius: responsive.borderRadius(8),
     justifyContent: 'center',
   },
   symbol: {
-    fontSize: 18,
+    fontSize: responsive.fontSize(14),
     fontWeight: 'bold',
-    marginVertical: 5,
+    marginVertical: responsive.margin(5),
   },
   bottomSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   value: {
-    fontSize: 14,
+    fontSize: responsive.fontSize(13),
     color: 'black',
   },
   change: {
-    fontSize: 14,
+    fontSize: responsive.fontSize(13),
     fontWeight: 'bold',
   },
 });

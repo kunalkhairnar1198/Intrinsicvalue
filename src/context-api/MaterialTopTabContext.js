@@ -1,10 +1,14 @@
 import React, {createContext, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCompanyIndicesAction} from '../store/dashboard/dashboardslice';
 
 const TabContext = createContext();
 
 const MaterialTopTabContextProvider = props => {
   const [dynamicTab, setDynamicTab] = useState(null);
   const [loading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.auth);
 
   const bottomSheetModalRef = useRef(null);
   const watchbottomSheetModalRef = useRef(null);
@@ -13,6 +17,7 @@ const MaterialTopTabContextProvider = props => {
 
   const handleItemClick = item => {
     setDynamicTab({name: item.Symbol});
+    dispatch(getCompanyIndicesAction(token, item.Symbol, setIsLoading));
     setIsLoading(true);
   };
   const toggleLoader = () => {

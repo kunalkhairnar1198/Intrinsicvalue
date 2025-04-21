@@ -1,6 +1,6 @@
 import {API_BASE_URL as BASE} from '@env';
 
-export const API_BASE_URL = BASE;
+export const API_BASE_URL = `https://devbackend.intrinsicvalue.ai`;
 export const API_HEADERS = {
   'Content-Type': 'application/json',
 };

@@ -16,7 +16,7 @@ import CustomeHeader from '../../components/Header/CustomeHeader';
 import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
 import MaterialToptabnavigation from '../../navigations/TopTabBarNavigation/MaterialToptabnavigation';
 
-import NseIndicesData from '../../assets/NiftyData/Data.json';
+// import NseIndicesData from '../../assets/NiftyData/Data.json';
 import NseTopGainerLooser from '../../assets/NiftyData/NseTopGainerLooser.json';
 import IndicesList from '../../components/List/IndicesItem';
 import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
@@ -35,7 +35,9 @@ import WatchlistBottomComponent from '../../components/BottomSheetContent/Watchl
 import AddtoWatchListBottom from '../../components/BottomSheetContent/AddtoWatchListBottom';
 
 const HomeScreen = ({navigation, route}) => {
-  const {niftydata} = NseIndicesData;
+  // const {niftydata} = NseIndicesData;
+  const {indicesData} = useSelector(state => state.dashboard);
+  console.log(indicesData);
   const {results} = companyIndices;
   const {gainer, looser} = NseTopGainerLooser;
   const {loading, bottomSheetModalRef, addWatchlistBottomModalRef} =
@@ -56,7 +58,7 @@ const HomeScreen = ({navigation, route}) => {
       case 'NseTopLoser':
         return looser;
       case 'NiftyData':
-        return niftydata;
+        return indicesData;
       case 'Dynamicscreen':
         return results;
       default:
@@ -82,8 +84,7 @@ const HomeScreen = ({navigation, route}) => {
       dispatch(selectAll(currentList));
     }
   };
-
-  const filteredData = niftydata.filter(item =>
+  const filteredData = indicesData?.filter(item =>
     ['NIFTY BANK', 'NIFTY NEXT 50', 'NIFTY 50'].includes(item.indices_name),
   );
 

@@ -1,26 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import NseTopGainers from '../../assets/NiftyData/NseTopGainerLooser.json';
+// import NseTopGainers from '../../assets/NiftyData/NseTopGainerLooser.json';
 import FlatlistComponent from '../../components/List/FlatlistComponent';
 import {useDispatch, useSelector} from 'react-redux';
-import {setTopLoosersData} from '../../store/dashboard/dashboardslice';
+import {
+  getTopGainerAndLooserAction,
+  setTopLoosersData,
+} from '../../store/dashboard/dashboardslice';
 
 const NseTopLoserScreen = ({navigation}) => {
-  const {looser} = NseTopGainers;
   const dispatch = useDispatch();
-  const nseTopLoosersData = useSelector(
-    state => state.dashboard.topLoosersData,
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const {topLoosersData} = useSelector(state => state.dashboard);
+  const {token} = useSelector(state => state.auth);
+
+  console.log(topLoosersData);
 
   useEffect(() => {
-    dispatch(setTopLoosersData(looser));
-  }, []);
+    dispatch(getTopGainerAndLooserAction(token, setIsLoading));
+  }, [token, setIsLoading]);
 
-  // console.log(NseTopGainers);
   return (
     <View style={styles.container}>
       <FlatlistComponent
-        data={nseTopLoosersData}
+        data={topLoosersData}
         navigation={navigation}
         table={'isTable'}
       />
