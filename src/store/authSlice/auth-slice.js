@@ -27,7 +27,11 @@ const authSlice = createSlice({
       // console.log('setIsLogin', state.isLoggedIn);
     },
     setIsLogout(state, action) {
-      return initialState;
+      state.isLoggedIn = false;
+      state.token = null;
+      state.emailId = null;
+      state.firstName = null;
+      state.lastName = null;
     },
   },
 });
@@ -100,6 +104,25 @@ export const registerAction = ({userData, setIsLoading, onEmailVerify}) => {
       setIsLoading(false);
     }
   };
+};
+
+export const logoutAction = token => async dispatch => {
+  const localHeader = {...API_HEADERS, Authorization: `Token ${token}`};
+  console.log(token);
+  try {
+    const response = await axios({
+      method: HTTP_METHODS.GET,
+      url: `${API_BASE_URL}/user/api/logout/`,
+      headers: localHeader,
+    });
+    // console.log(response);
+    dispatch(setIsLogout());
+
+    toastService.showSuccess(response, 'Logged out successfully');
+  } catch (error) {
+    dispatch(setIsLogout());
+    // console.log(error);
+  }
 };
 
 export const verifyEmailAction =

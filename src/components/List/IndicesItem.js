@@ -3,6 +3,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import CustomCard from '../UI/Card';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 import responsive from '../../utils/responsive';
+import Loader from '../Loader/Loader';
 
 const IndicesItem = ({data, navigation}) => {
   const {handleItemClick, toggleLoader} = useContext(TabContext);
@@ -49,6 +50,11 @@ const IndicesList = ({data, navigation}) => {
         <IndicesItem data={item} navigation={navigation} />
       )}
       contentContainerStyle={styles.listContainer}
+      ListEmptyComponent={
+        <View style={styles.loaderContainer}>
+          <Loader size="small" />
+        </View>
+      }
     />
   );
 };
@@ -81,6 +87,11 @@ const styles = StyleSheet.create({
   change: {
     fontSize: responsive.fontSize(13),
     fontWeight: 'bold',
+  },
+  loaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

@@ -17,9 +17,10 @@ import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
 import MaterialToptabnavigation from '../../navigations/TopTabBarNavigation/MaterialToptabnavigation';
 
 // import NseIndicesData from '../../assets/NiftyData/Data.json';
-import NseTopGainerLooser from '../../assets/NiftyData/NseTopGainerLooser.json';
+// import NseTopGainerLooser from '../../assets/NiftyData/NseTopGainerLooser.json';
+// import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
+
 import IndicesList from '../../components/List/IndicesItem';
-import companyIndices from '../../assets/NiftyData/CompanyIndices.json';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -36,10 +37,12 @@ import AddtoWatchListBottom from '../../components/BottomSheetContent/AddtoWatch
 
 const HomeScreen = ({navigation, route}) => {
   // const {niftydata} = NseIndicesData;
-  const {indicesData} = useSelector(state => state.dashboard);
-  console.log(indicesData);
-  const {results} = companyIndices;
-  const {gainer, looser} = NseTopGainerLooser;
+  const {indicesData, topGainersData, topLoosersData, dynamicData} =
+    useSelector(state => state.dashboard);
+  // console.log(indicesData);
+  // const {results} = companyIndices;
+  // const {gainer, looser} = NseTopGainerLooser;
+
   const {loading, bottomSheetModalRef, addWatchlistBottomModalRef} =
     useContext(TabContext);
 
@@ -54,13 +57,13 @@ const HomeScreen = ({navigation, route}) => {
   const getCurrentList = () => {
     switch (activeTab) {
       case 'NseTopGainer':
-        return gainer;
+        return topGainersData;
       case 'NseTopLoser':
-        return looser;
+        return topLoosersData;
       case 'NiftyData':
         return indicesData;
       case 'Dynamicscreen':
-        return results;
+        return dynamicData;
       default:
         return [];
     }
@@ -68,7 +71,7 @@ const HomeScreen = ({navigation, route}) => {
 
   const currentList = getCurrentList();
 
-  const isAllSelected = selectedItems.length === currentList.length;
+  const isAllSelected = selectedItems.length === currentList?.length;
 
   useEffect(() => {
     dispatch(deselectAll());
@@ -85,7 +88,7 @@ const HomeScreen = ({navigation, route}) => {
     }
   };
   const filteredData = indicesData?.filter(item =>
-    ['NIFTY BANK', 'NIFTY NEXT 50', 'NIFTY 50'].includes(item.indices_name),
+    ['NIFTY BANK', 'NIFTY NEXT 50', 'NIFTY 50'].includes(item?.indices_name),
   );
 
   const handleAddWatchlist = () => {

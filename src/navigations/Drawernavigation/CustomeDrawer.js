@@ -16,20 +16,22 @@ import LinearGradient from 'react-native-linear-gradient';
 import LoginIcon from 'react-native-vector-icons/Entypo';
 import DrawerBgSvg from '../../assets/SVG/BgSvgs/DrawerBgSvg';
 import responsive from '../../utils/responsive';
+
 import {useDispatch, useSelector} from 'react-redux';
-import {setIsLogout} from '../../store/authSlice/auth-slice';
-import {persistor} from '../../store/Store';
+import {logoutAction} from '../../store/authSlice/auth-slice';
+// import {persistor} from '../../store/Store';
 
 const CustomDrawer = props => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-
+  const {token} = useSelector(state => state.auth);
   const insets = useSafeAreaInsets();
 
   const logoutHandle = () => {
     // console.log('logout', isLoggedIn);
-    dispatch(setIsLogout());
-    persistor.purge();
+    dispatch(logoutAction(token));
+    // persistor.purge();
+    // console.log('logout');
     // props.navigation.navigate('Authnavigation');
   };
 

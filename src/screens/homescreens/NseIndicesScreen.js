@@ -28,7 +28,11 @@ const NseIndicesScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <FlatlistComponent data={indicesData} navigation={navigation} />
+      <FlatlistComponent
+        data={indicesData}
+        navigation={navigation}
+        isLoading={isLoading}
+      />
     </View>
   );
 };

@@ -4,9 +4,13 @@ import {FlatList, StyleSheet} from 'react-native';
 import ItemComponent from './ItemComponent';
 import responsive from '../../utils/responsive';
 import NseTopGainerLooserItem from './NseTopGainerLooserItem';
+import {ActivityIndicator} from 'react-native-paper';
+import {COLORS} from '../../constants/theme';
+import Loader from '../Loader/Loader';
 
-const FlatlistComponent = ({data, navigation, table}) => {
+const FlatlistComponent = ({data, navigation, table, isLoading}) => {
   // console.log(data);
+
   const renderItem = ({item}) => (
     <>
       {table === 'isTable' ? (
@@ -25,6 +29,7 @@ const FlatlistComponent = ({data, navigation, table}) => {
       }
       renderItem={renderItem}
       contentContainerStyle={styles.listContainer}
+      ListEmptyComponent={<Loader size="large" />}
     />
   );
 };
