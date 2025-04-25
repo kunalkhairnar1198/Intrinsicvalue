@@ -37,6 +37,7 @@ const Bottomnavigation = () => {
     const item = routes.find(routeItem => routeItem.name === route.name);
     // console.log(item);
     return {
+      tabBarHideOnKeyboard: true,
       title: item.title,
       headerShown: false,
       tabBarIcon: ({focused}) => item.icon(focused),

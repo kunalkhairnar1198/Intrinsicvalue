@@ -13,27 +13,54 @@ import {useDispatch, useSelector} from 'react-redux';
 import {toggleItem} from '../../store/selectSlice/select-slice';
 import {TabContext} from '../../context-api/MaterialTopTabContext';
 import {setWathlistItem} from '../../store/dashboard/dashboardslice';
+import {formatNumberToIndianStandard} from '../../utils/calculations/FormatAmountPercentage';
 
 const NseTopGainerLooserItem = ({item, navigation}) => {
   const dispatch = useDispatch();
   const {watchbottomSheetModalRef} = useContext(TabContext);
   const selectedItems = useSelector(state => state.selection.selectedItems);
 
+  const {
+    name,
+    symbol,
+    NSE_LTP,
+    // NSE_VOLUME,
+    // NSE_AVGPRICE,
+    // NSE_Open,
+    // NSE_High,
+    // NSE_Low,
+    // NSE_CLOSEPRICE,
+    // NSE_VALUE,
+    // NSE_PREV_PRICE,
+    NSE_CHANGE,
+    // NSE_PER_CHANGE,
+    NSE_UPD_TIME,
+    // PE_Ratio,
+    // PEG_Ratio,
+    // Growth_Rate,
+    // TTM_EPS,
+    // Prev_TTM_EPS,
+  } = item;
+  // console.log(name);
+
   // console.log('nse top gainers', selectedItems);
 
   const handleCheckboxPress = () => {
     const obj = {
       ...item,
-      id: item.symbol || `${item.name}-${item.NSE_UPD_TIME}`,
+      id: symbol || `${name}-${NSE_UPD_TIME}`,
     };
 
     dispatch(toggleItem(obj));
     // console.log('Toggled Item:', obj);
   };
 
-  const handlePresentModalPress = () => {
-    watchbottomSheetModalRef.current?.present();
-    dispatch(setWathlistItem(item));
+  const handlePresentModalPress = item => {
+    console.log('press open modal', item);
+    if (item) {
+      dispatch(setWathlistItem(item));
+    }
+    watchbottomSheetModalRef?.current.present();
   };
 
   return (
@@ -56,20 +83,20 @@ const NseTopGainerLooserItem = ({item, navigation}) => {
 
             <View style={styles.contentRow}>
               <View style={{flex: 1, justifyContent: 'center'}}>
-                <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.description}>{item.symbol}</Text>
+                <Text style={styles.title}>{name}</Text>
+                <Text style={styles.description}>{symbol}</Text>
               </View>
 
               <View style={{justifyContent: 'center'}}>
-                <Text style={styles.closeText}>₹ {item.NSE_LTP}</Text>
+                <Text style={styles.closeText}>
+                  ₹ {formatNumberToIndianStandard(NSE_LTP)}
+                </Text>
                 <Text
                   style={{
                     fontSize: 16,
-                    color: item.NSE_CHANGE < 0 ? 'red' : 'green',
+                    color: NSE_CHANGE < 0 ? 'red' : 'green',
                   }}>
-                  {item.NSE_CHANGE < 0
-                    ? `${item.NSE_CHANGE}%`
-                    : `${item.NSE_CHANGE}%`}
+                  {NSE_CHANGE < 0 ? `${NSE_CHANGE}%` : `${NSE_CHANGE}%`}
                 </Text>
               </View>
             </View>

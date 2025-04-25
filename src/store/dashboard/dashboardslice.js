@@ -122,6 +122,7 @@ export const getTopGainerAndLooserAction = (token, setIsLoading) => {
 };
 
 export const getCompanyIndicesAction = (token, symbol, setIsLoading) => {
+  console.log('render company indices', symbol);
   return async dispatch => {
     setIsLoading(true);
     dispatch(setDynamicData(null));
@@ -134,6 +135,7 @@ export const getCompanyIndicesAction = (token, symbol, setIsLoading) => {
         headers: localHeader,
         data: {symbol},
       });
+      console.log(response?.data);
       dispatch(setDynamicData(response?.data?.results));
     } catch (error) {
       console.error(error);

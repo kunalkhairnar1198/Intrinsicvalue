@@ -1,11 +1,15 @@
+import axios from 'axios';
 import {createSlice} from '@reduxjs/toolkit';
 import {watchlistNames} from '../../screens/watchlistscreen/WatchlistTabs/WatchlistTabs';
+import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
+import toastService from '../../utils/ToastService/toastService';
 
 const initialState = {
   selectedWatchlistData: [],
   watchList1: [],
   watchList2: [],
   watchList3: [],
+  myWatchListData: [],
 };
 
 const watchlistSlice = createSlice({
@@ -112,10 +116,66 @@ const watchlistSlice = createSlice({
         item => item.watchlist_name !== activeWatchlistName,
       );
     },
+
+    setWatchListData: (state, action) => {
+      state.myWatchListData = action.payload;
+    },
   },
 });
 
+export const getWatchListDataAction =
+  ({token, setIsLoadingData, watchlistno, filterBy = 'all', otherParams}) =>
+  async dispatch => {
+    console.log(watchlistno);
+    try {
+      setIsLoadingData(true);
+      const localHeader = {...API_HEADERS, Authorization: `Token ${token}`};
+      const {data} = await axios({
+        method: HTTP_METHODS.GET,
+        url: `${API_BASE_URL}/finance/api/v2/getwatchlist/`,
+        params: {
+          watchlistno,
+          filterby: filterBy,
+          ...otherParams,
+        },
+        headers: localHeader,
+      });
+      console.log('data', data.results);
+      dispatch(setWatchListData(data?.results));
+    } catch (error) {
+      toastService.showTomato(error);
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
+
+export const addNewStockInWatchListAction =
+  ({searchStock, watchlist_number, setIsLoadingData, token, onSuccess}) =>
+  async dispatch => {
+    console.log('searchstok add', searchStock, watchlist_number);
+    try {
+      setIsLoadingData(true);
+      const localHeader = {...API_HEADERS, Authorization: `Token ${token}`};
+      const {data} = await axios({
+        method: HTTP_METHODS.POST,
+        url: `${API_BASE_URL}/finance/api/insertwatchlist/`,
+        headers: localHeader,
+        data: {symbol: searchStock, watchlist_number},
+      });
+      toastService.showSuccess(
+        data,
+        data.results || 'Stock added to FTSM Watchlist',
+      );
+      onSuccess();
+    } catch (error) {
+      toastService.showError({dispatch, error});
+    } finally {
+      setIsLoadingData(false);
+    }
+  };
+
 export const {
+  setWatchListData,
   addWatchlistData,
   selectAllItem,
   deselectAllItem,

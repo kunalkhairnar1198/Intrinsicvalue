@@ -23,8 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const WatchlistBottomComponent = () => {
   const navigation = useNavigation();
-  const {watchbottomSheetModalRef, addWatchlistBottomModalRef} =
-    useContext(TabContext);
+  const {watchbottomSheetModalRef} = useContext(TabContext);
   const {watchlistItem} = useSelector(state => state.dashboard);
   // console.log(watchlistItem);
   const [selectedValue, setSelectedValue] = useState(null);
@@ -50,14 +49,17 @@ const WatchlistBottomComponent = () => {
           <Text style={styles.title}>
             {watchlistItem?.name || 'Stock Title'}
           </Text>
-          <Text
-            style={[
-              styles.percentage,
-              {color: watchlistItem?.NSE_CHANGE < 0 ? 'red' : 'green'},
-            ]}>
-            <Text style={styles.subText}>Change :</Text>
-            {formatPercentage(watchlistItem?.NSE_CHANGE || 'NA')}
-          </Text>
+
+          <View>
+            <Text
+              style={[
+                styles.percentage,
+                {color: watchlistItem?.NSE_CHANGE < 0 ? 'red' : 'green'},
+              ]}>
+              <Text style={styles.subText}>Change :</Text>
+              {formatPercentage(watchlistItem?.NSE_CHANGE || 'NA')}
+            </Text>
+          </View>
         </View>
 
         {/* Stock Name and Value */}
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: responsive.margin(8),
   },
   title: {
-    fontSize: responsive.fontSize(15),
+    fontSize: responsive.fontSize(14),
     fontWeight: 'bold',
   },
   percentage: {

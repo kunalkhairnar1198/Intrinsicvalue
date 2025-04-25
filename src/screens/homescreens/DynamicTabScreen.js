@@ -1,30 +1,34 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import FlatlistComponent from '../../components/List/FlatlistComponent';
-import {COLORS} from '../../constants/theme';
 import {useSelector} from 'react-redux';
+
+import {COLORS} from '../../constants/theme';
 import Loader from '../../components/Loader/Loader';
+import FlatlistComponent from '../../components/List/FlatlistComponent';
 
 const DynamicTabScreen = ({route, navigation}) => {
-  const {Symbol} = route.params || {};
-  const {dynamicData} = useSelector(state => state.dashboard);
+  const {dynamicData} = route.params || {};
+  console.log(dynamicData);
+  // const {dynamicData} = useSelector(state => state.dashboard);
   const selectedItems = useSelector(state => state.selection.selectedItems);
   // console.log('DYNAMIC SCREEN, ITEM', dynamicData, Symbol);
   // console.log('dynamic selected', selectedItems);
   return (
     <View style={styles.container}>
-      {dynamicData ? (
-        <>
-          <FlatlistComponent
-            data={dynamicData}
-            navigation={navigation}
-            table={'isTable'}
-          />
-        </>
-      ) : (
+      {dynamicData === null || dynamicData === undefined ? (
         <View style={styles.loaderContainer}>
           <Loader />
         </View>
+      ) : dynamicData.length === 0 ? (
+        <View style={styles.noDataContainer}>
+          <Text style={styles.noDataText}>Data Not Found</Text>
+        </View>
+      ) : (
+        <FlatlistComponent
+          data={dynamicData}
+          navigation={navigation}
+          table={'isTable'}
+        />
       )}
     </View>
   );
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
   },
-  loaderContainer: {
+  noDataContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

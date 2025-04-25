@@ -15,6 +15,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const MaterialToptabnavigation = ({setActiveTab}) => {
   const {dynamicTab} = useContext(TabContext);
+  // console.log('update DYNAMIC TAB', dynamicTab);
 
   const materialScreenOptions = {
     tabBarStyle: {
@@ -73,7 +74,8 @@ const MaterialToptabnavigation = ({setActiveTab}) => {
         <Tab.Screen
           name="Dynamicscreen"
           component={DynamicTabScreen}
-          options={{tabBarLabel: dynamicTab?.name || 'Dynamic'}}
+          options={{tabBarLabel: dynamicTab || 'Dynamic'}}
+          initialParams={{name: dynamicTab}}
         />
       )}
     </Tab.Navigator>

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import {
   FlatList,
   Pressable,
@@ -7,68 +8,225 @@ import {
   View,
 } from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
-
-import CustomeHeader from '../../components/Header/CustomeHeader';
-import Button from '../../components/Button/Button';
-import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
-
-import responsive from '../../utils/responsive';
-import PlusIcon from 'react-native-vector-icons/FontAwesome5';
-import {SortIcons} from '../../assets/SVG/appiconsvg/Icons';
-import {COLORS} from '../../constants/theme';
-import {watchlistNames} from './WatchlistTabs/WatchlistTabs';
 import {useDispatch, useSelector} from 'react-redux';
-import WatchlistItem from '../../components/List/WatchlistItem';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import CustomModal from '../../components/Modal/CustomModal';
-import Icon from 'react-native-vector-icons/Feather';
+
 import {
+  addNewStockInWatchListAction,
   deleteSelectedItems,
   deselectAllItem,
+  getWatchListDataAction,
   selectAllItem,
 } from '../../store/watchlist/watchlistslice';
+import useDebounce from '../../hooks/Debounce/useDebounce';
+import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
+
+import {COLORS} from '../../constants/theme';
+
+import responsive from '../../utils/responsive';
+
+import {SortIcons} from '../../assets/SVG/appiconsvg/Icons';
+
+import {watchlistNames} from './WatchlistTabs/WatchlistTabs';
+
+import CustomeHeader from '../../components/Header/CustomeHeader';
+import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
+import CustomModal from '../../components/Modal/CustomModal';
+import WatchlistItem from '../../components/List/WatchlistItem';
+import SearchInput from '../../components/WatchlistComponent/SearchInput';
+import SearchList from '../../components/WatchlistComponent/SearchList';
+import {
+  getUserRankingListAction,
+  updateRankingListName,
+  updateUserRankingListNameAction,
+} from '../../store/userSlice/user-slice';
+import WatchlistDynamicTab from '../../components/WatchlistComponent/WatchlistDynamicTab';
+import Watchlist from '../../components/WatchlistComponent/WatchList/Watchlist';
 
 const WathlistScreen = ({navigation, route}) => {
-  const {selectedWatchlistData, watchList1, watchList2, watchList3} =
-    useSelector(state => state.mywatchlist);
+  const {
+    selectedWatchlistData,
+    myWatchListData,
+    watchList1,
+    watchList2,
+    watchList3,
+  } = useSelector(state => state.mywatchlist);
+  const {token} = useSelector(state => state.auth);
+
+  //RankingList get for tabs
+  const {rankingList} = useSelector(state => state.user);
+  // console.log('rankinglist', rankingList, myWatchListData);
+
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
-  const [searchStock, setSearchStock] = useState();
-  const [tabs, setTabs] = useState([]);
+  const [searchStock, setSearchStock] = useState('');
+  const [searchLoader, setSearchLoader] = useState(false);
+  const [searchData, setSearchData] = useState('');
+  const debouncedValue = useDebounce(searchStock, 300);
+
   const [editModal, setEditModal] = useState(false);
   const [newTitle, setNewTitle] = useState('');
-  const [selectedTab, setSelectedTab] = useState(null);
+
+  const [selectedTab, setSelectedTab] = useState({
+    id: 1,
+    stockcapacity: '51',
+    usestock: 6,
+    watchlist_name: 'List1',
+    watchlist_namestatus: true,
+  });
+  const [selectedRankingListId, setSelectedRankingListId] = useState(1);
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [watchlistData, setWatchListData] = useState([]);
 
   useEffect(() => {
-    const formattedTabs = [
-      {
-        id: 'list1',
-        watchlist_name: watchlistNames[0],
-        data: watchList1?.flat() || [],
-        datalength: watchList1[0]?.stock?.length || 0,
-      },
-      {
-        id: 'list2',
-        watchlist_name: watchlistNames[1],
-        data: watchList2?.flat() || [],
-        datalength: watchList2[0]?.stock?.length || 0,
-      },
-      {
-        id: 'list3',
-        watchlist_name: watchlistNames[2],
-        data: watchList3?.flat() || [],
-        datalength: watchList3[0]?.stock?.length || 0,
-      },
-    ];
-    setTabs(formattedTabs);
-    setSelectedTab(formattedTabs[0]);
-  }, [watchList1, watchList2, watchList3]);
+    dispatch(
+      getWatchListDataAction({
+        token,
+        setIsLoadingData,
+        watchlistno: selectedRankingListId,
+      }),
+    );
+    console.log(selectedTab.id, selectedRankingListId);
+    dispatch(getUserRankingListAction(token));
+  }, []);
 
-  const flattenedStocks =
-    selectedTab?.data?.map(item => item?.stock)?.flat() ?? [];
+  useEffect(() => {
+    if (debouncedValue && debouncedValue?.length <= 3) return;
+
+    const getCompaniesData = async query => {
+      if (!query) return;
+      const localHeader = {...API_HEADERS, Authorization: `Token ${token}`};
+      try {
+        setSearchLoader(true);
+        const {data} = await axios({
+          method: HTTP_METHODS.POST,
+          url: `${API_BASE_URL}/finance/api/companysearch/`,
+          headers: localHeader,
+          data: {query},
+        });
+        // console.log('search', data.results);
+
+        if (data?.results?.length === 0) {
+          setSearchData([{name: 'No results found', symbol: ''}]);
+          return;
+        }
+        setSearchData(data?.results);
+      } catch (error) {
+        console.log('error: ', error);
+      } finally {
+        setSearchLoader(false);
+      }
+    };
+    getCompaniesData(debouncedValue);
+
+    return setSearchData([]);
+  }, [debouncedValue, token]);
+
+  // console.log(searchData);
+
+  //when click handleNewStockToWatchlist add item to specific list on search input
+  const handleAddNewStockToWatchList = () => {
+    // console.log('searchdata', searchData);
+    if (!searchStock) return;
+    console.log(searchStock);
+    dispatch(
+      addNewStockInWatchListAction({
+        token,
+        setIsLoadingData,
+        searchStock: searchStock,
+        watchlist_number: selectedRankingListId,
+        onSuccess: () => resetAllInputs({count: 1, operator: 'add'}),
+      }),
+    );
+    //  setIsNewStockAdded(true);
+    // resetAllInputs();
+  };
+
+  //if search input item click then populate value on input box
+  const handleItemClick = item => {
+    console.log(item);
+    if (item) {
+      setSearchStock(item);
+    }
+  };
+  //reset all inputs whne add button click
+  const resetAllInputs = ({count, operator}) => {
+    setSearchData('');
+    console.log('reset');
+    setSearchStock('');
+
+    dispatch(
+      getWatchListDataAction({
+        token,
+        setIsLoadingData,
+        watchlistno: selectedRankingListId,
+      }),
+    );
+    dispatch(
+      updateRankingListName({
+        count,
+        operator,
+        id: selectedRankingListId,
+      }),
+    );
+  };
+
+  const handleSelectTab = item => {
+    setSelectedTab(item);
+    setSelectedRankingListId(item.id);
+    console.log(item.id);
+
+    dispatch(
+      getWatchListDataAction({
+        token,
+        setIsLoadingData,
+        watchlistno: item.id,
+      }),
+    );
+  };
+  // console.log('item tab select', selectedRankingListId);
+
+  const handleEditModal = item => {
+    console.log('edit', editModal, item.watchlist_name);
+    setNewTitle(item?.watchlist_name);
+    setEditModal(true);
+    setSelectedRankingListId(item.id);
+  };
+
+  const handleChangeListName = () => {
+    // console.log(selectedRankingListId, newTitle);
+
+    const payload = {
+      id: selectedRankingListId,
+      name: newTitle,
+    };
+
+    console.log(payload);
+
+    dispatch(
+      updateUserRankingListNameAction({
+        token,
+        data: payload,
+        setIsLoadingData,
+      }),
+    );
+    resetAllInputs({count: 1, operator: 'add'});
+    setEditModal(false);
+  };
+
+  const flattenedStocks = myWatchListData?.map(item => item?.watchlist_number);
   // console.log(flattenedStocks);
   // console.log(selectedTab);
+
+  useEffect(() => {
+    console.log(myWatchListData);
+    setWatchListData(myWatchListData);
+  }, [myWatchListData, selectedRankingListId]);
+
+  // console.log(watchlistData);
+
+  // const selectedList ,
 
   const updateTabTitle = () => {
     setTabs(prev =>
@@ -105,107 +263,74 @@ const WathlistScreen = ({navigation, route}) => {
       <View style={styles.container}>
         {/* Search input  */}
         <View style={styles.searchContainer}>
-          <TextInput
+          <SearchInput
             value={searchStock}
             onChangeText={setSearchStock}
-            placeholder="Search By name and symbol"
-            placeholderTextColor={'#646262a7'}
+            showButton={true}
             mode="outlined"
             style={styles.searchInput}
             outlineStyle={{
               borderRadius: responsive.borderRadius(8),
               borderColor: COLORS.primary,
             }}
-            left={<TextInput.Icon icon="magnify" color={COLORS.primary} />}
+            placeholder="Search By name and symbol"
+            placeholderTextColor={'#646262a7'}
+            handleAddNewStockToWatchList={handleAddNewStockToWatchList}
+            buttonTitle="Add "
+            inputLoader={searchLoader}
+            searchData={searchData}
           />
-          <Button style={styles.addStockButton}>
-            <View style={styles.addStockContent}>
-              <PlusIcon name="plus" color={'white'} size={18} />
-              <Text style={styles.addStockText}>Stock</Text>
-            </View>
-          </Button>
         </View>
 
-        <View style={styles.divider} />
+        {searchData.length > 0 ? (
+          <View>
+            <SearchList
+              searchData={searchData}
+              handleItemClick={handleItemClick}
+            />
+          </View>
+        ) : (
+          <View>
+            <View style={styles.divider} />
 
-        {/* select all and filter */}
-        <View>
-          {flattenedStocks.length > 0 && (
-            <View style={styles.checkboxContainer}>
-              <CustomCheckBox
-                onPress={handleSelectAll}
-                isChecked={isAllSelected}
-              />
+            {/* select all and filter */}
+            <View>
+              {flattenedStocks.length > 0 && (
+                <View style={styles.checkboxContainer}>
+                  <CustomCheckBox
+                    onPress={handleSelectAll}
+                    isChecked={isAllSelected}
+                  />
 
-              <Pressable style={styles.sortBtn}>
-                <SortIcons size={25} color={COLORS.white} />
-              </Pressable>
-            </View>
-          )}
-          {/* Dynamic tabs */}
-          <FlatList
-            horizontal
-            data={tabs}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={[
-                  styles.tab,
-                  selectedTab?.id === item.id ? styles.activeTab : '',
-                ]}
-                onPress={() => setSelectedTab(item)}>
-                <View style={styles.tabContent}>
-                  {/* Edit Icon */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      setNewTitle(item?.watchlist_name);
-                      setSelectedTab(item);
-                      setEditModal(true);
-                    }}
-                    style={styles.editIcon}>
-                    <Icon
-                      name="edit-3"
-                      size={23}
-                      color={
-                        selectedTab?.id === item.id ? COLORS.primary : '#888888'
-                      }
-                    />
-                  </TouchableOpacity>
-                  <Text
-                    style={
-                      selectedTab?.id === item.id
-                        ? styles.activeTabText
-                        : styles.inactiveTabText
-                    }>
-                    {item?.watchlist_name} ({item?.datalength}/100)
-                  </Text>
+                  <Pressable style={styles.sortBtn}>
+                    <SortIcons size={25} color={COLORS.white} />
+                  </Pressable>
                 </View>
-              </TouchableOpacity>
-            )}
-            contentContainerStyle={styles.tabsContainer}
-          />
-          <View style={styles.dividerFlatlist} />
-          {/* Watchlist items */}
-          <FlatList
-            data={flattenedStocks}
-            keyExtractor={item => item.id || Math.random().toString()}
-            renderItem={({item}) => (
-              <WatchlistItem item={item} listKey={selectedTab.watchlist_name} />
-            )}
-            contentContainerStyle={{padding: 5, overflow: 'hidden'}}
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 3,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginVertical: 60,
-                }}>
-                <Text style={{fontWeight: 'bold'}}>No items in this list.</Text>
+              )}
+
+              {/* Dynamic tabs */}
+              <View>
+                <WatchlistDynamicTab
+                  rankingList={rankingList}
+                  handleEditModal={handleEditModal}
+                  selectedTab={selectedTab}
+                  handleSelectTab={handleSelectTab}
+                  selectedRankingListId={selectedRankingListId}
+                />
               </View>
-            )}
-          />
-        </View>
+
+              {/* divider */}
+              <View style={styles.dividerFlatlist} />
+
+              {/* Watchlist items */}
+              <Watchlist
+                watchlistData={watchlistData}
+                selectedTab={selectedTab}
+                selectedRankingListId={selectedRankingListId}
+              />
+            </View>
+          </View>
+        )}
 
         {/* Edit modal */}
         <CustomModal visible={editModal} onClose={() => setEditModal(false)}>
@@ -217,7 +342,9 @@ const WathlistScreen = ({navigation, route}) => {
             mode="outlined"
             outlineStyle={{borderColor: COLORS.primary}}
           />
-          <TouchableOpacity style={styles.modalButton} onPress={updateTabTitle}>
+          <TouchableOpacity
+            style={styles.modalButton}
+            onPress={handleChangeListName}>
             <Text style={styles.modalButtonText}>Update</Text>
           </TouchableOpacity>
         </CustomModal>
@@ -225,7 +352,7 @@ const WathlistScreen = ({navigation, route}) => {
       {/* Floating delete button */}'
       {flattenedStocks.length > 0 && (
         <FAB
-          style={[styles.fab, {bottom: insets.bottom + 80}]}
+          style={[styles.fab, {bottom: insets.bottom + 10}]}
           label="Delete"
           mode="elevated"
           color="red"
@@ -245,43 +372,6 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: responsive.padding(5),
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: responsive.margin(10),
-    gap: 15,
-  },
-  searchInput: {
-    width: responsive.width(240),
-    height: responsive.height(34),
-    backgroundColor: '#fff',
-    borderRadius: responsive.borderRadius(20),
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    justifyContent: 'center',
-  },
-  addStockButton: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: responsive.padding(10),
-    paddingVertical: responsive.padding(9),
-    borderRadius: responsive.borderRadius(8),
-    justifyContent: 'center',
-  },
-  addStockContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  addStockText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
-    marginLeft: 6,
   },
   divider: {
     top: 10,

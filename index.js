@@ -14,11 +14,11 @@ import {PersistGate} from 'redux-persist/integration/react';
 const Application = () => (
   <Provider store={Store}>
     <PersistGate loading={null} persistor={persistor}>
-      <PaperProvider>
-        <MaterialTopTabContextProvider>
+      <MaterialTopTabContextProvider>
+        <PaperProvider>
           <App />
-        </MaterialTopTabContextProvider>
-      </PaperProvider>
+        </PaperProvider>
+      </MaterialTopTabContextProvider>
     </PersistGate>
   </Provider>
 );
