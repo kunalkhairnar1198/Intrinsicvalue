@@ -1,56 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {
   addNewStockInWatchListAction,
-  deleteSelectedItems,
-  deselectAllItem,
+  deleteStockFromWatchListAction,
   getWatchListDataAction,
-  selectAllItem,
 } from '../../store/watchlist/watchlistslice';
-import useDebounce from '../../hooks/Debounce/useDebounce';
-import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
 
-import {COLORS} from '../../constants/theme';
-
-import responsive from '../../utils/responsive';
-
-import {SortIcons} from '../../assets/SVG/appiconsvg/Icons';
-
-import {watchlistNames} from './WatchlistTabs/WatchlistTabs';
-
-import CustomeHeader from '../../components/Header/CustomeHeader';
-import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
-import CustomModal from '../../components/Modal/CustomModal';
-import WatchlistItem from '../../components/List/WatchlistItem';
-import SearchInput from '../../components/WatchlistComponent/SearchInput';
-import SearchList from '../../components/WatchlistComponent/SearchList';
 import {
   getUserRankingListAction,
   updateRankingListName,
   updateUserRankingListNameAction,
 } from '../../store/userSlice/user-slice';
+
+import useDebounce from '../../hooks/Debounce/useDebounce';
+import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
+
+import {COLORS} from '../../constants/theme';
+import responsive from '../../utils/responsive';
+import {SortIcons} from '../../assets/SVG/appiconsvg/Icons';
+import toastService from '../../utils/ToastService/toastService';
+
+import CustomeHeader from '../../components/Header/CustomeHeader';
+import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
+import CustomModal from '../../components/Modal/CustomModal';
+import SearchInput from '../../components/WatchlistComponent/SearchInput';
+import SearchList from '../../components/WatchlistComponent/SearchList';
 import WatchlistDynamicTab from '../../components/WatchlistComponent/WatchlistDynamicTab';
 import Watchlist from '../../components/WatchlistComponent/WatchList/Watchlist';
 
 const WathlistScreen = ({navigation, route}) => {
-  const {
-    selectedWatchlistData,
-    myWatchListData,
-    watchList1,
-    watchList2,
-    watchList3,
-  } = useSelector(state => state.mywatchlist);
+  const {myWatchListData} = useSelector(state => state.mywatchlist);
   const {token} = useSelector(state => state.auth);
 
   //RankingList get for tabs
@@ -78,6 +63,8 @@ const WathlistScreen = ({navigation, route}) => {
   const [selectedRankingListId, setSelectedRankingListId] = useState(1);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [watchlistData, setWatchListData] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [confirmModal, setConfirmModal] = useState(false);
 
   useEffect(() => {
     dispatch(
@@ -113,7 +100,8 @@ const WathlistScreen = ({navigation, route}) => {
         }
         setSearchData(data?.results);
       } catch (error) {
-        console.log('error: ', error);
+        // console.log('error: ', error);
+        toastService.showError(error);
       } finally {
         setSearchLoader(false);
       }
@@ -139,8 +127,6 @@ const WathlistScreen = ({navigation, route}) => {
         onSuccess: () => resetAllInputs({count: 1, operator: 'add'}),
       }),
     );
-    //  setIsNewStockAdded(true);
-    // resetAllInputs();
   };
 
   //if search input item click then populate value on input box
@@ -153,7 +139,7 @@ const WathlistScreen = ({navigation, route}) => {
   //reset all inputs whne add button click
   const resetAllInputs = ({count, operator}) => {
     setSearchData('');
-    console.log('reset');
+    // console.log('reset');
     setSearchStock('');
 
     dispatch(
@@ -175,7 +161,7 @@ const WathlistScreen = ({navigation, route}) => {
   const handleSelectTab = item => {
     setSelectedTab(item);
     setSelectedRankingListId(item.id);
-    console.log(item.id);
+    // console.log(item.id);
 
     dispatch(
       getWatchListDataAction({
@@ -226,35 +212,41 @@ const WathlistScreen = ({navigation, route}) => {
 
   // console.log(watchlistData);
 
-  // const selectedList ,
+  const isAllSelected = selectedItems.length;
 
-  const updateTabTitle = () => {
-    setTabs(prev =>
-      prev.map(tab =>
-        tab.id === selectedTab.id ? {...tab, watchlist_name: newTitle} : tab,
-      ),
-    );
-    setEditModal(false);
-  };
-
-  const isAllSelected = selectedWatchlistData.length === flattenedStocks.length;
-
-  useEffect(() => {
-    if (selectedTab?.watchlist_name) {
-      dispatch(deselectAllItem());
-    }
-  }, [dispatch, selectedTab]);
+  // console.log(isAllSelected);
 
   const handleSelectAll = () => {
-    // console.log('selection', selectedWatchlistData);
-    if (isAllSelected) {
-      dispatch(deselectAllItem());
+    const idMap = myWatchListData.map(item => item.id);
+    // console.log(idMap);
+    setSelectedItems(prev => {
+      if (prev.length === idMap.length) {
+        return [];
+      } else {
+        return [...idMap];
+      }
+    });
+  };
+
+  const handleDeleteWatchlistItem = () => {
+    if (selectedItems.length === 0) {
+      toastService.showError('Please select at least one stock to delete.');
     } else {
-      dispatch(selectAllItem(flattenedStocks));
+      setConfirmModal(true);
     }
   };
-  const handleDeleteWatchlistItem = () => {
-    dispatch(deleteSelectedItems(selectedTab.watchlist_name));
+
+  const confirmDeleteWatchlistItem = selectedItems => {
+    dispatch(
+      deleteStockFromWatchListAction({
+        token,
+        ids: selectedItems,
+        watchlistno: selectedRankingListId,
+        onSuccess: () =>
+          resetAllInputs({count: selectedItems.length, operator: 'sub'}),
+      }),
+    );
+    setConfirmModal(false);
   };
 
   return (
@@ -295,18 +287,22 @@ const WathlistScreen = ({navigation, route}) => {
 
             {/* select all and filter */}
             <View>
-              {flattenedStocks.length > 0 && (
-                <View style={styles.checkboxContainer}>
-                  <CustomCheckBox
-                    onPress={handleSelectAll}
-                    isChecked={isAllSelected}
-                  />
+              <View style={styles.checkboxContainer}>
+                {selectedItems.length > 0 ? (
+                  <View style={styles.checkButton}>
+                    <CustomCheckBox
+                      onPress={handleSelectAll}
+                      isChecked={isAllSelected}
+                    />
+                  </View>
+                ) : (
+                  <View /> // Empty view to maintain spacing if no checkbox
+                )}
 
-                  <Pressable style={styles.sortBtn}>
-                    <SortIcons size={25} color={COLORS.white} />
-                  </Pressable>
-                </View>
-              )}
+                <Pressable style={styles.sortBtn}>
+                  <SortIcons size={22} color={COLORS.white} />
+                </Pressable>
+              </View>
 
               {/* Dynamic tabs */}
               <View>
@@ -326,11 +322,21 @@ const WathlistScreen = ({navigation, route}) => {
               <Watchlist
                 watchlistData={watchlistData}
                 selectedTab={selectedTab}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
                 selectedRankingListId={selectedRankingListId}
               />
             </View>
           </View>
         )}
+
+        {/* delete modal*/}
+        <ConfirmModal
+          visible={confirmModal}
+          onClose={() => setConfirmModal(false)}
+          onConfirm={() => confirmDeleteWatchlistItem(selectedItems)}
+          message="Are you sure you want to delete this stock from FTSM Watchlist?"
+        />
 
         {/* Edit modal */}
         <CustomModal visible={editModal} onClose={() => setEditModal(false)}>
@@ -350,7 +356,7 @@ const WathlistScreen = ({navigation, route}) => {
         </CustomModal>
       </View>
       {/* Floating delete button */}'
-      {flattenedStocks.length > 0 && (
+      {selectedItems.length > 0 && (
         <FAB
           style={[styles.fab, {bottom: insets.bottom + 10}]}
           label="Delete"
@@ -384,19 +390,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: responsive.padding(10),
-    margin: responsive.margin(4),
+    paddingHorizontal: responsive.padding(10),
+    paddingVertical: responsive.padding(8),
+    marginVertical: responsive.margin(4),
   },
+
+  checkButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: responsive.width(30),
+    height: responsive.height(30),
+    borderRadius: responsive.borderRadius(5),
+    backgroundColor: '#f0f0f0',
+  },
+
   sortBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: responsive.padding(5),
-    borderRadius: responsive.borderRadius(5),
     width: responsive.width(30),
     height: responsive.height(30),
     backgroundColor: COLORS.primary,
-    // alignSelf: 'flex-end',
+    borderRadius: responsive.borderRadius(5),
   },
+
   tab: {
     paddingVertical: 8,
     padding: 10,

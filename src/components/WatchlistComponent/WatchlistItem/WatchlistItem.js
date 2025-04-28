@@ -7,38 +7,32 @@ import CustomCard from '../../UI/Card';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomCheckBox from '../../CheckBox/CustomCheckBox';
 
-// import {useDispatch, useSelector} from 'react-redux';
-
-// import {toggleSelection} from '../../store/watchlist/watchlistslice';
-
 const WatchlistItem = ({
   item,
   symbolData,
   patternData,
   technicalrankdata,
   listKey,
+  selectedItems,
+  setSelectedItems,
 }) => {
-  // const dispatch = useDispatch();
-  // // console.log(item, listKey);
+  console.log(selectedItems);
+  // console.log(item);
 
-  // const {selectedWatchlistData, watchList1, watchList2, watchList3} =
-  //   useSelector(state => state.mywatchlist);
+  const handleSelectCheckItem = id => {
+    setSelectedItems(prev => {
+      const existsIndex = prev.findIndex(selected => selected === id);
 
-  // // console.log(selectedWatchlistData);
+      if (existsIndex !== -1) {
+        return prev.filter(selected => selected !== id);
+      } else {
+        return [id, ...prev];
+      }
+    });
 
-  // const handleCheckboxPress = (item, listKey) => {
-  //   // console.log(item);
-  //   const deletedObject = {
-  //     ...item,
-  //     listKey,
-  //     id: item.symbol || `${item.name}-${item.NSE_UPD_TIME}`,
-  //   };
-  //   // console.log(deletedObject);
-  //   dispatch(toggleSelection(deletedObject));
-  // };
+    console.log('click', id);
+  };
 
-  // const handeSelectedItemDelete = () => {};
-  //   console.log(item, symbolData, patternData, technicalrankdata, listKey);
   return (
     <>
       <CustomCard style={styles.cardContainer}>
@@ -51,10 +45,8 @@ const WatchlistItem = ({
             <View style={styles.container}>
               <View style={styles.checkBox}>
                 <CustomCheckBox
-                //   isChecked={selectedWatchlistData.some(
-                //     selected => selected.symbol === item.symbol,
-                //   )}
-                //   onPress={() => handleCheckboxPress(item, listKey)}
+                  isChecked={selectedItems.find(id => id === item.id)}
+                  onPress={() => handleSelectCheckItem(item.id)}
                 />
               </View>
 

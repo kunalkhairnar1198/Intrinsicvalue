@@ -140,10 +140,13 @@ export const getWatchListDataAction =
         },
         headers: localHeader,
       });
-      console.log('data', data.results);
+      // console.log('data', data.results);
       dispatch(setWatchListData(data?.results));
+      toastService.showSuccess('succesfully data loaded');
     } catch (error) {
-      toastService.showTomato(error);
+      toastService.showError(
+        'Upgrade your account to unlock additional FTSM Watchlist Lists and access more stocks in your Watchlist.',
+      );
     } finally {
       setIsLoadingData(false);
     }
@@ -168,9 +171,31 @@ export const addNewStockInWatchListAction =
       );
       onSuccess();
     } catch (error) {
-      toastService.showError({dispatch, error});
+      toastService.showError('Already exist');
     } finally {
       setIsLoadingData(false);
+    }
+  };
+export const deleteStockFromWatchListAction =
+  ({token, ids, onSuccess, watchlistno}) =>
+  async dispatch => {
+    console.log('token delete', ids, watchlistno);
+    try {
+      const localHeader = {...API_HEADERS, Authorization: `Token ${token}`};
+      const response = await axios({
+        method: HTTP_METHODS.DELETE,
+        url: `${API_BASE_URL}/finance/api/multipledeletewatchlist/`,
+        headers: localHeader,
+        data: {ids, watchlistno},
+      });
+      // console.log('res', response);
+      toastService.showSuccess(
+        response.data.results,
+        'Stock deleted from FTSM Watchlist',
+      );
+      onSuccess();
+    } catch (error) {
+      toastService.showError('error get', error);
     }
   };
 

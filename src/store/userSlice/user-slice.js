@@ -80,6 +80,7 @@ export const getUserRankingListAction = token => async dispatch => {
     dispatch(setRankingList(data));
     console.log(data);
   } catch (error) {
+    toastService.showError(error);
     console.log(error);
   } finally {
   }
