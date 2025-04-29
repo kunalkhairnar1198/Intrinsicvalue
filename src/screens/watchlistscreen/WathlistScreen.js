@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FAB, Text, TextInput} from 'react-native-paper';
@@ -17,6 +17,15 @@ import {
   updateUserRankingListNameAction,
 } from '../../store/userSlice/user-slice';
 
+import {
+  sortAlphabeticalAZ,
+  sortByFundamentalRank,
+  sortByMutualFundRank,
+  sortByPegRatio,
+  sortBySentimentalRank,
+  sortByTechnicalRank,
+} from '../../utils/helpers/utils/watchlist-sortUtils';
+
 import useDebounce from '../../hooks/Debounce/useDebounce';
 import {API_BASE_URL, API_HEADERS, HTTP_METHODS} from '../../utils/https/https';
 
@@ -24,6 +33,7 @@ import {COLORS} from '../../constants/theme';
 import responsive from '../../utils/responsive';
 import {SortIcons} from '../../assets/SVG/appiconsvg/Icons';
 import toastService from '../../utils/ToastService/toastService';
+import {TabContext} from '../../context-api/MaterialTopTabContext';
 
 import CustomeHeader from '../../components/Header/CustomeHeader';
 import CustomCheckBox from '../../components/CheckBox/CustomCheckBox';
@@ -33,8 +43,11 @@ import SearchInput from '../../components/WatchlistComponent/SearchInput';
 import SearchList from '../../components/WatchlistComponent/SearchList';
 import WatchlistDynamicTab from '../../components/WatchlistComponent/WatchlistDynamicTab';
 import Watchlist from '../../components/WatchlistComponent/WatchList/Watchlist';
+import WatchlistBottomFilter from '../../components/WatchlistComponent/FilterBottomsheetmodal/WatchlistBottomFilter';
 
 const WathlistScreen = ({navigation, route}) => {
+  const {filterBottomSheetModalRef} = useContext(TabContext);
+
   const {myWatchListData} = useSelector(state => state.mywatchlist);
   const {token} = useSelector(state => state.auth);
 
@@ -65,6 +78,8 @@ const WathlistScreen = ({navigation, route}) => {
   const [watchlistData, setWatchListData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [sortValue, setSortValue] = useState(null);
+  const [patternSort, setPatternSort] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -117,7 +132,7 @@ const WathlistScreen = ({navigation, route}) => {
   const handleAddNewStockToWatchList = () => {
     // console.log('searchdata', searchData);
     if (!searchStock) return;
-    console.log(searchStock);
+    // console.log(searchStock);
     dispatch(
       addNewStockInWatchListAction({
         token,
@@ -131,7 +146,7 @@ const WathlistScreen = ({navigation, route}) => {
 
   //if search input item click then populate value on input box
   const handleItemClick = item => {
-    console.log(item);
+    // console.log(item);
     if (item) {
       setSearchStock(item);
     }
@@ -188,7 +203,7 @@ const WathlistScreen = ({navigation, route}) => {
       name: newTitle,
     };
 
-    console.log(payload);
+    // console.log(payload);
 
     dispatch(
       updateUserRankingListNameAction({
@@ -249,6 +264,45 @@ const WathlistScreen = ({navigation, route}) => {
     setConfirmModal(false);
   };
 
+  const handlePresentModalPress = () => {
+    console.log('open');
+    filterBottomSheetModalRef.current?.present();
+  };
+
+  const handleSortData = () => {
+    let sortedData = [];
+
+    switch (sortValue) {
+      case 'fundamentalRank':
+        sortedData = sortByFundamentalRank(watchlistData);
+        break;
+      case 'pegRatio':
+        sortedData = sortByPegRatio(watchlistData);
+        break;
+      case 'technicalRank':
+        sortedData = sortByTechnicalRank(watchlistData);
+        break;
+      case 'sentimentalRank':
+        sortedData = sortBySentimentalRank(watchlistData);
+        break;
+      case 'mutualFundRank':
+        sortedData = sortByMutualFundRank(watchlistData);
+        break;
+      case 'alphabeticalAZ':
+        sortedData = sortAlphabeticalAZ(watchlistData);
+        break;
+      default:
+        break;
+    }
+
+    if (sortedData.length > 0) {
+      setWatchListData(sortedData);
+    }
+
+    setSortValue('');
+    filterBottomSheetModalRef?.current?.close();
+  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <CustomeHeader navigation={navigation} title={route.name} />
@@ -299,7 +353,9 @@ const WathlistScreen = ({navigation, route}) => {
                   <View /> // Empty view to maintain spacing if no checkbox
                 )}
 
-                <Pressable style={styles.sortBtn}>
+                <Pressable
+                  style={styles.sortBtn}
+                  onPress={handlePresentModalPress}>
                   <SortIcons size={22} color={COLORS.white} />
                 </Pressable>
               </View>
@@ -367,6 +423,14 @@ const WathlistScreen = ({navigation, route}) => {
           onPress={handleDeleteWatchlistItem}
         />
       )}
+      {/* bottomsheetmodal */}
+      <WatchlistBottomFilter
+        sortValue={sortValue}
+        patternSort={patternSort}
+        setSortValue={setSortValue}
+        setPatternSort={setPatternSort}
+        handleSortData={handleSortData}
+      />
     </SafeAreaView>
   );
 };

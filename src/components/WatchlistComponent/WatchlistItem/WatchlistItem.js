@@ -16,7 +16,7 @@ const WatchlistItem = ({
   selectedItems,
   setSelectedItems,
 }) => {
-  console.log(selectedItems);
+  // console.log(selectedItems);
   // console.log(item);
 
   const handleSelectCheckItem = id => {

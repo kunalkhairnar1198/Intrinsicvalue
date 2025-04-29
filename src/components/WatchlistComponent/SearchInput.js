@@ -22,7 +22,7 @@ const SearchInput = ({
   inputLoader,
   searchData,
 }) => {
-  console.log(searchData);
+  // console.log(searchData);
   return (
     <>
       <View style={styles.searchContainer}>

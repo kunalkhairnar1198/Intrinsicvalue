@@ -17,6 +17,8 @@ const MaterialTopTabContextProvider = props => {
   const addWatchlistBottomModalRef = useRef(null);
   // console.log('CONTEXT', dynamicTab);
 
+  const filterBottomSheetModalRef = useRef(null);
+
   useEffect(() => {
     if (dynamicTab) {
       console.log(
@@ -45,6 +47,7 @@ const MaterialTopTabContextProvider = props => {
         bottomSheetModalRef,
         addWatchlistBottomModalRef,
         watchbottomSheetModalRef,
+        filterBottomSheetModalRef,
         handleItemClick,
         setDynamicTab,
         dynamicTab,
